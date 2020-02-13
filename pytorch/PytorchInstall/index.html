@@ -20,12 +20,14 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:site_name" content="ZeroLearn">
 <meta property="og:title" content="Pytorch安裝(使用Anaconda 3)">
-<meta property="og:url" content="https://zerolr/zeroLR.github.io/%E5%88%86%E9%A1%9E/PytorchInstall/">
+<meta property="og:url" content="https://zerolr/zeroLR.github.io/pytorch/PytorchInstall/">
 
 
   <meta property="og:description" content="   Pytorch很適合想入門深度學習的人使用，官方文檔整理的很清楚，社區雖然還不是很完善，但有很多相關的教程可以幫助學習，之後再開一篇學習資源彙整，這篇先把Pytorch的環境架好，我是使用Windows10 搭配Anaconda3進行安裝  ">
 
 
+
+  <meta property="og:image" content="https://zerolr/zeroLR.github.io/assets/images/PytorchInstall/pytorch.png">
 
 
 
@@ -42,7 +44,7 @@
   
 
 
-<link rel="canonical" href="https://zerolr/zeroLR.github.io/%E5%88%86%E9%A1%9E/PytorchInstall/">
+<link rel="canonical" href="https://zerolr/zeroLR.github.io/pytorch/PytorchInstall/">
 
 
 
@@ -131,8 +133,19 @@
           
         </a>
         <ul class="visible-links"><li class="masthead__menu-item">
-              <a href="https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/" >Quick-Start Guide</a>
+              <a href="/categories/" >文章分類</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/" >實作</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about" >關於我</a>
             </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
         
         <button class="greedy-nav__toggle hidden" type="button">
           <span class="visually-hidden">切換選單</span>
@@ -303,6 +316,18 @@
 
       <section class="page__content" itemprop="text">
         
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-th-list"></i> 目錄</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#安裝anaconda--pytorch">安裝Anaconda &amp; Pytorch</a></li>
+  <li><a href="#在-vscode-中用anaconda建立虛擬環境編譯推薦">在 VsCode 中用Anaconda建立虛擬環境編譯(推薦)</a></li>
+  <li><a href="#在-sublime-text-中使用anaconda建立的虛擬環境編譯">在 Sublime Text 中使用Anaconda建立的虛擬環境編譯</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
         <blockquote>
   <p>Pytorch很適合想入門深度學習的人使用，官方文檔整理的很清楚，社區雖然還不是很完善，但有很多相關的教程可以幫助學習，之後再開一篇學習資源彙整，這篇先把Pytorch的環境架好，我是使用Windows10 搭配Anaconda3進行安裝</p>
 </blockquote>
@@ -312,11 +337,11 @@ Anaconda 3 、 Sublime Text 、 Pytorch 1.4 (Conda,Python,CUDA 10.1)</p>
 
 <p>確認顯卡有無支援CUDA，沒有則使用CPU <a href="https://developer.nvidia.com/cuda-gpus"><code class="highlighter-rouge">CUDA支援GPU一覽</code></a></p>
 
-<h3 id="安裝步驟-"><strong>安裝步驟</strong> :</h3>
+<h2 id="安裝anaconda--pytorch"><strong>安裝Anaconda &amp; Pytorch</strong></h2>
 
 <ul>
   <li>
-    <p>安裝<a href="https://www.anaconda.com/"><code class="highlighter-rouge">Anaconda 3</code></a>,<a href="https://pytorch.org/get-started/locally/"><code class="highlighter-rouge">pytorch</code></a>,<a href="https://www.sublimetext.com/"><code class="highlighter-rouge">Sublime Text</code></a>,<a href="https://code.visualstudio.com/"><code class="highlighter-rouge">VsCode</code></a></p>
+    <p>安裝<a href="https://www.anaconda.com/"><code class="highlighter-rouge">Anaconda 3</code></a>,<a href="https://pytorch.org/get-started/locally/"><code class="highlighter-rouge">pytorch</code></a>,<a href="https://www.sublimetext.com/"><code class="highlighter-rouge">Sublime Text</code></a>,<a href="https://code.visualstudio.com/"><code class="highlighter-rouge">VsCode</code></a>(後兩者擇一)</p>
   </li>
   <li>
     <p>在Anaconda建立虛擬環境(使用python 3.7.6)</p>
@@ -347,7 +372,7 @@ conda install pytorch torchvision cudatoolkit=10.1 -c pytorch
 </code></pre></div></div>
 
 <ul>
-  <li>安裝pytorch(CPU)</li>
+  <li>安裝pytorch(CPU) &lt;- 顯卡不支援CUDA時用這個</li>
 </ul>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
@@ -366,32 +391,25 @@ torch.cuda.is_available()
 
 </code></pre></div></div>
 
-<hr />
-
-<h3 id="在-vscode-中使用anaconda建立的虛擬環境編譯推薦-"><strong>在 VsCode 中使用Anaconda建立的虛擬環境編譯(推薦)</strong> :</h3>
+<h2 id="在-vscode-中用anaconda建立虛擬環境編譯推薦"><strong>在 VsCode 中用Anaconda建立虛擬環境編譯(推薦)</strong></h2>
 
 <ul>
-  <li>
-    <p>在左邊的 EXTENSIONS 中搜尋 Pytorch 並安裝</p>
-  </li>
+  <li>在左邊的 EXTENSIONS 中搜尋 Pytorch 並安裝
+<img src="/assets/images/PytorchInstall/1.png" alt="" /></li>
   <li>
     <p>打開命令面板（Ctrl / Cmd + Shift + P）</p>
   </li>
   <li>
     <p>輸入”Python : Select Interpreter”</p>
   </li>
-  <li>
-    <p>選擇 “pytorch_GPU : conda” 進行編譯</p>
-  </li>
+  <li>選擇 “pytorch_GPU : conda” 進行編譯</li>
 </ul>
 
 <blockquote>
   <p><code class="highlighter-rouge">torch has no member</code> : setting -&gt; 搜尋python.linting.pylintPath -&gt; 修改為(Anaconda安裝路徑)\pkgs\pylint-1.8.4-py36_0\Scriptspylint</p>
 </blockquote>
 
-<hr />
-
-<h3 id="在-sublime-text-中使用anaconda建立的虛擬環境編譯-"><strong>在 Sublime Text 中使用Anaconda建立的虛擬環境編譯</strong> :</h3>
+<h2 id="在-sublime-text-中使用anaconda建立的虛擬環境編譯"><strong>在 Sublime Text 中使用Anaconda建立的虛擬環境編譯</strong></h2>
 
 <ul>
   <li>
@@ -405,11 +423,11 @@ torch.cuda.is_available()
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 {
 
-	"cmd": ["A:\\Anaconda3\\envs\\pytorch_GPU\\python", "-u", "$file"],
+  "cmd": ["A:\\Anaconda3\\envs\\pytorch_GPU\\python", "-u", "$file"],
 
-	"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+  "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
 
-	"selector": "source.python"
+  "selector": "source.python"
 
 }
 
@@ -446,7 +464,7 @@ torch.cuda.is_available()
     
       
       
-      <a href="/tags/#%E6%A8%99%E7%B1%A4" class="page__taxonomy-item" rel="tag">標籤</a>
+      <a href="/tags/#%E7%92%B0%E5%A2%83%E5%BB%BA%E7%BD%AE" class="page__taxonomy-item" rel="tag">環境建置</a>
     
     </span>
   </p>
@@ -467,7 +485,7 @@ torch.cuda.is_available()
     
       
       
-      <a href="/categories/#%E5%88%86%E9%A1%9E" class="page__taxonomy-item" rel="tag">分類</a>
+      <a href="/categories/#pytorch" class="page__taxonomy-item" rel="tag">Pytorch</a>
     
     </span>
   </p>
@@ -483,15 +501,25 @@ torch.cuda.is_available()
     <h4 class="page__share-title">分享到</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=Pytorch%E5%AE%89%E8%A3%9D%28%E4%BD%BF%E7%94%A8Anaconda+3%29%20https%3A%2F%2Fzerolr%2FzeroLR.github.io%2F%25E5%2588%2586%25E9%25A1%259E%2FPytorchInstall%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Pytorch%E5%AE%89%E8%A3%9D%28%E4%BD%BF%E7%94%A8Anaconda+3%29%20https%3A%2F%2Fzerolr%2FzeroLR.github.io%2Fpytorch%2FPytorchInstall%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fzerolr%2FzeroLR.github.io%2F%25E5%2588%2586%25E9%25A1%259E%2FPytorchInstall%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fzerolr%2FzeroLR.github.io%2Fpytorch%2FPytorchInstall%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fzerolr%2FzeroLR.github.io%2F%25E5%2588%2586%25E9%25A1%259E%2FPytorchInstall%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fzerolr%2FzeroLR.github.io%2Fpytorch%2FPytorchInstall%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">較舊</a>
+    
+    
+      <a href="/about/" class="pagination--pager" title="關於我
+">較新</a>
+    
+  </nav>
+
     </div>
 
     
@@ -504,14 +532,61 @@ torch.cuda.is_available()
       <div class="grid__wrapper">
         
           
-            
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/z_icon.png"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/about/" rel="permalink">關於我
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  少於 1 分鐘閱讀
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">本名先不說，目前是資工系延畢生orz
+</p>
+  </article>
+</div>
+
+        
       </div>
     </div>
+  
   
 </div>
 
     </div>
 
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
     
 
     <div id="footer" class="page__footer">
@@ -531,6 +606,8 @@ torch.cuda.is_available()
       
         
       
+        
+          <li><a href="https://github.com/zeroLR" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
         
       
         
@@ -556,6 +633,10 @@ torch.cuda.is_available()
 
 
 
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
 
 
 
