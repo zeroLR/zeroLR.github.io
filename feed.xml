@@ -1,1 +1,121 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://zerolr/zeroLR.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://zerolr/zeroLR.github.io/" rel="alternate" type="text/html" /><updated>2020-02-13T18:19:12+08:00</updated><id>https://zerolr/zeroLR.github.io/feed.xml</id><title type="html">ZeroLearn</title><subtitle>An amazing website.</subtitle><author><name>Zero</name><email>ceyanglab@gmail.com</email></author><entry><title type="html">標題helloworld</title><link href="https://zerolr/zeroLR.github.io/%E5%88%86%E9%A1%9E/Hello/" rel="alternate" type="text/html" title="標題helloworld" /><published>2020-02-13T00:00:00+08:00</published><updated>2020-02-13T00:00:00+08:00</updated><id>https://zerolr/zeroLR.github.io/%E5%88%86%E9%A1%9E/Hello</id><content type="html" xml:base="https://zerolr/zeroLR.github.io/%E5%88%86%E9%A1%9E/Hello/">&lt;p&gt;第一篇blog的內文&lt;/p&gt;</content><author><name>Zero</name><email>ceyanglab@gmail.com</email></author><category term="分類" /><category term="標籤" /><summary type="html">第一篇blog的內文</summary></entry></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://zerolr/zeroLR.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://zerolr/zeroLR.github.io/" rel="alternate" type="text/html" /><updated>2020-02-13T19:55:56+08:00</updated><id>https://zerolr/zeroLR.github.io/feed.xml</id><title type="html">ZeroLearn</title><subtitle>用來記錄平常做咚咚的Blog</subtitle><author><name>Zero</name><email>ceyanglab@gmail.com</email></author><entry><title type="html">Pytorch安裝(使用Anaconda 3)</title><link href="https://zerolr/zeroLR.github.io/%E5%88%86%E9%A1%9E/PytorchInstall/" rel="alternate" type="text/html" title="Pytorch安裝(使用Anaconda 3)" /><published>2020-02-13T00:00:00+08:00</published><updated>2020-02-13T00:00:00+08:00</updated><id>https://zerolr/zeroLR.github.io/%E5%88%86%E9%A1%9E/PytorchInstall</id><content type="html" xml:base="https://zerolr/zeroLR.github.io/%E5%88%86%E9%A1%9E/PytorchInstall/">&lt;p&gt;Pytorch很適合想入門深度學習的人使用，官方文檔整理的很清楚，社區雖然還不是很完善，但有很多相關的教程可以幫助學習，之後再開一篇學習資源彙整，這篇先把Pytorch的環境架好，我是使用Windows10 搭配Anaconda3進行安裝&lt;/p&gt;
+
+&lt;p&gt;環境 : Anaconda 3 、 Sublime Text 、 Pytorch 1.4 (Conda,Python,CUDA 10.1)&lt;/p&gt;
+
+&lt;p&gt;確認顯卡有無支援CUDA，沒有則使用CPU &lt;a href=&quot;https://developer.nvidia.com/cuda-gpus&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;CUDA支援GPU一覽&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;安裝步驟-&quot;&gt;&lt;strong&gt;安裝步驟&lt;/strong&gt; :&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;安裝&lt;a href=&quot;https://www.anaconda.com/&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Anaconda 3&lt;/code&gt;&lt;/a&gt;,&lt;a href=&quot;https://pytorch.org/get-started/locally/&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pytorch&lt;/code&gt;&lt;/a&gt;,&lt;a href=&quot;https://www.sublimetext.com/&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Sublime Text&lt;/code&gt;&lt;/a&gt;,&lt;a href=&quot;https://code.visualstudio.com/&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;VsCode&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在Anaconda建立虛擬環境(使用python 3.7.6)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+conda create -n pytorch_GPU python==3.7
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;切換至pytorch虛擬環境&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+activate pytorch_GPU
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;安裝pytorch(with CUDA)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+conda install pytorch torchvision cudatoolkit=10.1 -c pytorch
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;安裝pytorch(CPU)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+conda install pytorch torchvision cpuonly -c pytorch
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;進python測試是否安裝成功&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+import torch
+
+torch.cuda.is_available()
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;在-vscode-中使用anaconda建立的虛擬環境編譯推薦-&quot;&gt;&lt;strong&gt;在 VsCode 中使用Anaconda建立的虛擬環境編譯(推薦)&lt;/strong&gt; :&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;在左邊的 EXTENSIONS 中搜尋 Pytorch 並安裝&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;打開命令面板（Ctrl / Cmd + Shift + P）&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;輸入”Python : Select Interpreter”&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;選擇 “pytorch_GPU : conda” 進行編譯&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;torch has no member&lt;/code&gt; : setting -&amp;gt; 搜尋python.linting.pylintPath -&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;修改為(Anaconda安裝路徑)\pkgs\pylint-1.8.4-py36_0\Scriptspylint&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;在-sublime-text-中使用anaconda建立的虛擬環境編譯-&quot;&gt;&lt;strong&gt;在 Sublime Text 中使用Anaconda建立的虛擬環境編譯&lt;/strong&gt; :&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;選擇 Tools -&amp;gt; Build System -&amp;gt; New Build System&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;將程式碼替換如下(換成自己的Anaconda3虛擬環境路徑)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+{
+
+&quot;cmd&quot;: [&quot;A:\\Anaconda3\\envs\\pytorch_GPU\\python&quot;, &quot;-u&quot;, &quot;$file&quot;],
+
+&quot;file_regex&quot;: &quot;^[ ]*File \&quot;(...*?)\&quot;, line ([0-9]*)&quot;,
+
+&quot;selector&quot;: &quot;source.python&quot;
+
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;儲存並命名 pytorch.sublime-build&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;選擇 Tools -&amp;gt; Build System -&amp;gt; pytorch 開始編譯&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;</content><author><name>Zero</name><email>ceyanglab@gmail.com</email></author><category term="分類" /><category term="標籤" /><summary type="html">Pytorch很適合想入門深度學習的人使用，官方文檔整理的很清楚，社區雖然還不是很完善，但有很多相關的教程可以幫助學習，之後再開一篇學習資源彙整，這篇先把Pytorch的環境架好，我是使用Windows10 搭配Anaconda3進行安裝</summary></entry></feed>
