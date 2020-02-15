@@ -319,7 +319,11 @@
           <aside class="sidebar__right ">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-th-list"></i> 目錄</h4></header>
-              
+              <ul class="toc__menu">
+  <li><a href="#安裝-anaconda--pytorch">安裝 Anaconda &amp; Pytorch</a></li>
+  <li><a href="#在-vscode-中用-anaconda-建立虛擬環境編譯推薦">在 VsCode 中用 Anaconda 建立虛擬環境編譯(推薦)</a></li>
+  <li><a href="#在-sublime-text-中使用-anaconda-建立的虛擬環境編譯">在 Sublime Text 中使用 Anaconda 建立的虛擬環境編譯</a></li>
+</ul>
 
             </nav>
           </aside>
@@ -331,7 +335,7 @@
 <p class="notice--success"><strong>環境 : Anaconda 3 、 Sublime Text 、 Pytorch 1.4 (Conda,Python,CUDA 10.1)</strong></p>
 <p class="notice--warning"><strong>⚠   確認顯卡有無支援CUDA，沒有則使用CPU <a href="https://developer.nvidia.com/cuda-gpus">CUDA支援GPU一覽</a></strong></p>
 
-<p><span style="color: #58ff20; font-size:1.2em"> <strong>安裝 Anaconda &amp; Pytorch</strong> </span></p>
+<h2 id="安裝-anaconda--pytorch"><strong>安裝 Anaconda &amp; Pytorch</strong></h2>
 
 <ul>
   <li>
@@ -385,7 +389,7 @@ conda install pytorch torchvision cpuonly -c pytorch
 
 </code></pre></div></div>
 
-<p><span style="color: #58ff20; font-size:1.2em"> <strong>在 VsCode 中用 Anaconda 建立虛擬環境編譯(推薦)</strong> </span></p>
+<h2 id="在-vscode-中用-anaconda-建立虛擬環境編譯推薦"><strong>在 VsCode 中用 Anaconda 建立虛擬環境編譯(推薦)</strong></h2>
 
 <ul>
   <li>在左邊的 EXTENSIONS 中搜尋 Pytorch 並安裝
@@ -401,7 +405,7 @@ conda install pytorch torchvision cpuonly -c pytorch
 
 <p class="notice--danger text-center"><strong>🚨  <code class="highlighter-rouge">torch has no member</code> : setting -&gt; 搜尋 python.linting.pylintPath -&gt; 修改為 (Anaconda安裝路徑) \pkgs\pylint-1.8.4-py36_0\Scriptspylint</strong></p>
 
-<p><span style="color: #58ff20; font-size:1.2em"> <strong>在 Sublime Text 中使用 Anaconda 建立的虛擬環境編譯</strong> </span></p>
+<h2 id="在-sublime-text-中使用-anaconda-建立的虛擬環境編譯"><strong>在 Sublime Text 中使用 Anaconda 建立的虛擬環境編譯</strong></h2>
 
 <ul>
   <li>
