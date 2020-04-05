@@ -1,6 +1,6 @@
 var store = [{
         "title": "PyTorch安裝(使用Anaconda 3)",
-        "excerpt":"Pytorch很適合想入門深度學習的人使用，官方文檔整理的很清楚，社區雖然還不是很完善，但有很多相關的教程可以幫助學習，之後再開一篇學習資源彙整，這篇先把Pytorch的環境架好，我是使用Win10搭配Anaconda3進行安裝(如內容有誤或其他問題，歡迎留言或email) 環境 : Anaconda 3 、 Sublime Text 、 Pytorch 1.4 (Conda,Python,CUDA 10.1) ⚠   確認顯卡有無支援CUDA，沒有則使用CPU CUDA支援GPU一覽 安裝 Anaconda &amp; Pytorch 安裝Anaconda 3,pytorch,Sublime Text,VsCode(後兩者擇一) 在Anaconda建立虛擬環境(使用python 3.7.6) conda create -n pytorch_GPU python==3.7 切換至pytorch虛擬環境 activate pytorch_GPU 安裝pytorch(with CUDA) conda install pytorch torchvision cudatoolkit=10.1 -c pytorch 安裝pytorch(CPU) &lt;- 顯卡不支援CUDA時用這個 conda install pytorch torchvision...","categories": ["Tools"],
+        "excerpt":"Pytorch很適合想入門深度學習的人使用，官方文檔整理的很清楚，社區雖然還不是很完善，但有很多相關的教程可以幫助學習，之後再開一篇學習資源彙整，這篇先把Pytorch的環境架好，我是使用Win10搭配Anaconda3進行安裝(如內容有誤或其他問題，歡迎留言或email) 環境 : Anaconda 3 、 Pytorch 1.4 (Conda,Python,CUDA 10.1) 、 Sublime Text 、 VsCode ⚠   確認顯卡有無支援CUDA，沒有則使用CPU CUDA支援GPU一覽 安裝 Anaconda &amp; Pytorch 安裝Anaconda 3,pytorch,Sublime Text,VsCode(後兩者擇一) 在Anaconda建立虛擬環境(使用python 3.7.6) conda create -n pytorch_GPU python==3.7 切換至pytorch虛擬環境 activate pytorch_GPU 安裝pytorch(with CUDA) conda install pytorch torchvision cudatoolkit=10.1 -c pytorch 安裝pytorch(CPU) &lt;- 顯卡不支援CUDA時用這個 conda install...","categories": ["Tools"],
         "tags": ["Pytorch","Anaconda","Sublime Text","VsCode"],
         "url": "https://zerolr.github.io/tools/PytorchInstall/",
         "teaser":"https://zerolr.github.io/assets/images/PytorchInstall/pytorch.png"},{
@@ -13,4 +13,9 @@ var store = [{
         "excerpt":"   記錄一下優質的文章    Python          感謝作者Clay所寫的這篇文章，最近要做的東西剛好需要用到，平常用來下載Youtube的影片也非常方便!    Python 當中使用 pytube 下載 Youtube 的影片        ","categories": ["Share"],
         "tags": ["Python","Youtube"],
         "url": "https://zerolr.github.io/share/Share/",
-        "teaser":"https://images.unsplash.com/photo-1482066490729-6f26115b60dc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1302&q=80"}]
+        "teaser":"https://images.unsplash.com/photo-1482066490729-6f26115b60dc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1302&q=80"},{
+        "title": "歌聲轉譜資料處理(1) - 排序資料&下載YT歌曲",
+        "excerpt":"   參加了AI CUP 2020的歌聲轉譜競賽，目前得知兩種訓練方法，一種透過主辦標記好的音符資料(Vocal.json)去訓練出人聲音高，另一種是將YT歌曲自行抽取出人聲和進行音高追蹤去取得資料，後者目前能力還做不太到，但可以先試試，所以先將測試集的歌曲按順序下載下來，之後再看如何處理囉    環境 : Anaconda 3 、 VsCode 、 Pytorch 1.4 (Conda,Python,CUDA 10.1)   將os.listdir所讀取的資料夾名稱進行排序      python中的os.listdir讀取進來的檔名排序是亂的，需要使用sort來進行排序，但由於資料夾名稱不是用int表示，所以排出來還是亂的。         為了節省時間從網上得知natsort這個套件，用conda或pip安裝都可，import後就可以直接使用了，結果如下圖。         下載所有YT歌曲      這篇文章有教學如何用python下載YT歌曲pytube 下載 Youtube 的影片，加上主辦提供的代碼可以讀取所有YT連結，一行代碼就可以下載囉，建議output到對應資料夾裡，看起來比較舒服。     ","categories": ["Contest"],
+        "tags": ["Python","Youtube"],
+        "url": "https://zerolr.github.io/contest/VocalToMidi(1)/",
+        "teaser":"https://aidea-web.tw/images/5e60592bb1489dd7e534d665/bfcaa1b4-5b69-4f17-a5c4-f58ef7da68cb-big.png"}]

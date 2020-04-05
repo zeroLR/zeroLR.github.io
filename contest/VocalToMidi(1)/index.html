@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>轉貼集中地 | ZeroLearn</title>
-<meta name="description" content="蒐集一些平常做東做西覺得不錯的文章 ">
+<!-- begin _includes/seo.html --><title>歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲 | ZeroLearn</title>
+<meta name="description" content="從主辦方提供的資料集中按順序下載YT歌曲 ">
 
 
   <meta name="author" content="Zero">
@@ -19,32 +19,32 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:site_name" content="ZeroLearn">
-<meta property="og:title" content="轉貼集中地">
-<meta property="og:url" content="https://zerolr.github.io/share/Share/">
+<meta property="og:title" content="歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲">
+<meta property="og:url" content="https://zerolr.github.io/contest/VocalToMidi(1)/">
 
 
-  <meta property="og:description" content="蒐集一些平常做東做西覺得不錯的文章 ">
-
-
-
-  <meta property="og:image" content="https://images.unsplash.com/photo-1482066490729-6f26115b60dc?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1302&amp;q=80">
+  <meta property="og:description" content="從主辦方提供的資料集中按順序下載YT歌曲 ">
 
 
 
-
-
-  <meta property="article:published_time" content="2020-04-03T00:00:00+08:00">
+  <meta property="og:image" content="https://aidea-web.tw/images/5e60592bb1489dd7e534d665/bfcaa1b4-5b69-4f17-a5c4-f58ef7da68cb-big.png">
 
 
 
 
 
-  
+  <meta property="article:published_time" content="2020-04-05T00:00:00+08:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="https://zerolr.github.io/share/Share/">
+
+<link rel="canonical" href="https://zerolr.github.io/contest/VocalToMidi(1)/">
 
 
 
@@ -291,15 +291,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="轉貼集中地">
-    <meta itemprop="description" content="蒐集一些平常做東做西覺得不錯的文章">
-    <meta itemprop="datePublished" content="2020-04-03T00:00:00+08:00">
+    <meta itemprop="headline" content="歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲">
+    <meta itemprop="description" content="從主辦方提供的資料集中按順序下載YT歌曲">
+    <meta itemprop="datePublished" content="2020-04-05T00:00:00+08:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">轉貼集中地
+          <h1 id="page-title" class="page__title" itemprop="headline">歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -320,26 +320,41 @@
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-th-list"></i> 目錄</h4></header>
               <ul class="toc__menu">
-  <li><a href="#python">Python</a></li>
+  <li><a href="#將oslistdir所讀取的資料夾名稱進行排序">將os.listdir所讀取的資料夾名稱進行排序</a></li>
+  <li><a href="#下載所有yt歌曲">下載所有YT歌曲</a></li>
 </ul>
 
             </nav>
           </aside>
         
         <blockquote>
-  <p><strong>記錄一下優質的文章</strong></p>
+  <p><strong>參加了AI CUP 2020的歌聲轉譜競賽，目前得知兩種訓練方法，一種透過主辦標記好的音符資料(Vocal.json)去訓練出人聲音高，另一種是將YT歌曲自行抽取出人聲和進行音高追蹤去取得資料，後者目前能力還做不太到，但可以先試試，所以先將測試集的歌曲按順序下載下來，之後再看如何處理囉</strong></p>
 </blockquote>
 
-<h1 id="python"><strong>Python</strong></h1>
+<p class="notice--success"><strong>環境 : Anaconda 3 、 VsCode 、 Pytorch 1.4 (Conda,Python,CUDA 10.1)</strong></p>
 
-<p> </p>
+<h2 id="將oslistdir所讀取的資料夾名稱進行排序"><strong>將os.listdir所讀取的資料夾名稱進行排序</strong></h2>
 
-<p class="text-justify"><img src="https://i2.wp.com/clay-atlas.com/wp-content/uploads/2019/11/youtube_logo.png?resize=768%2C768&amp;ssl=1" alt="full" class="align-left" height="200px" width="200px" />
-  感謝作者Clay所寫的這篇文章，最近要做的東西剛好需要用到，平常用來下載Youtube的影片也非常方便!</p>
-<p> 
-<a href="https://clay-atlas.com/blog/2019/11/08/python-chinese-packages-pytube-moviepy-download-youtube-convert/" class="btn btn--primary align-center">Python 當中使用 pytube 下載 Youtube 的影片</a></p>
+<ul>
+  <li>python中的os.listdir讀取進來的檔名排序是亂的，需要使用sort來進行排序，但由於資料夾名稱不是用int表示，所以排出來還是亂的。</li>
+</ul>
 
-<p> </p>
+<p><img src="/assets/images/VocalToMidi/sort1.png" alt="" /></p>
+
+<ul>
+  <li>為了節省時間從網上得知natsort這個套件，用conda或pip安裝都可，import後就可以直接使用了，結果如下圖。</li>
+</ul>
+
+<p><img src="/assets/images/VocalToMidi/sort3.png" alt="" /></p>
+
+<p><img src="/assets/images/VocalToMidi/sort2.png" alt="" /></p>
+
+<h2 id="下載所有yt歌曲"><strong>下載所有YT歌曲</strong></h2>
+
+<ul>
+  <li>這篇文章有教學如何用python下載YT歌曲<a href="https://clay-atlas.com/blog/2019/11/08/python-chinese-packages-pytube-moviepy-download-youtube-convert/">pytube 下載 Youtube 的影片</a>，加上主辦提供的代碼可以讀取所有YT連結，一行代碼就可以下載囉，建議output到對應資料夾裡，看起來比較舒服。
+<img src="/assets/images/VocalToMidi/YT1.png" alt="" /></li>
+</ul>
 
 <hr />
 
@@ -388,14 +403,14 @@
     
       
       
-      <a href="/categories/#share" class="page__taxonomy-item" rel="tag">Share</a>
+      <a href="/categories/#contest" class="page__taxonomy-item" rel="tag">Contest</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新時間:</strong> <time datetime="2020-04-03T00:00:00+08:00">April 3, 2020</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新時間:</strong> <time datetime="2020-04-05T00:00:00+08:00">April 5, 2020</time></p>
         
       </footer>
 
@@ -404,23 +419,22 @@
     <h4 class="page__share-title">分享到</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=%E8%BD%89%E8%B2%BC%E9%9B%86%E4%B8%AD%E5%9C%B0%20https%3A%2F%2Fzerolr.github.io%2Fshare%2FShare%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=%E6%AD%8C%E8%81%B2%E8%BD%89%E8%AD%9C%E8%B3%87%E6%96%99%E8%99%95%E7%90%86%281%29+-+%E6%8E%92%E5%BA%8F%E8%B3%87%E6%96%99%26%E4%B8%8B%E8%BC%89YT%E6%AD%8C%E6%9B%B2%20https%3A%2F%2Fzerolr.github.io%2Fcontest%2FVocalToMidi%281%29%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fzerolr.github.io%2Fshare%2FShare%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fzerolr.github.io%2Fcontest%2FVocalToMidi%281%29%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fzerolr.github.io%2Fshare%2FShare%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fzerolr.github.io%2Fcontest%2FVocalToMidi%281%29%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/resources/Resources/" class="pagination--pager" title="學習資源
+      <a href="/share/Share/" class="pagination--pager" title="轉貼集中地
 ">較舊</a>
     
     
-      <a href="/contest/VocalToMidi(1)/" class="pagination--pager" title="歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲
-">較新</a>
+      <a href="#" class="pagination--pager disabled">較新</a>
     
   </nav>
 
@@ -455,14 +469,14 @@
       <div class="archive__item-teaser">
         <img src=
           
-            "https://aidea-web.tw/images/5e60592bb1489dd7e534d665/bfcaa1b4-5b69-4f17-a5c4-f58ef7da68cb-big.png"
+            "https://images.unsplash.com/photo-1482066490729-6f26115b60dc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1302&q=80"
           
           alt="">
       </div>
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/contest/VocalToMidi(1)/" rel="permalink">歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲
+        <a href="/share/Share/" rel="permalink">轉貼集中地
 </a>
       
     </h2>
@@ -476,7 +490,7 @@
 
 </p>
     
-    <p class="archive__item-excerpt" itemprop="description">從主辦方提供的資料集中按順序下載YT歌曲
+    <p class="archive__item-excerpt" itemprop="description">蒐集一些平常做東做西覺得不錯的文章
 </p>
   </article>
 </div>
@@ -632,8 +646,8 @@
     
   <script>
     var disqus_config = function () {
-      this.page.url = "https://zerolr.github.io/share/Share/";  /* Replace PAGE_URL with your page's canonical URL variable */
-      this.page.identifier = "/share/Share"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+      this.page.url = "https://zerolr.github.io/contest/VocalToMidi(1)/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/contest/VocalToMidi(1)"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
     };
     (function() { /* DON'T EDIT BELOW THIS LINE */
       var d = document, s = d.createElement('script');
