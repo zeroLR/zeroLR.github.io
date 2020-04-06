@@ -339,26 +339,26 @@
   <li>python中的os.listdir讀取進來的檔名排序是亂的，需要使用sort來進行排序，但由於資料夾名稱不是用int表示，所以排出來還是亂的。</li>
 </ul>
 
-<p><img src="/assets/images/VocalToMidi/sort1.png" alt="" /></p>
+<p><img src="/assets/images/VocalToMidi/sort1.PNG" alt="" /></p>
 
 <ul>
   <li>為了節省時間從網上得知natsort這個套件，用conda或pip安裝都可，import後就可以直接使用了，結果如下圖。</li>
 </ul>
 
-<p><img src="/assets/images/VocalToMidi/sort3.png" alt="" /></p>
+<p><img src="/assets/images/VocalToMidi/sort3.PNG" alt="" /></p>
 
-<p><img src="/assets/images/VocalToMidi/sort2.png" alt="" /></p>
+<p><img src="/assets/images/VocalToMidi/sort2.PNG" alt="" /></p>
 
 <h2 id="下載所有yt歌曲"><strong>下載所有YT歌曲</strong></h2>
 
 <ul>
-  <li>
-    <p>這篇文章有教學如何用python下載YT歌曲<a href="https://clay-atlas.com/blog/2019/11/08/python-chinese-packages-pytube-moviepy-download-youtube-convert/">pytube 下載 Youtube 的影片</a>，加上主辦提供的代碼可以讀取所有YT連結，一行代碼就可以下載囉，建議output到對應資料夾裡，看起來比較舒服。
-<img src="/assets/images/VocalToMidi/YT1.png" alt="" /></p>
-  </li>
-  <li>
-    <p>由於載下來的檔案是影片檔(.mp4)，還需要做轉檔的處理，首先安裝moviepy套件，再來下面以轉成(.mp3)為例，轉出到對應的路徑中</p>
-  </li>
+  <li>這篇文章有教學如何用python下載YT歌曲<a href="https://clay-atlas.com/blog/2019/11/08/python-chinese-packages-pytube-moviepy-download-youtube-convert/">pytube 下載 Youtube 的影片</a>，加上主辦提供的代碼可以讀取所有YT連結，一行代碼就可以下載囉，建議output到對應資料夾裡，看起來比較舒服。</li>
+</ul>
+
+<p><img src="/assets/images/VocalToMidi/YT1.PNG" alt="" /></p>
+
+<ul>
+  <li>由於載下來的檔案是影片檔(.mp4)，還需要做轉檔的處理，首先安裝moviepy套件，再來下面以轉成(.mp3)為例，轉出到對應的路徑中</li>
 </ul>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
