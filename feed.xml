@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://zerolr.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://zerolr.github.io/" rel="alternate" type="text/html" /><updated>2020-04-06T19:01:54+08:00</updated><id>https://zerolr.github.io/feed.xml</id><title type="html">ZeroLearn</title><subtitle>用來記錄平常做咚咚的Blog</subtitle><author><name>Zero</name><email>ceyanglab@gmail.com</email></author><entry><title type="html">歌聲轉譜資料處理(1) - 排序資料&amp;amp;下載YT歌曲</title><link href="https://zerolr.github.io/contest/VocalToMidi(1)/" rel="alternate" type="text/html" title="歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲" /><published>2020-04-05T00:00:00+08:00</published><updated>2020-04-05T00:00:00+08:00</updated><id>https://zerolr.github.io/contest/VocalToMidi(1)</id><content type="html" xml:base="https://zerolr.github.io/contest/VocalToMidi(1)/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://zerolr.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://zerolr.github.io/" rel="alternate" type="text/html" /><updated>2020-04-06T23:43:04+08:00</updated><id>https://zerolr.github.io/feed.xml</id><title type="html">ZeroLearn</title><subtitle>用來記錄平常做咚咚的Blog</subtitle><author><name>Zero</name><email>ceyanglab@gmail.com</email></author><entry><title type="html">歌聲轉譜資料處理(1) - 排序資料&amp;amp;下載YT歌曲</title><link href="https://zerolr.github.io/contest/VocalToMidi(1)/" rel="alternate" type="text/html" title="歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲" /><published>2020-04-06T00:00:00+08:00</published><updated>2020-04-06T00:00:00+08:00</updated><id>https://zerolr.github.io/contest/VocalToMidi(1)</id><content type="html" xml:base="https://zerolr.github.io/contest/VocalToMidi(1)/">&lt;p&gt;&lt;img src=&quot;https://aidea-web.tw/images/5e60592bb1489dd7e534d665/bfcaa1b4-5b69-4f17-a5c4-f58ef7da68cb-big.png&quot; alt=&quot;vocal&quot; height=&quot;500px&quot; width=&quot;500px&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;參加了AI CUP 2020的歌聲轉譜競賽，目前得知兩種訓練方法，一種透過主辦標記好的音符資料(Vocal.json)去訓練出人聲音高，另一種是將YT歌曲自行抽取出人聲和進行音高追蹤去取得資料，後者目前能力還做不太到，但可以先試試，所以先將測試集的歌曲按順序下載下來，之後再看如何處理囉&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -50,7 +51,157 @@
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;hr /&gt;</content><author><name>Zero</name><email>ceyanglab@gmail.com</email></author><category term="Python" /><category term="Youtube" /><summary type="html">從主辦方提供的資料集中按順序下載YT歌曲</summary></entry><entry><title type="html">轉貼集中地</title><link href="https://zerolr.github.io/share/Share/" rel="alternate" type="text/html" title="轉貼集中地" /><published>2020-04-03T00:00:00+08:00</published><updated>2020-04-03T00:00:00+08:00</updated><id>https://zerolr.github.io/share/Share</id><content type="html" xml:base="https://zerolr.github.io/share/Share/">&lt;blockquote&gt;
+&lt;hr /&gt;</content><author><name>Zero</name><email>ceyanglab@gmail.com</email></author><category term="Python" /><category term="Youtube" /><summary type="html">從主辦方提供的資料集中按順序下載YT影片並轉成音樂檔</summary></entry><entry><title type="html">學習資源</title><link href="https://zerolr.github.io/resources/Resources/" rel="alternate" type="text/html" title="學習資源" /><published>2020-04-06T00:00:00+08:00</published><updated>2020-04-06T00:00:00+08:00</updated><id>https://zerolr.github.io/resources/Resources</id><content type="html" xml:base="https://zerolr.github.io/resources/Resources/">&lt;p&gt;&lt;img src=&quot;https://cdn.pixabay.com/photo/2019/06/17/19/48/source-4280758_960_720.jpg&quot; alt=&quot;&quot; height=&quot;400px&quot; width=&quot;400px&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;這邊是我個人目前有在關注的學習資源，若有敘述錯誤或是連結失效請留言或email，有推薦的文章或教程也歡迎推坑，先感謝各位大大的指教了。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;pytorch&quot;&gt;&lt;strong&gt;PyTorch&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://morvanzhou.github.io/static/img/course_cover/torch.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
+  這系列教學可以快速入門PyTorch，從安裝到建造神經網絡、CNN、RNN、DQN等等，各種淺顯易懂的說明，包含影片、文章、和所有代碼。&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;https://morvanzhou.github.io/tutorials/machine-learning/torch/&quot; class=&quot;btn btn--primary align-center&quot;&gt;Pytorch 教程系列 / 莫煩Python&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://www.machinelearningmindset.com/wp-content/uploads/2019/12/1_LLVL8xUiUOBE8WHgzAuY-Q-e1577047292655-1280x720.png&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
+  PyTorch官方文檔，包含官方教學、社區、Github，都在這網站裡，基本上看完莫煩有個初步了解後可以開始嗑官方教程了。&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;https://pytorch.org/docs/stable/index.html&quot; class=&quot;btn btn--primary align-center&quot;&gt;PyTorch官方文檔&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://www.machinelearningmindset.com/wp-content/uploads/2019/12/1_LLVL8xUiUOBE8WHgzAuY-Q-e1577047292655-1280x720.png&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
+  PyTorch中文文檔，不過我個人偏向看官方英文文檔，有時看英文反而比較好理解，除非看不懂再來這尋暖。&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;https://pytorch-cn.readthedocs.io/zh/latest/&quot; class=&quot;btn btn--primary align-center&quot;&gt;PyTorch中文文檔&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://i0.wp.com/luckyhasae.com/wp-content/uploads/2019/10/Pytorch.png?fit=1280%2C720&amp;amp;ssl=1&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
+  從初階到實戰，各種大大小小的學習資源全部都在這啦，目前還沒開始研究，但嗑完這個的話…JoJo我不做人啦!!!&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;https://github.com/INTERMT/Awesome-PyTorch-Chinese&quot; class=&quot;btn btn--primary align-center&quot;&gt;史上最全的PyTorch學習資源匯總&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&quot;數據處理&quot;&gt;&lt;strong&gt;數據處理&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://morvanzhou.github.io/static/img/course_cover/np_pd.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
+  兩個科學運算當中最為重要的兩個模塊，應用在數據分析、機器學習、深度學習，運算速度快且消耗資源少。&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;https://morvanzhou.github.io/tutorials/data-manipulation/np-pd/&quot; class=&quot;btn btn--primary align-center&quot;&gt;Numpy &amp;amp; Pandas 教程系列 / 莫煩Python&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://morvanzhou.github.io/static/img/course_cover/scraping.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
+  對於需要大量數據的機器學習來說，爬蟲是很好的技術，可以省下許多收集資料的時間，讓作者莫煩帶你認識和實作爬蟲吧。&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;https://morvanzhou.github.io/tutorials/data-manipulation/scraping/&quot; class=&quot;btn btn--primary align-center&quot;&gt;網頁爬蟲教程系列 / 莫煩Python&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&quot;dlmlrl&quot;&gt;&lt;strong&gt;DL/ML/RL&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://morvanzhou.github.io/static/img/course_cover/ML_intro.png&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
+  這系列帶你認識一些常見的神經網絡和強化學習的相關知識，在動手實作前不妨看一看，可以對機器學習有更多認識喔。&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;https://morvanzhou.github.io/tutorials/machine-learning/ML-intro/&quot; class=&quot;btn btn--primary align-center&quot;&gt;有趣的機器學習系列 / 莫煩Python&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://morvanzhou.github.io/static/img/course_cover/rl.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
+  對強化學習有認識後，這系列教程會實作各種model，必須具備Numpy和Pandas的知識才比較好上手，教程使用Tensorflow來實作。&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/&quot; class=&quot;btn btn--primary align-center&quot;&gt;強化學習系列教程 / 莫煩Python&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://i0.hdslb.com/bfs/article/eb7483112aea2c6ca765ac9dd8229a888296a419.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
+  有寶可夢大師之稱的李教授，在教授機器學習時用寶可夢為例子故得稱XD，李教授的課程非常精實，課堂的實作讓你收穫滿滿，理論講解也非常詳細，非常推薦跟著課程實作!&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;http://speech.ee.ntu.edu.tw/~tlkagk/courses.html&quot; class=&quot;btn btn--primary align-center&quot;&gt;臺大李弘毅教授-開放課程&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&quot;python&quot;&gt;&lt;strong&gt;Python&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://morvanzhou.github.io/static/img/course_cover/python_basic.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
+  從安裝開始到各種變數、函數運算、model導入、文件讀取等Python的基礎教學，適合未接觸過或是想複習的朋友們。&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;https://morvanzhou.github.io/tutorials/python-basic/basic/&quot; class=&quot;btn btn--primary align-center&quot;&gt;基礎教程系列 / 莫煩Python&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://vceplus.com/wp-content/uploads/2015/09/W3School.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
+  包含基礎python、MySQL、MongoDB教學，提供範例、練習、測驗及線上考證，可以好好確認自己的實力。&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;https://www.w3schools.com/Python/default.asp&quot; class=&quot;btn btn--primary align-center&quot;&gt;w3schools Python 教程&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&quot;github&quot;&gt;&lt;strong&gt;GitHub&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://miro.medium.com/max/800/1*Jl2VDHVzFBDdXggRprziUg.png&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;240px&quot; width=&quot;240px&quot; /&gt; 
+  不想做專案寫程式還要自己分版本去存，就來用Git吧，當你熟練後絕對不吃虧! &lt;del&gt;然而我目前只會push pull&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;https://github.com/doggy8088/Learn-Git-in-30-days/blob/master/zh-tw/README.md&quot; class=&quot;btn btn--primary align-center&quot;&gt;30 天精通 Git 版本控管&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&quot;papers&quot;&gt;&lt;strong&gt;Papers&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://pbs.twimg.com/media/ELsiiN0WsAAkUYN.png&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;240px&quot; width=&quot;240px&quot; /&gt; 
+  論文代碼結合網站，搜尋關鍵字可以找到相關的論文及GitHub代碼，實力不足只能多看別人的代碼來練習了QAQ&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;https://paperswithcode.com/&quot; class=&quot;btn btn--primary align-center&quot;&gt;Papers With Code&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://images.wallpaperscraft.com/image/black_formula_board_79691_1920x1080.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;240px&quot; width=&quot;240px&quot; /&gt; 
+  來自知乎上作者所整理的強化學習論文簡述，標題表示會持續更新，簡述部分是中文，可以大概了解內容，就拿來當參考用囉。&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;https://zhuanlan.zhihu.com/p/104237363&quot; class=&quot;btn btn--primary align-center&quot;&gt;強化學習論文簡述&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&quot;tutorials&quot;&gt;&lt;strong&gt;Tutorials&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://geek-docs.com/static/logo.png&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;240px&quot; width=&quot;240px&quot; /&gt; 
+  提供最全面最通俗易懂的IT技術教程。&lt;/p&gt;
+&lt;p&gt; 
+&lt;a href=&quot;https://geek-docs.com/&quot; class=&quot;btn btn--primary align-center&quot;&gt;極客教程&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;hr /&gt;</content><author><name>Zero</name><email>ceyanglab@gmail.com</email></author><category term="Pytorch" /><category term="Numpy" /><category term="Pandas" /><category term="Python" /><category term="GitHub" /><category term="Papers" /><category term="Tutorials" /><summary type="html">不定時更新，目前收錄PyTorch、數據處理、Python、GitHub、論文、IT教程等相關資源</summary></entry><entry><title type="html">轉貼集中地</title><link href="https://zerolr.github.io/share/Share/" rel="alternate" type="text/html" title="轉貼集中地" /><published>2020-04-05T00:00:00+08:00</published><updated>2020-04-05T00:00:00+08:00</updated><id>https://zerolr.github.io/share/Share</id><content type="html" xml:base="https://zerolr.github.io/share/Share/">&lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;記錄一下優質的文章&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -65,7 +216,8 @@
 
 &lt;p&gt; &lt;/p&gt;
 
-&lt;hr /&gt;</content><author><name>Zero</name><email>ceyanglab@gmail.com</email></author><category term="Python" /><category term="Youtube" /><summary type="html">蒐集一些平常做東做西覺得不錯的文章</summary></entry><entry><title type="html">PyTorch安裝(使用Anaconda 3)</title><link href="https://zerolr.github.io/tools/PytorchInstall/" rel="alternate" type="text/html" title="PyTorch安裝(使用Anaconda 3)" /><published>2020-02-17T00:00:00+08:00</published><updated>2020-02-17T00:00:00+08:00</updated><id>https://zerolr.github.io/tools/PytorchInstall</id><content type="html" xml:base="https://zerolr.github.io/tools/PytorchInstall/">&lt;blockquote class=&quot;text-justify&quot;&gt;
+&lt;hr /&gt;</content><author><name>Zero</name><email>ceyanglab@gmail.com</email></author><category term="Python" /><category term="Youtube" /><summary type="html">蒐集一些平常做東做西覺得不錯的文章</summary></entry><entry><title type="html">PyTorch安裝(使用Anaconda 3)</title><link href="https://zerolr.github.io/tools/PytorchInstall/" rel="alternate" type="text/html" title="PyTorch安裝(使用Anaconda 3)" /><published>2020-02-17T00:00:00+08:00</published><updated>2020-02-17T00:00:00+08:00</updated><id>https://zerolr.github.io/tools/PytorchInstall</id><content type="html" xml:base="https://zerolr.github.io/tools/PytorchInstall/">&lt;p&gt;&lt;img src=&quot;/assets/images/PytorchInstall/pytorch.png&quot; alt=&quot;&quot; height=&quot;500px&quot; width=&quot;500px&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;blockquote class=&quot;text-justify&quot;&gt;
   &lt;p&gt;&lt;strong&gt;Pytorch很適合想入門深度學習的人使用，官方文檔整理的很清楚，社區雖然還不是很完善，但有很多相關的教程可以幫助學習，之後再開一篇學習資源彙整，這篇先把Pytorch的環境架好，我是使用Win10搭配Anaconda3進行安裝(如內容有誤或其他問題，歡迎留言或email)&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -175,131 +327,4 @@ conda install pytorch torchvision cpuonly -c pytorch
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;hr /&gt;</content><author><name>Zero</name><email>ceyanglab@gmail.com</email></author><category term="Pytorch" /><category term="Anaconda" /><category term="Sublime Text" /><category term="VsCode" /><summary type="html">在Windows10上安裝PyTorch</summary></entry><entry><title type="html">學習資源</title><link href="https://zerolr.github.io/resources/Resources/" rel="alternate" type="text/html" title="學習資源" /><published>2020-02-17T00:00:00+08:00</published><updated>2020-02-17T00:00:00+08:00</updated><id>https://zerolr.github.io/resources/Resources</id><content type="html" xml:base="https://zerolr.github.io/resources/Resources/">&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;這邊是我個人目前有在關注的學習資源，若有敘述錯誤或是連結失效請留言或email，有推薦的文章或教程也歡迎推坑，先感謝各位大大的指教了。&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;pytorch&quot;&gt;&lt;strong&gt;PyTorch&lt;/strong&gt;&lt;/h1&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://morvanzhou.github.io/static/img/course_cover/torch.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
-  這系列教學可以快速入門PyTorch，從安裝到建造神經網絡、CNN、RNN、DQN等等，各種淺顯易懂的說明，包含影片、文章、和所有代碼。&lt;/p&gt;
-&lt;p&gt; 
-&lt;a href=&quot;https://morvanzhou.github.io/tutorials/machine-learning/torch/&quot; class=&quot;btn btn--primary align-center&quot;&gt;Pytorch 教程系列 / 莫煩Python&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://www.machinelearningmindset.com/wp-content/uploads/2019/12/1_LLVL8xUiUOBE8WHgzAuY-Q-e1577047292655-1280x720.png&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
-  PyTorch官方文檔，包含官方教學、社區、Github，都在這網站裡，基本上看完莫煩有個初步了解後可以開始嗑官方教程了。&lt;/p&gt;
-&lt;p&gt; 
-&lt;a href=&quot;https://pytorch.org/docs/stable/index.html&quot; class=&quot;btn btn--primary align-center&quot;&gt;PyTorch官方文檔&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://www.machinelearningmindset.com/wp-content/uploads/2019/12/1_LLVL8xUiUOBE8WHgzAuY-Q-e1577047292655-1280x720.png&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
-  PyTorch中文文檔，不過我個人偏向看官方英文文檔，有時看英文反而比較好理解，除非看不懂再來這尋暖。&lt;/p&gt;
-&lt;p&gt; 
-&lt;a href=&quot;https://pytorch-cn.readthedocs.io/zh/latest/&quot; class=&quot;btn btn--primary align-center&quot;&gt;PyTorch中文文檔&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://i0.wp.com/luckyhasae.com/wp-content/uploads/2019/10/Pytorch.png?fit=1280%2C720&amp;amp;ssl=1&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
-  從初階到實戰，各種大大小小的學習資源全部都在這啦，目前還沒開始研究，但嗑完這個的話…JoJo我不做人啦!!!&lt;/p&gt;
-&lt;p&gt; 
-&lt;a href=&quot;https://github.com/INTERMT/Awesome-PyTorch-Chinese&quot; class=&quot;btn btn--primary align-center&quot;&gt;史上最全的PyTorch學習資源匯總&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&quot;數據處理&quot;&gt;&lt;strong&gt;數據處理&lt;/strong&gt;&lt;/h1&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://morvanzhou.github.io/static/img/course_cover/np_pd.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
-  兩個科學運算當中最為重要的兩個模塊，應用在數據分析、機器學習、深度學習，運算速度快且消耗資源少。&lt;/p&gt;
-&lt;p&gt; 
-&lt;a href=&quot;https://morvanzhou.github.io/tutorials/data-manipulation/np-pd/&quot; class=&quot;btn btn--primary align-center&quot;&gt;Numpy &amp;amp; Pandas 教程系列 / 莫煩Python&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://morvanzhou.github.io/static/img/course_cover/scraping.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
-  對於需要大量數據的機器學習來說，爬蟲是很好的技術，可以省下許多收集資料的時間，讓作者莫煩帶你認識和實作爬蟲吧。&lt;/p&gt;
-&lt;p&gt; 
-&lt;a href=&quot;https://morvanzhou.github.io/tutorials/data-manipulation/scraping/&quot; class=&quot;btn btn--primary align-center&quot;&gt;網頁爬蟲教程系列 / 莫煩Python&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&quot;dlmlrl&quot;&gt;&lt;strong&gt;DL/ML/RL&lt;/strong&gt;&lt;/h1&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://morvanzhou.github.io/static/img/course_cover/ML_intro.png&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
-  這系列帶你認識一些常見的神經網絡和強化學習的相關知識，在動手實作前不妨看一看，可以對機器學習有更多認識喔。&lt;/p&gt;
-&lt;p&gt; 
-&lt;a href=&quot;https://morvanzhou.github.io/tutorials/machine-learning/ML-intro/&quot; class=&quot;btn btn--primary align-center&quot;&gt;有趣的機器學習系列 / 莫煩Python&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://morvanzhou.github.io/static/img/course_cover/rl.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
-  對強化學習有認識後，這系列教程會實作各種model，必須具備Numpy和Pandas的知識才比較好上手，教程使用Tensorflow來實作。&lt;/p&gt;
-&lt;p&gt; 
-&lt;a href=&quot;https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/&quot; class=&quot;btn btn--primary align-center&quot;&gt;強化學習系列教程 / 莫煩Python&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&quot;python&quot;&gt;&lt;strong&gt;Python&lt;/strong&gt;&lt;/h1&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://morvanzhou.github.io/static/img/course_cover/python_basic.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
-  從安裝開始到各種變數、函數運算、model導入、文件讀取等Python的基礎教學，適合未接觸過或是想複習的朋友們。&lt;/p&gt;
-&lt;p&gt; 
-&lt;a href=&quot;https://morvanzhou.github.io/tutorials/python-basic/basic/&quot; class=&quot;btn btn--primary align-center&quot;&gt;基礎教程系列 / 莫煩Python&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://vceplus.com/wp-content/uploads/2015/09/W3School.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;250px&quot; width=&quot;250px&quot; /&gt;
-  包含基礎python、MySQL、MongoDB教學，提供範例、練習、測驗及線上考證，可以好好確認自己的實力。&lt;/p&gt;
-&lt;p&gt; 
-&lt;a href=&quot;https://www.w3schools.com/Python/default.asp&quot; class=&quot;btn btn--primary align-center&quot;&gt;w3schools Python 教程&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&quot;github&quot;&gt;&lt;strong&gt;GitHub&lt;/strong&gt;&lt;/h1&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://miro.medium.com/max/800/1*Jl2VDHVzFBDdXggRprziUg.png&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;240px&quot; width=&quot;240px&quot; /&gt; 
-  不想做專案寫程式還要自己分版本去存，就來用Git吧，當你熟練後絕對不吃虧! &lt;del&gt;然而我目前只會push pull&lt;/del&gt;&lt;/p&gt;
-&lt;p&gt; 
-&lt;a href=&quot;https://github.com/doggy8088/Learn-Git-in-30-days/blob/master/zh-tw/README.md&quot; class=&quot;btn btn--primary align-center&quot;&gt;30 天精通 Git 版本控管&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&quot;papers&quot;&gt;&lt;strong&gt;Papers&lt;/strong&gt;&lt;/h1&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://pbs.twimg.com/media/ELsiiN0WsAAkUYN.png&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;240px&quot; width=&quot;240px&quot; /&gt; 
-  論文代碼結合網站，搜尋關鍵字可以找到相關的論文及GitHub代碼，實力不足只能多看別人的代碼來練習了QAQ&lt;/p&gt;
-&lt;p&gt; 
-&lt;a href=&quot;https://paperswithcode.com/&quot; class=&quot;btn btn--primary align-center&quot;&gt;Papers With Code&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;p class=&quot;text-justify&quot;&gt;&lt;img src=&quot;https://images.wallpaperscraft.com/image/black_formula_board_79691_1920x1080.jpg&quot; alt=&quot;full&quot; class=&quot;align-left&quot; height=&quot;240px&quot; width=&quot;240px&quot; /&gt; 
-  來自知乎上作者所整理的強化學習論文簡述，標題表示會持續更新，簡述部分是中文，可以大概了解內容，就拿來當參考用囉。&lt;/p&gt;
-&lt;p&gt; 
-&lt;a href=&quot;https://zhuanlan.zhihu.com/p/104237363&quot; class=&quot;btn btn--primary align-center&quot;&gt;強化學習論文簡述&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt; &lt;/p&gt;</content><author><name>Zero</name><email>ceyanglab@gmail.com</email></author><category term="Pytorch" /><category term="Numpy" /><category term="Pandas" /><category term="Python" /><category term="GitHub" /><category term="Papers" /><summary type="html">不定時更新，目前收錄PyTorch、數據處理、Python、GitHub、論文等相關資源</summary></entry></feed>
+&lt;hr /&gt;</content><author><name>Zero</name><email>ceyanglab@gmail.com</email></author><category term="Pytorch" /><category term="Anaconda" /><category term="Sublime Text" /><category term="VsCode" /><summary type="html">在Windows10上安裝PyTorch</summary></entry></feed>
