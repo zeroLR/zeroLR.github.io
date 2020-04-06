@@ -352,9 +352,32 @@
 <h2 id="下載所有yt歌曲"><strong>下載所有YT歌曲</strong></h2>
 
 <ul>
-  <li>這篇文章有教學如何用python下載YT歌曲<a href="https://clay-atlas.com/blog/2019/11/08/python-chinese-packages-pytube-moviepy-download-youtube-convert/">pytube 下載 Youtube 的影片</a>，加上主辦提供的代碼可以讀取所有YT連結，一行代碼就可以下載囉，建議output到對應資料夾裡，看起來比較舒服。
-<img src="/assets/images/VocalToMidi/YT1.png" alt="" /></li>
+  <li>
+    <p>這篇文章有教學如何用python下載YT歌曲<a href="https://clay-atlas.com/blog/2019/11/08/python-chinese-packages-pytube-moviepy-download-youtube-convert/">pytube 下載 Youtube 的影片</a>，加上主辦提供的代碼可以讀取所有YT連結，一行代碼就可以下載囉，建議output到對應資料夾裡，看起來比較舒服。
+<img src="/assets/images/VocalToMidi/YT1.png" alt="" /></p>
+  </li>
+  <li>
+    <p>由於載下來的檔案是影片檔(.mp4)，還需要做轉檔的處理，首先安裝moviepy套件，再來下面以轉成(.mp3)為例，轉出到對應的路徑中</p>
+  </li>
 </ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">moviepy.editor</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+
+    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s">"./singingTranscription"</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>                                         <span class="c1"># 取得資料夾中所有檔案
+</span>            <span class="n">f_n</span><span class="p">,</span> <span class="n">f_ex</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>                     <span class="c1"># f_n儲存檔案名稱 ,f_ex儲存檔案的副檔名
+</span>            <span class="n">fullpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">f_ex</span> <span class="o">==</span> <span class="s">'.mp4'</span><span class="p">:</span>                                  <span class="c1"># 將.mp4轉成.mp3
+</span>                <span class="n">video</span> <span class="o">=</span> <span class="n">VideoFileClip</span><span class="p">(</span><span class="n">fullpath</span><span class="p">)</span>
+                <span class="n">output_path</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fullpath</span><span class="p">)</span>
+                <span class="n">video</span><span class="o">.</span><span class="n">audio</span><span class="o">.</span><span class="n">write_audiofile</span><span class="p">(</span><span class="n">output_path</span><span class="o">+</span><span class="s">'.mp3'</span><span class="p">)</span>
+
+</code></pre></div></div>
 
 <hr />
 
