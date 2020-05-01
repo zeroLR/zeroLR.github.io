@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
   Minimal Mistakes Jekyll Theme 4.18.1 by Michael Rose
   Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
@@ -7,362 +7,356 @@
 -->
 <html lang="zh" class="no-js">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
 
-<!-- begin _includes/seo.html --><title>歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲 | ZeroLearn</title>
-<meta name="description" content="從主辦方提供的資料集中按順序下載YT影片並轉成音樂檔 ">
+    <!-- begin _includes/seo.html -->
+    <title>歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲 | ZeroLearn</title>
+    <meta
+      name="description"
+      content="從主辦方提供的資料集中按順序下載YT影片並轉成音樂檔 "
+    />
 
+    <meta name="author" content="Zero" />
 
-  <meta name="author" content="Zero">
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:site_name" content="ZeroLearn" />
+    <meta
+      property="og:title"
+      content="歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲"
+    />
+    <meta
+      property="og:url"
+      content="https://zerolr.github.io/contest/VocalToMidi(1)/"
+    />
 
+    <meta
+      property="og:description"
+      content="從主辦方提供的資料集中按順序下載YT影片並轉成音樂檔 "
+    />
 
-<meta property="og:type" content="article">
-<meta property="og:locale" content="zh_TW">
-<meta property="og:site_name" content="ZeroLearn">
-<meta property="og:title" content="歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲">
-<meta property="og:url" content="https://zerolr.github.io/contest/VocalToMidi(1)/">
+    <meta
+      property="og:image"
+      content="https://aidea-web.tw/images/5e60592bb1489dd7e534d665/bfcaa1b4-5b69-4f17-a5c4-f58ef7da68cb-big.png"
+    />
 
+    <meta
+      property="article:published_time"
+      content="2020-04-06T00:00:00+08:00"
+    />
 
-  <meta property="og:description" content="從主辦方提供的資料集中按順序下載YT影片並轉成音樂檔 ">
+    <link
+      rel="canonical"
+      href="https://zerolr.github.io/contest/VocalToMidi(1)/"
+    />
 
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
 
+        "@type": "Person",
+        "name": "Zero",
+        "url": "https://zerolr.github.io/"
+      }
+    </script>
 
-  <meta property="og:image" content="https://aidea-web.tw/images/5e60592bb1489dd7e534d665/bfcaa1b4-5b69-4f17-a5c4-f58ef7da68cb-big.png">
+    <!-- end _includes/seo.html -->
 
+    <link
+      href="/feed.xml"
+      type="application/atom+xml"
+      rel="alternate"
+      title="ZeroLearn Feed"
+    />
 
+    <!-- https://t.co/dKP3o1e -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <script>
+      document.documentElement.className =
+        document.documentElement.className.replace(/\bno-js\b/g, "") + " js ";
+    </script>
 
+    <!-- For all browsers -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
 
-  <meta property="article:published_time" content="2020-04-06T00:00:00+08:00">
-
-
-
-
-
-  
-
-  
-
-
-<link rel="canonical" href="https://zerolr.github.io/contest/VocalToMidi(1)/">
-
-
-
-
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    
-      "@type": "Person",
-      "name": "Zero",
-      "url": "https://zerolr.github.io/"
-    
-  }
-</script>
-
-
-
-
-
-
-<!-- end _includes/seo.html -->
-
-
-<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="ZeroLearn Feed">
-
-<!-- https://t.co/dKP3o1e -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<script>
-  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
-</script>
-
-<!-- For all browsers -->
-<link rel="stylesheet" href="/assets/css/main.css">
-
-<!--[if IE]>
-  <style>
-    /* old IE unsupported flexbox fixes */
-    .greedy-nav .site-title {
-      padding-right: 3em;
-    }
-    .greedy-nav button {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-    }
-  </style>
-<![endif]-->
-
-
+    <!--[if IE]>
+      <style>
+        /* old IE unsupported flexbox fixes */
+        .greedy-nav .site-title {
+          padding-right: 3em;
+        }
+        .greedy-nav button {
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 100%;
+        }
+      </style>
+    <![endif]-->
 
     <!-- start custom head snippets -->
 
-<!-- insert favicons. use https://realfavicongenerator.net/ -->
+    <!-- insert favicons. use https://realfavicongenerator.net/ -->
 
-<!-- end custom head snippets -->
-
+    <!-- end custom head snippets -->
   </head>
 
   <body class="layout--single">
     <nav class="skip-links">
-  <h2 class="screen-reader-text">Skip links</h2>
-  <ul>
-    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
-    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
-    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
-  </ul>
-</nav>
+      <h2 class="screen-reader-text">Skip links</h2>
+      <ul>
+        <li>
+          <a href="#site-nav" class="screen-reader-shortcut"
+            >Skip to primary navigation</a
+          >
+        </li>
+        <li>
+          <a href="#main" class="screen-reader-shortcut">Skip to content</a>
+        </li>
+        <li>
+          <a href="#footer" class="screen-reader-shortcut">Skip to footer</a>
+        </li>
+      </ul>
+    </nav>
 
     <!--[if lt IE 9]>
-<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
-<![endif]-->
+      <div class="notice--danger align-center" style="margin: 0;">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience.
+      </div>
+    <![endif]-->
 
-    
+    <div class="masthead">
+      <div class="masthead__inner-wrap">
+        <div class="masthead__menu">
+          <nav id="site-nav" class="greedy-nav">
+            <a class="site-logo" href="/"
+              ><img src="/assets/images/z_icon2.png" alt=""
+            /></a>
 
-<div class="masthead">
-  <div class="masthead__inner-wrap">
-    <div class="masthead__menu">
-      <nav id="site-nav" class="greedy-nav">
-        
-          <a class="site-logo" href="/"><img src="/assets/images/z_icon2.png" alt=""></a>
-        
-        <a class="site-title" href="/">
-          ZeroLearn
-          
-        </a>
-        <ul class="visible-links"><li class="masthead__menu-item">
-              <a href="/categories/" >文章分類</a>
-            </li><li class="masthead__menu-item">
-              <a href="/portfolio/" >作品</a>
-            </li><li class="masthead__menu-item">
-              <a href="/about/" >關於我</a>
-            </li></ul>
-        
-        <button class="search__toggle" type="button">
-          <span class="visually-hidden">Toggle search</span>
-          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
-            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
-          </svg>
-        </button>
-        
-        <button class="greedy-nav__toggle hidden" type="button">
-          <span class="visually-hidden">切換選單</span>
-          <div class="navicon"></div>
-        </button>
-        <ul class="hidden-links hidden"></ul>
-      </nav>
+            <a class="site-title" href="/">
+              ZeroLearn
+            </a>
+            <ul class="visible-links">
+              <li class="masthead__menu-item">
+                <a href="/categories/">文章分類</a>
+              </li>
+              <li class="masthead__menu-item">
+                <a href="/portfolio/">作品</a>
+              </li>
+              <li class="masthead__menu-item">
+                <a href="/about/">關於我</a>
+              </li>
+            </ul>
+
+            <button class="search__toggle" type="button">
+              <span class="visually-hidden">Toggle search</span>
+              <svg
+                class="icon"
+                width="16"
+                height="16"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 15.99 16"
+              >
+                <path
+                  d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z"
+                  transform="translate(-.01)"
+                ></path>
+              </svg>
+            </button>
+
+            <button class="greedy-nav__toggle hidden" type="button">
+              <span class="visually-hidden">切換選單</span>
+              <div class="navicon"></div>
+            </button>
+            <ul class="hidden-links hidden"></ul>
+          </nav>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
 
     <div class="initial-content">
-      
+      <div id="main" role="main">
+        <div class="sidebar sticky">
+          <div itemscope itemtype="https://schema.org/Person">
+            <div class="author__avatar">
+              <img
+                src="/assets/images/zeroImg.png"
+                alt="Zero"
+                itemprop="image"
+              />
+            </div>
 
+            <div class="author__content">
+              <h3 class="author__name" itemprop="name">Zero</h3>
 
+              <div class="author__bio" itemprop="description">
+                <p>☠Pytorch摸索中☠</p>
+              </div>
+            </div>
 
-<div id="main" role="main">
-  
-  <div class="sidebar sticky">
-  
+            <div class="author__urls-wrapper">
+              <button class="btn btn--inverse">追蹤</button>
+              <ul class="author__urls social-icons">
+                <li
+                  itemprop="homeLocation"
+                  itemscope
+                  itemtype="https://schema.org/Place"
+                >
+                  <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i>
+                  <span itemprop="name">Kaohsiung,Taiwan</span>
+                </li>
 
+                <li>
+                  <a
+                    href="https://github.com/zeroLR"
+                    rel="nofollow noopener noreferrer"
+                    ><i class="fab fa-fw fa-github" aria-hidden="true"></i>
+                    GitHub</a
+                  >
+                </li>
 
-<div itemscope itemtype="https://schema.org/Person">
+                <li>
+                  <a href="mailto:ceyanglab@gmail.com">
+                    <meta itemprop="email" content="ceyanglab@gmail.com" />
+                    <i
+                      class="fas fa-fw fa-envelope-square"
+                      aria-hidden="true"
+                    ></i>
+                    電子信箱
+                  </a>
+                </li>
 
-  
-    <div class="author__avatar">
-      
-
-      
-        <img src="/assets/images/zeroImg.png" alt="Zero" itemprop="image">
-      
-    </div>
-  
-
-  <div class="author__content">
-    
-      <h3 class="author__name" itemprop="name">Zero</h3>
-    
-    
-      <div class="author__bio" itemprop="description">
-        <p>☠Pytorch摸索中☠</p>
-
-      </div>
-    
-  </div>
-
-  <div class="author__urls-wrapper">
-    <button class="btn btn--inverse">追蹤</button>
-    <ul class="author__urls social-icons">
-      
-        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
-          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Kaohsiung,Taiwan</span>
-        </li>
-      
-
-      
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-            <li><a href="https://github.com/zeroLR" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
-          
-        
-          
-        
-      
-
-      
-
-      
-        <li>
-          <a href="mailto:ceyanglab@gmail.com">
-            <meta itemprop="email" content="ceyanglab@gmail.com" />
-            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> 電子信箱
-          </a>
-        </li>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      <!--
+                <!--
   <li>
     <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
       <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
     </a>
   </li>
 -->
-    </ul>
-  </div>
-</div>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-  
-  </div>
+        <article
+          class="page"
+          itemscope
+          itemtype="https://schema.org/CreativeWork"
+        >
+          <meta
+            itemprop="headline"
+            content="歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲"
+          />
+          <meta
+            itemprop="description"
+            content="從主辦方提供的資料集中按順序下載YT影片並轉成音樂檔"
+          />
+          <meta itemprop="datePublished" content="2020-04-06T00:00:00+08:00" />
 
+          <div class="page__inner-wrap">
+            <header>
+              <h1 id="page-title" class="page__title" itemprop="headline">
+                歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲
+              </h1>
 
-  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲">
-    <meta itemprop="description" content="從主辦方提供的資料集中按順序下載YT影片並轉成音樂檔">
-    <meta itemprop="datePublished" content="2020-04-06T00:00:00+08:00">
-    
+              <p class="page__meta">
+                <i class="far fa-clock" aria-hidden="true"></i>
 
-    <div class="page__inner-wrap">
-      
-        <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">歌聲轉譜資料處理(1) - 排序資料&amp;下載YT歌曲
-</h1>
-          
-            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+                少於 1 分鐘閱讀
+              </p>
+            </header>
 
+            <section class="page__content" itemprop="text">
+              <aside class="sidebar__right">
+                <nav class="toc">
+                  <header>
+                    <h4 class="nav__title">
+                      <i class="fas fa-th-list"></i> 目錄
+                    </h4>
+                  </header>
+                  <ul class="toc__menu">
+                    <li>
+                      <a href="#將oslistdir所讀取的資料夾名稱進行排序"
+                        >將os.listdir所讀取的資料夾名稱進行排序</a
+                      >
+                    </li>
+                    <li><a href="#下載所有yt歌曲">下載所有YT歌曲</a></li>
+                  </ul>
+                </nav>
+              </aside>
 
+              <p>
+                <img
+                  src="https://aidea-web.tw/images/5e60592bb1489dd7e534d665/bfcaa1b4-5b69-4f17-a5c4-f58ef7da68cb-big.png"
+                  alt="vocal"
+                  height="500px"
+                  width="500px"
+                  class="align-center"
+                />
+              </p>
+              <blockquote>
+                <p>
+                  <strong
+                    >參加了AI CUP
+                    2020的歌聲轉譜競賽，目前得知兩種訓練方法，一種透過主辦標記好的音符資料(Vocal.json)去訓練出人聲音高，另一種是將YT歌曲自行抽取出人聲和進行音高追蹤去取得資料，後者目前能力還做不太到，但可以先試試，所以先將測試集的歌曲按順序下載下來，之後再看如何處理囉</strong
+                  >
+                </p>
+              </blockquote>
 
+              <p class="notice--success">
+                <strong
+                  >環境 : Anaconda 3 、 VsCode 、 Pytorch 1.4 (Conda,Python,CUDA
+                  10.1)</strong
+                >
+              </p>
 
-  少於 1 分鐘閱讀
+              <h2 id="將oslistdir所讀取的資料夾名稱進行排序">
+                <strong>將os.listdir所讀取的資料夾名稱進行排序</strong>
+              </h2>
 
-</p>
-          
-        </header>
-      
+              <ul>
+                <li>
+                  python中的os.listdir讀取進來的檔名排序是亂的，需要使用sort來進行排序，但由於資料夾名稱不是用int表示，所以排出來還是亂的。
+                </li>
+              </ul>
 
-      <section class="page__content" itemprop="text">
-        
-          <aside class="sidebar__right ">
-            <nav class="toc">
-              <header><h4 class="nav__title"><i class="fas fa-th-list"></i> 目錄</h4></header>
-              <ul class="toc__menu">
-  <li><a href="#將oslistdir所讀取的資料夾名稱進行排序">將os.listdir所讀取的資料夾名稱進行排序</a></li>
-  <li><a href="#下載所有yt歌曲">下載所有YT歌曲</a></li>
-</ul>
+              <p><img src="/assets/images/VocalToMidi/sort1.PNG" alt="" /></p>
 
-            </nav>
-          </aside>
-        
-        <p><img src="https://aidea-web.tw/images/5e60592bb1489dd7e534d665/bfcaa1b4-5b69-4f17-a5c4-f58ef7da68cb-big.png" alt="vocal" height="500px" width="500px" class="align-center" /></p>
-<blockquote>
-  <p><strong>參加了AI CUP 2020的歌聲轉譜競賽，目前得知兩種訓練方法，一種透過主辦標記好的音符資料(Vocal.json)去訓練出人聲音高，另一種是將YT歌曲自行抽取出人聲和進行音高追蹤去取得資料，後者目前能力還做不太到，但可以先試試，所以先將測試集的歌曲按順序下載下來，之後再看如何處理囉</strong></p>
-</blockquote>
+              <ul>
+                <li>
+                  為了節省時間從網上得知natsort這個套件，用conda或pip安裝都可，import後就可以直接使用了，結果如下圖。
+                </li>
+              </ul>
 
-<p class="notice--success"><strong>環境 : Anaconda 3 、 VsCode 、 Pytorch 1.4 (Conda,Python,CUDA 10.1)</strong></p>
+              <p><img src="/assets/images/VocalToMidi/sort3.PNG" alt="" /></p>
 
-<h2 id="將oslistdir所讀取的資料夾名稱進行排序"><strong>將os.listdir所讀取的資料夾名稱進行排序</strong></h2>
+              <p><img src="/assets/images/VocalToMidi/sort2.PNG" alt="" /></p>
 
-<ul>
-  <li>python中的os.listdir讀取進來的檔名排序是亂的，需要使用sort來進行排序，但由於資料夾名稱不是用int表示，所以排出來還是亂的。</li>
-</ul>
+              <h2 id="下載所有yt歌曲"><strong>下載所有YT歌曲</strong></h2>
 
-<p><img src="/assets/images/VocalToMidi/sort1.PNG" alt="" /></p>
+              <ul>
+                <li>
+                  這篇文章有教學如何用python下載YT歌曲<a
+                    href="https://clay-atlas.com/blog/2019/11/08/python-chinese-packages-pytube-moviepy-download-youtube-convert/"
+                    >pytube 下載 Youtube 的影片</a
+                  >，加上主辦提供的代碼可以讀取所有YT連結，一行代碼就可以下載囉，建議output到對應資料夾裡，看起來比較舒服。
+                </li>
+              </ul>
 
-<ul>
-  <li>為了節省時間從網上得知natsort這個套件，用conda或pip安裝都可，import後就可以直接使用了，結果如下圖。</li>
-</ul>
+              <p><img src="/assets/images/VocalToMidi/YT1.PNG" alt="" /></p>
 
-<p><img src="/assets/images/VocalToMidi/sort3.PNG" alt="" /></p>
+              <ul>
+                <li>
+                  由於載下來的檔案是影片檔(.mp4)，還需要做轉檔的處理，首先安裝moviepy套件，再來下面以轉成(.mp3)為例，轉出到對應的路徑中
+                </li>
+              </ul>
 
-<p><img src="/assets/images/VocalToMidi/sort2.PNG" alt="" /></p>
-
-<h2 id="下載所有yt歌曲"><strong>下載所有YT歌曲</strong></h2>
-
-<ul>
-  <li>這篇文章有教學如何用python下載YT歌曲<a href="https://clay-atlas.com/blog/2019/11/08/python-chinese-packages-pytube-moviepy-download-youtube-convert/">pytube 下載 Youtube 的影片</a>，加上主辦提供的代碼可以讀取所有YT連結，一行代碼就可以下載囉，建議output到對應資料夾裡，看起來比較舒服。</li>
-</ul>
-
-<p><img src="/assets/images/VocalToMidi/YT1.PNG" alt="" /></p>
-
-<ul>
-  <li>由於載下來的檔案是影片檔(.mp4)，還需要做轉檔的處理，首先安裝moviepy套件，再來下面以轉成(.mp3)為例，轉出到對應的路徑中</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+              <div class="language-python highlighter-rouge">
+                <div class="highlight">
+                  <pre class="highlight"><code>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">moviepy.editor</span> <span class="kn">import</span> <span class="o">*</span>
 
@@ -378,316 +372,289 @@
                 <span class="n">output_path</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fullpath</span><span class="p">)</span>
                 <span class="n">video</span><span class="o">.</span><span class="n">audio</span><span class="o">.</span><span class="n">write_audiofile</span><span class="p">(</span><span class="n">output_path</span><span class="o">+</span><span class="s">'.mp3'</span><span class="p">)</span>
 
-</code></pre></div></div>
+</code></pre>
+                </div>
+              </div>
 
-<hr />
+              <hr />
 
-        
-        <a href="#page-title" class="back-to-top">Back to Top &uarr;</a>
-      </section>
+              <a href="#page-title" class="back-to-top">Back to Top &uarr;</a>
+            </section>
 
-      <footer class="page__meta">
-        
-        
-  
+            <footer class="page__meta">
+              <p class="page__taxonomy">
+                <strong
+                  ><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 標籤:
+                </strong>
+                <span itemprop="keywords">
+                  <a href="/tags/#python" class="page__taxonomy-item" rel="tag"
+                    >Python</a
+                  ><span class="sep">, </span>
 
+                  <a href="/tags/#youtube" class="page__taxonomy-item" rel="tag"
+                    >Youtube</a
+                  >
+                </span>
+              </p>
 
-  
-  
-  
+              <p class="page__taxonomy">
+                <strong
+                  ><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i>
+                  分類:
+                </strong>
+                <span itemprop="keywords">
+                  <a
+                    href="/categories/#contest"
+                    class="page__taxonomy-item"
+                    rel="tag"
+                    >Contest</a
+                  >
+                </span>
+              </p>
 
-  <p class="page__taxonomy">
-    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 標籤: </strong>
-    <span itemprop="keywords">
-    
-      
-      
-      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a><span class="sep">, </span>
-    
-      
-      
-      <a href="/tags/#youtube" class="page__taxonomy-item" rel="tag">Youtube</a>
-    
-    </span>
-  </p>
+              <p class="page__date">
+                <strong
+                  ><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i>
+                  更新時間:</strong
+                >
+                <time datetime="2020-04-06T00:00:00+08:00">April 6, 2020</time>
+              </p>
+            </footer>
 
+            <section class="page__share">
+              <h4 class="page__share-title">分享到</h4>
 
+              <a
+                href="https://twitter.com/intent/tweet?text=%E6%AD%8C%E8%81%B2%E8%BD%89%E8%AD%9C%E8%B3%87%E6%96%99%E8%99%95%E7%90%86%281%29+-+%E6%8E%92%E5%BA%8F%E8%B3%87%E6%96%99%26%E4%B8%8B%E8%BC%89YT%E6%AD%8C%E6%9B%B2%20https%3A%2F%2Fzerolr.github.io%2Fcontest%2FVocalToMidi%281%29%2F"
+                class="btn btn--twitter"
+                onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+                title="分享到 Twitter"
+                ><i class="fab fa-fw fa-twitter" aria-hidden="true"></i
+                ><span> Twitter</span></a
+              >
 
+              <a
+                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fzerolr.github.io%2Fcontest%2FVocalToMidi%281%29%2F"
+                class="btn btn--facebook"
+                onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+                title="分享到 Facebook"
+                ><i class="fab fa-fw fa-facebook" aria-hidden="true"></i
+                ><span> Facebook</span></a
+              >
 
-  
+              <a
+                href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fzerolr.github.io%2Fcontest%2FVocalToMidi%281%29%2F"
+                class="btn btn--linkedin"
+                onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+                title="分享到 LinkedIn"
+                ><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i
+                ><span> LinkedIn</span></a
+              >
+            </section>
 
+            <nav class="pagination">
+              <a
+                href="/resources/Resources/"
+                class="pagination--pager"
+                title="學習資源
+"
+                >較舊</a
+              >
 
-  
-  
-  
+              <a href="#" class="pagination--pager disabled">較新</a>
+            </nav>
+          </div>
 
-  <p class="page__taxonomy">
-    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分類: </strong>
-    <span itemprop="keywords">
-    
-      
-      
-      <a href="/categories/#contest" class="page__taxonomy-item" rel="tag">Contest</a>
-    
-    </span>
-  </p>
+          <div class="page__comments">
+            <h4 class="page__comments-title">留言</h4>
+            <section id="disqus_thread"></section>
+          </div>
 
+          <script type="text/javascript" src="/assets/js/new-tab.js"></script>
+          <!--以分頁開啟超連結-->
+        </article>
 
-        
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新時間:</strong> <time datetime="2020-04-06T00:00:00+08:00">April 6, 2020</time></p>
-        
-      </footer>
+        <div class="page__related">
+          <h4 class="page__related-title">猜您有與趣</h4>
+          <div class="grid__wrapper">
+            <div class="grid__item">
+              <article
+                class="archive__item"
+                itemscope
+                itemtype="https://schema.org/CreativeWork"
+              >
+                <div class="archive__item-teaser">
+                  <img
+                    src="https://cdn.pixabay.com/photo/2019/06/17/19/48/source-4280758_960_720.jpg"
+                    alt=""
+                  />
+                </div>
 
-      <section class="page__share">
-  
-    <h4 class="page__share-title">分享到</h4>
-  
+                <h2 class="archive__item-title" itemprop="headline">
+                  <a href="/resources/Resources/" rel="permalink">學習資源 </a>
+                </h2>
 
-  <a href="https://twitter.com/intent/tweet?text=%E6%AD%8C%E8%81%B2%E8%BD%89%E8%AD%9C%E8%B3%87%E6%96%99%E8%99%95%E7%90%86%281%29+-+%E6%8E%92%E5%BA%8F%E8%B3%87%E6%96%99%26%E4%B8%8B%E8%BC%89YT%E6%AD%8C%E6%9B%B2%20https%3A%2F%2Fzerolr.github.io%2Fcontest%2FVocalToMidi%281%29%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+                <p class="page__meta">
+                  <i class="far fa-clock" aria-hidden="true"></i>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fzerolr.github.io%2Fcontest%2FVocalToMidi%281%29%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+                  少於 1 分鐘閱讀
+                </p>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fzerolr.github.io%2Fcontest%2FVocalToMidi%281%29%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享到 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
-</section>
+                <p class="archive__item-excerpt" itemprop="description">
+                  不定時更新，目前收錄PyTorch、數據處理、Python、GitHub、論文、IT教程等相關資源
+                </p>
+              </article>
+            </div>
 
+            <div class="grid__item">
+              <article
+                class="archive__item"
+                itemscope
+                itemtype="https://schema.org/CreativeWork"
+              >
+                <div class="archive__item-teaser">
+                  <img
+                    src="https://images.unsplash.com/photo-1482066490729-6f26115b60dc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1302&q=80"
+                    alt=""
+                  />
+                </div>
 
-      
-  <nav class="pagination">
-    
-      <a href="/resources/Resources/" class="pagination--pager" title="學習資源
-">較舊</a>
-    
-    
-      <a href="#" class="pagination--pager disabled">較新</a>
-    
-  </nav>
+                <h2 class="archive__item-title" itemprop="headline">
+                  <a href="/share/Share/" rel="permalink">轉貼集中地 </a>
+                </h2>
 
-    </div>
+                <p class="page__meta">
+                  <i class="far fa-clock" aria-hidden="true"></i>
 
-    
-      <div class="page__comments">
-  
-  
-      <h4 class="page__comments-title">留言</h4>
-      <section id="disqus_thread"></section>
-    
-</div>
+                  少於 1 分鐘閱讀
+                </p>
 
-    
-    <script type="text/javascript" src="/assets/js/new-tab.js"></script> <!--以分頁開啟超連結-->
-  </article>
+                <p class="archive__item-excerpt" itemprop="description">
+                  蒐集一些平常做東做西覺得不錯的文章
+                </p>
+              </article>
+            </div>
 
-  
-  
-    <div class="page__related">
-      <h4 class="page__related-title">猜您有與趣</h4>
-      <div class="grid__wrapper">
-        
-          
+            <div class="grid__item">
+              <article
+                class="archive__item"
+                itemscope
+                itemtype="https://schema.org/CreativeWork"
+              >
+                <div class="archive__item-teaser">
+                  <img src="/assets/images/PytorchInstall/pytorch.png" alt="" />
+                </div>
 
+                <h2 class="archive__item-title" itemprop="headline">
+                  <a href="/tools/PytorchInstall/" rel="permalink"
+                    >PyTorch安裝(使用Anaconda 3)
+                  </a>
+                </h2>
 
+                <p class="page__meta">
+                  <i class="far fa-clock" aria-hidden="true"></i>
 
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src=
-          
-            "https://cdn.pixabay.com/photo/2019/06/17/19/48/source-4280758_960_720.jpg"
-          
-          alt="">
-      </div>
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/resources/Resources/" rel="permalink">學習資源
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+                  少於 1 分鐘閱讀
+                </p>
 
-
-
-
-  少於 1 分鐘閱讀
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">不定時更新，目前收錄PyTorch、數據處理、Python、GitHub、論文、IT教程等相關資源
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src=
-          
-            "https://images.unsplash.com/photo-1482066490729-6f26115b60dc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1302&q=80"
-          
-          alt="">
-      </div>
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/share/Share/" rel="permalink">轉貼集中地
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  少於 1 分鐘閱讀
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">蒐集一些平常做東做西覺得不錯的文章
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src=
-          
-            "/assets/images/PytorchInstall/pytorch.png"
-          
-          alt="">
-      </div>
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/tools/PytorchInstall/" rel="permalink">PyTorch安裝(使用Anaconda 3)
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  少於 1 分鐘閱讀
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">在Windows10上安裝PyTorch
-</p>
-  </article>
-</div>
-
-        
+                <p class="archive__item-excerpt" itemprop="description">
+                  在Windows10上安裝PyTorch
+                </p>
+              </article>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  
-  
-</div>
 
-    </div>
-
-    
-      <div class="search-content">
-        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
-    <label class="sr-only" for="search">
-      Enter your search term...
-    </label>
-    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
-  </form>
-  <div id="results" class="results"></div></div>
-
+    <div class="search-content">
+      <div class="search-content__inner-wrap">
+        <form
+          class="search-content__form"
+          onkeydown="return event.key != 'Enter';"
+        >
+          <label class="sr-only" for="search">
+            Enter your search term...
+          </label>
+          <input
+            type="search"
+            id="search"
+            class="search-input"
+            tabindex="-1"
+            placeholder="Enter your search term..."
+          />
+        </form>
+        <div id="results" class="results"></div>
       </div>
-    
+    </div>
 
     <div id="footer" class="page__footer">
       <footer>
         <!-- start custom footer snippets -->
 
-<!-- end custom footer snippets -->
+        <!-- end custom footer snippets -->
         <div class="page__footer-follow">
-  <ul class="social-icons">
-    
-      <li><strong>追蹤:</strong></li>
-    
+          <ul class="social-icons">
+            <li><strong>追蹤:</strong></li>
 
-    
-      
-        
-      
-        
-      
-        
-          <li><a href="https://github.com/zeroLR" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
-        
-      
-        
-      
-        
-      
-        
-      
-    
+            <li>
+              <a
+                href="https://github.com/zeroLR"
+                rel="nofollow noopener noreferrer"
+                ><i class="fab fa-fw fa-github" aria-hidden="true"></i>
+                GitHub</a
+              >
+            </li>
 
-    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> RSS Feed</a></li>
-  </ul>
-</div>
+            <li>
+              <a href="/feed.xml"
+                ><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> RSS
+                Feed</a
+              >
+            </li>
+          </ul>
+        </div>
 
-<div class="page__footer-copyright">&copy; 2020 Zero. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
-
+        <div class="page__footer-copyright">
+          &copy; 2020 Zero. Powered by
+          <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
+          <a
+            href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/"
+            rel="nofollow"
+            >Minimal Mistakes</a
+          >.
+        </div>
       </footer>
     </div>
 
-    
-  <script src="/assets/js/main.min.js"></script>
-  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+    <script src="/assets/js/main.min.js"></script>
+    <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
 
+    <script src="/assets/js/lunr/lunr.min.js"></script>
+    <script src="/assets/js/lunr/lunr-store.js"></script>
+    <script src="/assets/js/lunr/lunr-en.js"></script>
 
-
-
-<script src="/assets/js/lunr/lunr.min.js"></script>
-<script src="/assets/js/lunr/lunr-store.js"></script>
-<script src="/assets/js/lunr/lunr-en.js"></script>
-
-
-
-
-    
-  <script>
-    var disqus_config = function () {
-      this.page.url = "https://zerolr.github.io/contest/VocalToMidi(1)/";  /* Replace PAGE_URL with your page's canonical URL variable */
-      this.page.identifier = "/contest/VocalToMidi(1)"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
-    };
-    (function() { /* DON'T EDIT BELOW THIS LINE */
-      var d = document, s = d.createElement('script');
-      s.src = 'https://zerolr.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', +new Date());
-      (d.head || d.body).appendChild(s);
-    })();
-  </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-  
-
-
-
-
-
+    <script>
+      var disqus_config = function () {
+        this.page.url =
+          "https://zerolr.github.io/contest/VocalToMidi(1)/"; /* Replace PAGE_URL with your page's canonical URL variable */
+        this.page.identifier =
+          "/contest/VocalToMidi(1)"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+      };
+      (function () {
+        /* DON'T EDIT BELOW THIS LINE */
+        var d = document,
+          s = d.createElement("script");
+        s.src = "https://zerolr.disqus.com/embed.js";
+        s.setAttribute("data-timestamp", +new Date());
+        (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript
+      >Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript"
+        >comments powered by Disqus.</a
+      ></noscript
+    >
   </body>
 </html>
