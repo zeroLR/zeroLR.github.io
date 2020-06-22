@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset='utf-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>定時灑水</title>
+
+	<style type="text/css">
+		table {
+			width: 90%;
+		}
+
+		th {
+			text-align: right;
+		}
+
+		td {
+			text-align: center;
+		}
+	</style>
+
+</head>
+
+<body>
+	<table id="TIME">
+		<caption>
+			<h1>台東區農業改良場灑水控制 V1.2</h1>
+		</caption>
+		<tr>
+			<th>日期</th>
+			<td onclick="upTm()">--/--/--</td>
+			<th>時間</th>
+			<td onclick="upTm()">--:--</td>
+			<td width="12%" style="background-color:#fecd90" onclick="ckchm()">模式</td>
+		</tr>
+		<tr>
+			<th>連接網路</th>
+			<td>*******</td>
+			<th>訊號品質
+			<th>
+			<td colspan=2>----</td>
+		</tr>
+		<tr>
+			<td colspan=5></td>
+		</tr>
+		<tr>
+			<td colspan=5></td>
+		</tr>
+	</table>
+	</br>
+	<table id="STATION">
+		<tr>
+			<th>站別</th>
+			<th>1站</th>
+			<td><input id='SW1' type="button" value="停止" onclick="BTSW(this)"></td>
+			<th>2站</th>
+			<td><input id='SW2' type="button" value="停止" onclick="BTSW(this)"></td>
+			<th>3站</th>
+			<td><input id='SW3' type="button" value="停止" onclick="BTSW(this)"></td>
+		</tr>
+	</table>
+	<table id="MOISTURE">
+		<caption>
+			<h1>土壤濕度偵測</h1>
+		</caption>
+		<tr>
+			<th>土壤濕度</th>
+			<th>偵測點</th>
+			<td>----%</td>
+			<th>設定值(%)</th>
+			<td>----</td>
+			<th>範圍 (+-%)</th>
+			<td>10</td>
+			<th>紀錄</th>
+			<td width="15%"></td>
+			<td width="15%"></td>
+		</tr>
+		<tr>
+			<td colspan=7></td>
+		</tr>
+	</table>
+	</br>
+	<table id="SCHE">
+		<caption>
+			<h1>時間設定</h1>
+		</caption>
+		<tr>
+			<td width="35%">週期</th>
+			<td width="25%">時間</td>
+			<td>1站</td>
+			<td>2站</td>
+			<td>3站</td>
+			<td width="10%">功能</td>
+		</tr>
+		<tr>
+			<td colspan=7></td>
+		</tr>
+	</table>
+	<table id="MAGIC">
+		<tr>
+			<td>
+			</td>
+		</tr>
+	</table>
+	<div id="content"></div>
+	<!-- <script src='./func.js'></script>
+	<script src='./index.js'></script> -->
+	<script src="./test.js"></script>
+	<script>
+		setTimeout('connect()', 3000);
+	</script>
+</body>
+
+</html>
