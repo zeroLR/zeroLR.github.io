@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset='utf-8'>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>定時灑水</title>
 
 	<style type="text/css">
@@ -19,7 +19,7 @@
 			text-align: center;
 		}
 	</style>
-
+	<link rel="stylesheet" type="text/css" href="../dist/css/timer.css">
 </head>
 
 <body>
@@ -48,18 +48,54 @@
 			<td colspan=5></td>
 		</tr>
 	</table>
+	<!-- <div id="TIME">
+		<div class="title">
+			<h1>台東區農業改良場灑水控制 V1.2</h1>
+		</div>
+		<div>
+			<div>日期</div>
+			<div onclick="upTm()">--/--/--</div>
+			<div>時間</div>
+			<div onclick="upTm()">--:--</div>
+			<div>連接網路</div>
+			<div>*******</div>
+			<div>訊號品質</div>
+			<div>----</div>
+		</div>
+		<div width="12%" style="background-color:#fecd90" onclick="ckchm()">模式</div>
+	</div> -->
 	</br>
 	<table id="STATION">
+		</br>
 		<tr>
 			<th>站別</th>
-			<th>1站</th>
-			<td><input id='SW1' type="button" value="停止" onclick="BTSW(this)"></td>
-			<th>2站</th>
-			<td><input id='SW2' type="button" value="停止" onclick="BTSW(this)"></td>
-			<th>3站</th>
-			<td><input id='SW3' type="button" value="停止" onclick="BTSW(this)"></td>
+		</tr>
+		<tr>
+			<td>1站 <input id='SW1' type="button" value="停止" onclick="BTSW(this)"></td>
+			<td>2站 <input id='SW2' type="button" value="停止" onclick="BTSW(this)"></td>
+			<td>3站 <input id='SW3' type="button" value="停止" onclick="BTSW(this)"></td>
+			<td>4站 <input id='SW4' type="button" value="停止" onclick="BTSW(this)"></td>
+		</tr>
+		<tr>
+			<td>5站 <input id='SW5' type="button" value="停止" onclick="BTSW(this)"></td>
+			<td>6站 <input id='SW6' type="button" value="停止" onclick="BTSW(this)"></td>
+			<td>7站 <input id='SW7' type="button" value="停止" onclick="BTSW(this)"></td>
+			<td>8站 <input id='SW8' type="button" value="停止" onclick="BTSW(this)"></td>
 		</tr>
 	</table>
+	<!-- <div id="STATION">
+		<div>站別</div>
+		<div>
+			<div>1站 <input id='SW1' type="button" value="停止" onclick="BTSW(this)"></div>
+			<div>2站 <input id='SW2' type="button" value="停止" onclick="BTSW(this)"></div>
+			<div>3站 <input id='SW3' type="button" value="停止" onclick="BTSW(this)"></div>
+			<div>4站 <input id='SW3' type="button" value="停止" onclick="BTSW(this)"></div>
+			<div>5站 <input id='SW3' type="button" value="停止" onclick="BTSW(this)"></div>
+			<div>6站 <input id='SW3' type="button" value="停止" onclick="BTSW(this)"></div>
+			<div>7站 <input id='SW3' type="button" value="停止" onclick="BTSW(this)"></div>
+			<div>8站 <input id='SW3' type="button" value="停止" onclick="BTSW(this)"></div>
+		</div>
+	</div> -->
 	<table id="MOISTURE">
 		<caption>
 			<h1>土壤濕度偵測</h1>
@@ -80,6 +116,23 @@
 			<td colspan=7></td>
 		</tr>
 	</table>
+	<!-- <div id="MOISTURE">
+		<div class="title">
+			<h1>土壤濕度偵測</h1>
+		</div>
+		<div>
+			<div>土壤濕度</div>
+			<div>偵測點</div>
+			<div>----%</div>
+			<div>設定值(%)</div>
+			<div>----</div>
+			<div>範圍 (+-%)</div>
+			<div>10</div>
+			<div>紀錄</div>
+			<div width="15%"></div>
+			<div width="15%"></div>
+		</div>
+	</div> -->
 	</br>
 	<table id="SCHE">
 		<caption>
@@ -93,10 +146,24 @@
 			<td>3站</td>
 			<td width="10%">功能</td>
 		</tr>
+
 		<tr>
 			<td colspan=7></td>
 		</tr>
 	</table>
+	<!-- <div id="SCHE">
+		<div class="title">
+			<h1>時間設定</h1>
+		</div>
+		<div>
+			<div width="35%">週期</div>
+			<div width="25%">時間</div>
+			<div>1站</div>
+			<div>2站</div>
+			<div>3站</div>
+			<div width="10%">功能</div>
+		</div>
+	</div> -->
 	<table id="MAGIC">
 		<tr>
 			<td>

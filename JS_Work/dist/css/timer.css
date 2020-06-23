@@ -1,0 +1,41 @@
+caption {
+  text-align: center;
+  font-size: 18px;
+}
+#STATION tr {
+  display: contents;
+}
+@media screen and (max-width: 1096px) {
+  #STATION tr th {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+  }
+  #STATION tr td {
+    text-align: center;
+  }
+  caption {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 768px) {
+  caption {
+    font-size: 12px;
+  }
+  #STATION tr {
+    display: block;
+  }
+  #STATION tr td {
+    text-align: center;
+  }
+}
+@media screen and (max-width: 400px) {
+  caption {
+    font-size: 10px;
+  }
+  th {
+    font-size: 12px;
+  }
+}
