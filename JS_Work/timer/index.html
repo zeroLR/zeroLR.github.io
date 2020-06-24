@@ -7,7 +7,7 @@
 	<title>定時灑水</title>
 
 	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="webstyle.css">
+	<link rel="stylesheet" type="text/css" href="./dist/css/webstyle.css">
 </head>
 
 <body>
@@ -34,12 +34,12 @@
 		</tr>
 		<tr>
 			<td colspan=5>
-				<!-- <input type="text" id='CMD'><input type='button' value='執行' onclick='printSelect()'> -->
-				<select id='CMD_select'>
+				<input type="text" id='CMD'><input type='button' value='執行' onclick='printSelect()'>
+				<!-- <select id='CMD_select'>
 					<option value="1">cmd1</option>
 					<option value="2">cmd2</option>
 					<option value="3">cmd3</option>
-				</select>
+				</select> -->
 			</td>
 		</tr>
 		<tr>
@@ -53,10 +53,25 @@
 			<h1>站別</h1>
 		</caption>
 		<tr>
-			<td><input id='SW1' type="button" value="停止" onclick="BTSW(this)"></td>
+			<!-- <td><input id='SW1' type="button" value="停止" onclick="BTSW(this)"></td>
 			<td><input id='SW2' type="button" value="停止" onclick="BTSW(this)"></td>
-			<td><input id='SW3' type="button" value="停止" onclick="BTSW(this)"></td>
-			<input type="checkbox" checked data-toggle="toggle">
+			<td><input id='SW3' type="button" value="停止" onclick="BTSW(this)"></td> -->
+			<td>
+				<label class="switch">
+					<input id="SW1" type="checkbox"><span class="slider round">1站</span>
+				</label>
+			</td>
+			<td>
+				<label class="switch">
+					<input id="SW2" type="checkbox"><span class="slider round">2站</span>
+				</label>
+			</td>
+			<td>
+				<label class="switch">
+					<input id="SW3" type="checkbox"><span class="slider round">3站</span>
+				</label>
+			</td>
+
 		</tr>
 	</table>
 	</br>
