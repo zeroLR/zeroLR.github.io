@@ -1,14 +1,14 @@
-// 添加字體厚度,陰影,轉場效果
+// 添加字體厚度,陰影,轉場效果,字體在不同瀏覽器上不同,需統一字體
 * {
   font-weight: 700 !important;
-  text-shadow: 0.02em 0.02em 0.07em #1c7eff !important;
+  // text-shadow: 0.02em 0.02em 0.07em #1c7eff !important;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
 
 /*-------------------------HTML元素-----------------------------*/
 body {
-  background-image: linear-gradient(#ecf388b7, #e952d0c4);
+  background-color: rgb(225, 255, 0);
 }
 
 table {
@@ -18,14 +18,13 @@ table {
 }
 h1 {
   font-size: 35px;
-  color: green;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
+  // font: bold;
+  color: rgb(255, 103, 1);
 }
 
 /*-------------------------class元素-----------------------------*/
 .button {
-  font-size: 24px;
+  font-size: 35px;
   cursor: pointer;
   text-align: center;
   color: #fff;
@@ -41,9 +40,24 @@ h1 {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+
+.div_Time {
+  background-color: rgb(0, 53, 226);
+  border-radius: 34px;
+  box-shadow: 10px 10px 5px #888888;
+  padding-bottom: 2em;
+  th {
+    color: tomato;
+  }
+  td {
+    color: springgreen;
+  }
+}
+
 // 站別物件屬性
 .div_Station {
-  background-image: linear-gradient(#c0a8b5b7, #7c85dfc4);
+  // background-image: linear-gradient(#c0a8b5b7, #7c85dfc4);
+  background-color: rgb(0, 53, 226);
   border-radius: 34px;
   box-shadow: 10px 10px 5px #888888;
   padding-bottom: 2em;
@@ -55,7 +69,8 @@ h1 {
 }
 // 土壤濕度偵測屬性
 .div_Moisture {
-  background-image: linear-gradient(#c0a8b5b7, #7c85dfc4);
+  // background-image: linear-gradient(#c0a8b5b7, #7c85dfc4);
+  background-color: rgb(0, 53, 226);
   border-radius: 34px;
   box-shadow: 10px 10px 5px #888888;
   padding-bottom: 2em;
@@ -65,7 +80,7 @@ h1 {
     inline-size: 10em;
   }
   td {
-    color: lawngreen;
+    color: rgb(252, 0, 0);
     background-color: khaki;
     font-size: 25px;
   }
@@ -79,12 +94,12 @@ h1 {
 }
 @media screen and (max-width: 768px) {
   h1 {
-    font-size: 22px;
+    font-size: 28px;
   }
 }
 @media screen and (max-width: 550px) {
   h1 {
-    font-size: 20px;
+    font-size: 24px;
   }
   .div_Moisture {
     thead {

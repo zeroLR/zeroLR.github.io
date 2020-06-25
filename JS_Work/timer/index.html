@@ -10,36 +10,37 @@
 
 <body>
 	</br>
+	<div class="div_Time">
+		<table id="TIME">
+			<caption>
+				<h1>台東區農業改良場灑水控制 V1.2</h1>
+			</caption>
+			<tr>
+				<th>日期</th>
+				<td id="date" onclick="upTm()">2020-06-24 W1</td>
+				<th>時間</th>
+				<td onclick="upTm()">08:58:58</td>
+				<!-- <td><button type="button" class="btn btn-warning mb-3" onclick="ckchm()">模式</button></td> -->
+				<td style="background-color: burlywood;" onclick="ckchm()">模式</td>
+			</tr>
+			<tr>
+				<th>連接網路</th>
+				<td>獨立作業</td>
+				<th>訊號品質</th>
+				<td colspan=2>SAP模式<3200>
+				</td>
+			</tr>
+			<tr>
+				<td colspan=5>
+					<input type="text" id='CMD'><input type='button' value='執行' onclick='printSelect()'>
+				</td>
+			</tr>
+			<tr>
+				<td colspan=5></td>
+			</tr>
+		</table>
+	</div>
 
-	<table id="TIME">
-		<caption>
-			<h1>台東區農業改良場灑水控制 V1.2</h1>
-		</caption>
-		<tr>
-			<th>日期</th>
-			<td id="date" onclick="upTm()">2020-06-24 W1</td>
-			<th>時間</th>
-			<td onclick="upTm()">08:58:58</td>
-			<!-- <td><button type="button" class="btn btn-warning mb-3" onclick="ckchm()">模式</button></td> -->
-			<td style="background-color: burlywood;" onclick="ckchm()">模式</td>
-		</tr>
-		<tr>
-			<th>連接網路</th>
-			<td>獨立作業</td>
-			<th>訊號品質</th>
-			<td colspan=2>SAP模式<3200>
-			</td>
-		</tr>
-		<tr>
-			<td colspan=5>
-				<input type="text" id='CMD'><input type='button' value='執行' onclick='printSelect()'>
-			</td>
-		</tr>
-		<tr>
-			<td colspan=5></td>
-		</tr>
-
-	</table>
 	</br>
 	<div class="div_Station">
 		<table id="STATION">
