@@ -5,9 +5,7 @@
 	<meta charset='utf-8'>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>定時灑水</title>
-
-	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="webstyle.css">
+	<link rel="stylesheet" type="text/css" href="./dist/css/webstyle.css">
 </head>
 
 <body>
@@ -19,7 +17,7 @@
 		</caption>
 		<tr>
 			<th>日期</th>
-			<td onclick="upTm()">2020-06-24 W1</td>
+			<td id="date" onclick="upTm()">2020-06-24 W1</td>
 			<th>時間</th>
 			<td onclick="upTm()">08:58:58</td>
 			<!-- <td><button type="button" class="btn btn-warning mb-3" onclick="ckchm()">模式</button></td> -->
@@ -35,11 +33,6 @@
 		<tr>
 			<td colspan=5>
 				<input type="text" id='CMD'><input type='button' value='執行' onclick='printSelect()'>
-				<!-- <select id='CMD_select'>
-					<option value="1">cmd1</option>
-					<option value="2">cmd2</option>
-					<option value="3">cmd3</option>
-				</select> -->
 			</td>
 		</tr>
 		<tr>
@@ -48,53 +41,37 @@
 
 	</table>
 	</br>
-	<table id="STATION">
-		<caption>
-			<h1>站別</h1>
-		</caption>
-		<tr>
-			<!-- <td><input id='SW1' type="button" value="停止" onclick="BTSW(this)"></td>
-			<td><input id='SW2' type="button" value="停止" onclick="BTSW(this)"></td>
-			<td><input id='SW3' type="button" value="停止" onclick="BTSW(this)"></td> -->
-			<td>
-				<label class="switch">
-					<input id="SW1" type="checkbox"><span class="slider round">1站 - 停止</span>
-				</label>
-			</td>
-			<td>
-				<label class="switch">
-					<input id="SW2" type="checkbox"><span class="slider round">2站 - 停止</span>
-				</label>
-			</td>
-			<td>
-				<label class="switch">
-					<input id="SW3" type="checkbox"><span class="slider round">3站 - 停止</span>
-				</label>
-			</td>
-
-		</tr>
-	</table>
+	<div class="div_Station">
+		<table id="STATION">
+			<caption>
+				<h1>站別</h1>
+			</caption>
+			<tr>
+				<td><input id='SW1' class="button" type="button" value="停止" onclick="BTSW(this)"></td>
+				<td><input id='SW2' class="button" type="button" value="停止" onclick="BTSW(this)"></td>
+				<td><input id='SW3' class="button" type="button" value="停止" onclick="BTSW(this)"></td>
+			</tr>
+		</table>
+	</div>
 	</br>
-	<table id="MOISTURE">
-		<caption>
-			<h1>土壤濕度偵測</h1>
-		</caption>
-		<tr>
-			<th class="table-dark">土壤濕度</th>
-			<th class="table-info">偵測點</th>
-			<td class="table-warning">20.5%</td>
-			<th class="table-info">設定值(%)</th>
-			<td class="table-warning">10</td>
-			<th class="table-info">範圍 (+-%)</th>
-			<td class="table-warning">10</td>
-			<th class="table-success">紀錄</th>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td colspan=7></td>
-		</tr>
-	</table>
+	<div class="div_Moisture">
+		<table id="MOISTURE">
+			<caption>
+				<h1>土壤濕度偵測</h1>
+			</caption>
+			<thead>
+				<th class="table-info">偵測點</th>
+				<th class="table-info">設定值(%)</th>
+				<th class="table-info">範圍 (+-%)</th>
+			</thead>
+			<tr>
+				<td id="MOISTURE_detect" data-label="偵測點">20.5%</td>
+				<td id="MOISTURE_set" data-label="設定值">10</td>
+				<td id="MOISTURE_range" data-label="範圍">10</td>
+			</tr>
+		</table>
+	</div>
+
 	</br>
 	<table id="SCHE">
 		<caption>
