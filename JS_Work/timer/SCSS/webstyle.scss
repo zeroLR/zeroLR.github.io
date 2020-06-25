@@ -1,14 +1,43 @@
 // 添加字體厚度,陰影,轉場效果,字體在不同瀏覽器上不同,需統一字體
 * {
   font-weight: 700 !important;
-  // text-shadow: 0.02em 0.02em 0.07em #1c7eff !important;
+  text-shadow: 0.03em 0.03em 0.08em #d7c4bb !important;
+  font-family: "Microsoft JhengHei";
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
+/*-------------------------常用混合元素-----------------------------*/
+
+@mixin main-style {
+  background-color: #86c166;
+  border-radius: 34px;
+  box-shadow: 5px 5px 2px #888888a2;
+  padding-bottom: 2em;
+  h1 {
+    background-color: #dcb879;
+    border-radius: 20px;
+    width: auto;
+  }
+}
+
+@mixin div-style {
+  // background-image: linear-gradient(#c0a8b5b7, #7c85dfc4);
+  background-color: #f0ece6;
+  border-radius: 34px;
+  box-shadow: 5px 5px 2px #888888a2;
+  padding-bottom: 2em;
+  margin: 1em 1em 1em 1em;
+  h1 {
+    background-color: #dcb879;
+    border-radius: 20px;
+    width: auto;
+  }
+}
 
 /*-------------------------HTML元素-----------------------------*/
+
 body {
-  background-color: rgb(225, 255, 0);
+  background-color: #91b493;
 }
 
 table {
@@ -18,11 +47,10 @@ table {
 }
 h1 {
   font-size: 35px;
-  // font: bold;
-  color: rgb(255, 103, 1);
+  color: #734338;
 }
-
 /*-------------------------class元素-----------------------------*/
+
 .button {
   font-size: 35px;
   cursor: pointer;
@@ -34,6 +62,7 @@ h1 {
   box-shadow: 0 9px #999;
   width: 30%;
   height: 100px;
+  margin-left: 0.4em;
 }
 
 .button:active {
@@ -41,26 +70,24 @@ h1 {
   transform: translateY(4px);
 }
 
-.div_Time {
-  background-color: rgb(0, 53, 226);
-  border-radius: 34px;
-  box-shadow: 10px 10px 5px #888888;
-  padding-bottom: 2em;
+.div_Main {
+  @include main-style;
   th {
-    color: tomato;
+    color: #734338;
+    font-size: 20px;
+    background-color: #dcb879;
+    border-radius: 10px;
   }
   td {
-    color: springgreen;
+    color: #4a593d;
+    background-color: #f0ece6;
+    border-radius: 10px;
   }
 }
 
 // 站別物件屬性
 .div_Station {
-  // background-image: linear-gradient(#c0a8b5b7, #7c85dfc4);
-  background-color: rgb(0, 53, 226);
-  border-radius: 34px;
-  box-shadow: 10px 10px 5px #888888;
-  padding-bottom: 2em;
+  @include div-style;
   tr {
     td {
       display: contents;
@@ -69,11 +96,7 @@ h1 {
 }
 // 土壤濕度偵測屬性
 .div_Moisture {
-  // background-image: linear-gradient(#c0a8b5b7, #7c85dfc4);
-  background-color: rgb(0, 53, 226);
-  border-radius: 34px;
-  box-shadow: 10px 10px 5px #888888;
-  padding-bottom: 2em;
+  @include div-style;
   th {
     background-color: cadetblue;
     font-size: 25px;
@@ -92,15 +115,27 @@ h1 {
     font-size: 32px;
   }
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   h1 {
     font-size: 28px;
   }
 }
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 770px) {
   h1 {
-    font-size: 24px;
+    font-size: 26px;
   }
+  .div_Main {
+    th {
+      font-size: 14px;
+    }
+  }
+  .button {
+    display: block;
+    // margin: auto;
+    width: 80%;
+    margin: 0.5em 0em 1em 1em;
+  }
+  // 土壤濕度偵測屬性變化排版
   .div_Moisture {
     thead {
       clip: rect(0 0 0 0);

@@ -10,7 +10,7 @@
 
 <body>
 	</br>
-	<div class="div_Time">
+	<div class="div_Main">
 		<table id="TIME">
 			<caption>
 				<h1>台東區農業改良場灑水控制 V1.2</h1>
@@ -39,39 +39,41 @@
 				<td colspan=5></td>
 			</tr>
 		</table>
+		<div class="div_Station">
+			<table id="STATION">
+				<caption>
+					<h1>站別</h1>
+				</caption>
+				<tr>
+					<td><input id='SW1' class="button" type="button" value="停止" onclick="BTSW(this)"></td>
+					<td><input id='SW2' class="button" type="button" value="停止" onclick="BTSW(this)"></td>
+					<td><input id='SW3' class="button" type="button" value="停止" onclick="BTSW(this)"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="div_Moisture">
+			<table id="MOISTURE">
+				<caption>
+					<h1>土壤濕度偵測</h1>
+				</caption>
+				<thead>
+					<th class="table-info">偵測點</th>
+					<th class="table-info">設定值(%)</th>
+					<th class="table-info">範圍 (+-%)</th>
+				</thead>
+				<tr>
+					<td id="MOISTURE_detect" data-label="偵測點">20.5%</td>
+					<td id="MOISTURE_set" data-label="設定值">10</td>
+					<td id="MOISTURE_range" data-label="範圍">10</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 
 	</br>
-	<div class="div_Station">
-		<table id="STATION">
-			<caption>
-				<h1>站別</h1>
-			</caption>
-			<tr>
-				<td><input id='SW1' class="button" type="button" value="停止" onclick="BTSW(this)"></td>
-				<td><input id='SW2' class="button" type="button" value="停止" onclick="BTSW(this)"></td>
-				<td><input id='SW3' class="button" type="button" value="停止" onclick="BTSW(this)"></td>
-			</tr>
-		</table>
-	</div>
+
 	</br>
-	<div class="div_Moisture">
-		<table id="MOISTURE">
-			<caption>
-				<h1>土壤濕度偵測</h1>
-			</caption>
-			<thead>
-				<th class="table-info">偵測點</th>
-				<th class="table-info">設定值(%)</th>
-				<th class="table-info">範圍 (+-%)</th>
-			</thead>
-			<tr>
-				<td id="MOISTURE_detect" data-label="偵測點">20.5%</td>
-				<td id="MOISTURE_set" data-label="設定值">10</td>
-				<td id="MOISTURE_range" data-label="範圍">10</td>
-			</tr>
-		</table>
-	</div>
+
 
 	</br>
 	<table id="SCHE">
@@ -100,7 +102,7 @@
 	<div id="content"></div>
 	<!-- <script src='./func.js'></script>
 	<script src='./index.js'></script> -->
-	<script src="../test.js"></script>
+	<script src="./test.js"></script>
 
 	<script>
 		setTimeout('connect()', 3000);
