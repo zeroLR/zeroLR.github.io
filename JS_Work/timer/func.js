@@ -58,28 +58,35 @@ function setTm() {
   abET();
 }
 // 開始灑水時間設定
-function newRule() {
-  var row = $("SCHE").insertRow($("SCHE").rows.length - 1);
-  row.insertCell(0).innerHTML =
-    "<input type='button' value='儲存' onclick='appSche(1)'><input type='button' value='取消' onclick='appSche(0)'>";
-  row.insertCell(0).innerHTML = "<input type='number' id='v3' value='0'>";
-  row.insertCell(0).innerHTML = "<input type='number' id='v2' value='0'>";
-  row.insertCell(0).innerHTML = "<input type='number' id='v1'value='0'>";
-  row.insertCell(0).innerHTML = "<input type='time' id='tm'>";
-  str = addckbox("d0", "每一天");
-  str += addckbox("w0", "星期日");
-  str += addckbox("w1", "星期一");
-  str += addckbox("w2", "星期二");
-  str += addckbox("w3", "星期三");
-  str += addckbox("w4", "星期四");
-  str += addckbox("w5", "星期五");
-  str += addckbox("w6", "星期六");
-  row.insertCell(0).innerHTML = str;
-  $("MAGIC").rows[0].cells[0].innerHTML = addckbox("all", "全開", "ckAll(1)");
-  $("SCHE").rows[$("SCHE").rows.length - 1].cells[0].innerHTML = "";
+// function newRule() {
+//   var row = $("SCHE").insertRow($("SCHE").rows.length - 1);
+//   row.insertCell(0).innerHTML =
+//     "<input type='button' value='儲存' onclick='appSche(1)'><input type='button' value='取消' onclick='appSche(0)'>";
+//   row.insertCell(0).innerHTML = "<input type='number' id='v3' value='0'>";
+//   row.insertCell(0).innerHTML = "<input type='number' id='v2' value='0'>";
+//   row.insertCell(0).innerHTML = "<input type='number' id='v1'value='0'>";
+//   row.insertCell(0).innerHTML = "<input type='time' id='tm'>";
+//   str = addckbox("d0", "每一天");
+//   str += addckbox("w0", "星期日");
+//   str += addckbox("w1", "星期一");
+//   str += addckbox("w2", "星期二");
+//   str += addckbox("w3", "星期三");
+//   str += addckbox("w4", "星期四");
+//   str += addckbox("w5", "星期五");
+//   str += addckbox("w6", "星期六");
+//   row.insertCell(0).innerHTML = str;
+//   $("MAGIC").rows[0].cells[0].innerHTML = addckbox("all", "全開", "ckAll(1)");
+//   $("SCHE").rows[$("SCHE").rows.length - 1].cells[0].innerHTML = "";
 
-  onScheEdit = 1;
+//   onScheEdit = 1;
+// }
+
+// 開始灑水時間設定
+function newRule() {
+  ControlTb("time_edit", true);
+  ControlTb("MAGIC_edit", true);
 }
+
 // 添加checkbox
 function addckbox(boxname, prompt, ckfunc) {
   str = "<input type='checkbox' name='" + boxname + "' id='" + boxname + "'";
@@ -104,8 +111,8 @@ function ckAll(i) {
 function appSche(i) {
   onScheEdit = 0;
   if (i) {
-    var row = $("SCHE").rows[$("SCHE").rows.length - 2];
-    mm = parseInt($("SCHE").rows.length - 2);
+    var row = $("SCHE").rows[$("SCHE").rows.length - 3];
+    mm = parseInt($("SCHE").rows.length - 3);
     str = "add Sche ";
     str += mm > 9 ? mm : "0" + mm;
     str += ",";
@@ -140,8 +147,8 @@ function appSche(i) {
     str += tall;
     postCmd(str);
   }
-  $("SCHE").deleteRow($("SCHE").rows.length - 2);
-  $("MAGIC").rows[0].cells[0].innerHTML = "";
+  $("SCHE").deleteRow($("SCHE").rows.length - 3);
+  ControlTb("MAGIC", false);
 }
 // 刪除時間設定
 function delRule(i) {

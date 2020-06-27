@@ -10,8 +10,6 @@
 
 <body>
 	<div class="container">
-
-
 		<div class="div-main">
 			<table>
 				<caption>
@@ -66,8 +64,23 @@
 					</tr>
 				</table>
 			</div>
+			<div class="div-outletWater">
+				<table>
+					<caption>
+						<h1>出口壓力&水位</h1>
+					</caption>
+					<thead>
+						<th>出口壓力</th>
+						<th>水位</th>
+					</thead>
+					<tr>
+						<td id="" data-label="出口壓力">20</td>
+						<td id="" data-label="水位">10</td>
+					</tr>
+				</table>
+			</div>
 			<div class="div-moisture">
-				<table id="MOISTURE">
+				<table>
 					<caption>
 						<h1>土壤濕度偵測</h1>
 					</caption>
@@ -82,9 +95,9 @@
 						<td id="MOISTURE_range" data-label="範圍">10</td>
 						<td id="MOISTURE_edit">
 							<span>設定值（％）<input type="number" id="SETSM" value=""><input type="button" value="確認"
-									onclick="setSM(1)"></span>
+									class="button-ok" onclick="setSM(1)"></span>
 							<span>範圍（±）<input type="number" id="SETSMD" value=""><input type="button" value="確認"
-									onclick="setSM(2)"></span>
+									class="button-ok" onclick="setSM(2)"></span>
 						</td>
 					</tr>
 				</table>
@@ -102,14 +115,14 @@
 						<th>3站</th>
 						<th>功能</th>
 					</thead>
-					<!-- <tr id="time1">
-					<td data-label="週期" width="30%">日一二三四五六</th>
-					<td data-label="時間" width="25%">下午 12：00</td>
-					<td data-label="1站">08分</td>
-					<td data-label="2站">08分</td>
-					<td data-label="3站">08分</td>
-					<td data-label="功能" width="10%"><button class="button-cancel">刪除</button></td>
-				</tr> -->
+					<tr id="time1">
+						<td data-label="週期">日一二三四五六</th>
+						<td data-label="時間">下午 12：00</td>
+						<td data-label="1站">08分</td>
+						<td data-label="2站">08分</td>
+						<td data-label="3站">08分</td>
+						<td data-label="功能"><button class="button-cancel">刪除</button></td>
+					</tr>
 					<tr id="time_add" style="display: none;">
 						<td colspan="6">
 							<button class="button-ok" onclick="newRule()">新增</button>
@@ -160,18 +173,25 @@
 						</td>
 					</tr>
 				</table>
+				<table id="MAGIC">
+					<tr id="MAGIC_edit" style="display: none;">
+						<td>
+							<label for="all">
+								<input type="checkbox" name="all" id="all">
+								<span>全開</span>
+							</label>
+							<input type='number' id='alltm' value='0' style="display: none;">
+						</td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>
-	<table id="MAGIC">
-		<tr>
-			<td>
-			</td>
-		</tr>
-	</table>
+
 	<!-- <script src='./func.js'></script>
 	<script src='./index.js'></script> -->
-	<script src="../test.js"></script>
+	<script src="test.js"></script>
+	<script src="style.js"></script>
 
 	<script>
 		setTimeout('connect()', 3000);
