@@ -1,0 +1,277 @@
+// 添加字體厚度,陰影,轉場效果,字體在不同瀏覽器上不同,需統一字體
+* {
+  font-weight: 700 !important;
+  text-shadow: 0.03em 0.03em 0.08em #d7c4bb !important;
+  font-family: "Microsoft JhengHei";
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+/*-------------------------常用混合元素-----------------------------*/
+
+@mixin main-style {
+  background-color: #86c166;
+  border-radius: 34px;
+  box-shadow: 5px 5px 2px #888888a2;
+  padding-bottom: 2em;
+
+  h1 {
+    background-color: #dcb879;
+    border-radius: 20px;
+    width: auto;
+  }
+  th {
+    color: #734338;
+    font-size: 20px;
+    background-color: #dcb879;
+    border-radius: 10px;
+  }
+  td {
+    color: #4a593d;
+    font-size: 20px;
+    background-color: #f0ece6;
+    border-radius: 10px;
+  }
+}
+
+@mixin div-style {
+  // background-image: linear-gradient(#c0a8b5b7, #7c85dfc4);
+  background-color: #f0ece6;
+  border-radius: 34px;
+  box-shadow: 5px 5px 2px #888888a2;
+  padding-bottom: 2em;
+  margin: 1em 1em 1em 1em;
+  h1 {
+    background-color: #dcb879;
+    border-radius: 20px;
+    width: auto;
+  }
+}
+
+@mixin table-style($th-color: cadetblue, $td-color: khaki, $width: 80%) {
+  table {
+    width: $width;
+  }
+  th {
+    background-color: $th-color;
+  }
+  td {
+    background-color: $td-color;
+  }
+}
+
+@mixin button-style($color: white, $backcolor: blue) {
+  border: none;
+  border-radius: 25px;
+  color: $color;
+  background-color: $backcolor;
+  cursor: pointer;
+  text-align: center;
+}
+
+@mixin checkbox-style {
+  label {
+    padding: 0;
+    margin-right: 3px;
+    cursor: pointer;
+  }
+  input[type="checkbox"] {
+    display: none;
+  }
+  input[type="checkbox"] + span {
+    display: inline-block;
+    background-color: rgb(179, 179, 179);
+    padding: 5px 8px;
+    border-radius: 20px;
+    color: #444;
+    user-select: none; /* 防止文字被滑鼠選取反白 */
+  }
+
+  input[type="checkbox"]:checked + span {
+    color: rgb(255, 255, 255);
+    background-color: rgb(41, 121, 226);
+  }
+}
+/*-------------------------HTML元素-----------------------------*/
+body {
+  background-color: #91b493;
+}
+table {
+  text-align: center;
+  margin: auto;
+  width: 80%;
+}
+h1 {
+  font-size: 35px;
+  color: #734338;
+}
+
+/*-------------------------class元素-----------------------------*/
+
+.button-ok {
+  @include button-style(white, #1ce43d);
+  padding: 5px 15px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+.button-cancel {
+  @include button-style(white, #ff3c00);
+  padding: 5px 15px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+.button-switch {
+  @include button-style(rgb(4, 0, 255), lawngreen);
+  font-size: 60px;
+  box-shadow: 0 9px #999;
+  width: 30%;
+  height: 100px;
+  margin-left: 0.3em;
+}
+
+.button-switch:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+// 主頁面屬性
+.div-main {
+  @include main-style;
+  @include table-style;
+  select {
+    padding: 0.5em;
+    font-size: 20px;
+    background-color: rgb(241, 126, 19);
+    color: rgb(7, 91, 248);
+    border-radius: 10px;
+    border: none;
+  }
+}
+
+// 站別物件屬性
+.div-station {
+  @include div-style;
+  tr {
+    td {
+      display: contents;
+    }
+  }
+}
+// 土壤濕度偵測屬性
+.div-moisture {
+  @include div-style;
+  @include table-style;
+  th {
+    font-size: 25px;
+    inline-size: 10em;
+  }
+  td {
+    color: #4a593d;
+    font-size: 25px;
+  }
+  span {
+    display: block;
+    text-align: center;
+    input {
+      padding: 0.5em;
+    }
+  }
+}
+
+.div-sche {
+  @include div-style;
+  @include table-style;
+  @include checkbox-style;
+  th {
+    font-size: 25px;
+    inline-size: 10em;
+  }
+  td {
+    color: #4a593d;
+    font-size: 25px;
+  }
+}
+/*-------------------------縮放時變化版面-----------------------------*/
+@media screen and (max-width: 1096px) {
+  h1 {
+    font-size: 32px;
+  }
+}
+@media screen and (max-width: 770px) {
+  h1 {
+    font-size: 25px;
+  }
+  .div-main {
+    th {
+      font-size: 18px;
+    }
+    td {
+      font-size: 18px;
+    }
+  }
+  .button-switch {
+    display: block;
+    // margin: auto;
+    width: 80%;
+    margin: 0.5em 0em 0.5em 0.6em;
+  }
+  // 土壤濕度偵測屬性變化排版
+  .div-moisture {
+    thead {
+      clip: rect(0 0 0 0);
+      position: absolute;
+    }
+    tr {
+      background-color: khaki;
+      border-bottom: 3px solid #ddd;
+      display: block;
+      border-radius: 20px;
+    }
+    td {
+      border-bottom: 3px solid rgb(245, 144, 144);
+      display: block;
+      text-align: right;
+      margin: 0em 1em 1em 1em;
+      border-radius: 0px;
+      padding-top: 1em;
+      font-size: 28px;
+    }
+    td::before {
+      color: #734338;
+      content: attr(data-label);
+      float: left;
+    }
+  }
+  .div-sche {
+    thead {
+      clip: rect(0 0 0 0);
+      position: absolute;
+    }
+    tr {
+      background-color: khaki;
+      border-bottom: 3px solid #ddd;
+      display: block;
+      border-radius: 20px;
+    }
+    td {
+      border-bottom: 3px solid rgb(245, 144, 144);
+      display: block;
+      text-align: right;
+      margin: 0em 1em 1em 1em;
+      border-radius: 0px;
+      width: 85%;
+      padding-top: 1em;
+      font-size: 28px;
+    }
+    td::before {
+      color: #734338;
+      content: attr(data-label);
+      float: left;
+    }
+  }
+}

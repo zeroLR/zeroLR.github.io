@@ -1,3 +1,18 @@
+// 開啟/關閉table
+function ControlTb(id, bool = false) {
+  var id = document.getElementById(id);
+  if (bool) {
+    id.style.display = "table-row";
+  } else {
+    id.style.display = "none";
+  }
+}
+
+// 顯示目前模式
+function showACT(act) {
+  $("ACT").value = act;
+}
+
 // 根據傳入字串執行對應function
 function postCmd(str) {
   if (str === "") return;
@@ -5,24 +20,35 @@ function postCmd(str) {
   console.log(jsonCmd);
   w.postMessage(jsonCmd);
 }
-// 切換模式(自動, 手動, 修改, 停止)
+// 切換模式(0停止, 1自動, 2修改, 3手動)
 function ckchm() {
   console.log("mode change");
   onScheEdit = 0;
   kM = 0;
-  str = "change mode";
+  switch ($("ACT").options[$("ACT").selectedIndex].value) {
+    case "stop":
+      str = "change mode 0";
+      break;
+    case "auto":
+      str = "change mode 1";
+      break;
+    case "edit":
+      str = "change mode 2";
+      break;
+    case "manual":
+      str = "change mode 3";
+      break;
+  }
   postCmd(str);
 }
 // 開始修改時間
 function upTm(cell) {
-  if (act != "[修改]") return;
-  var x = $("TIME").rows[2].cells[0];
-  x.innerHTML =
-    "修改日期:<input type='datetime-local' id='EDT'><input type='button' value='確認' onclick='setTm()'><input type='button' value='取消' onclick='abET()'>";
+  if (act != "edit") return;
+  ControlTb("date_edit", true);
 }
 // 取消修改時間
 function abET() {
-  $("TIME").rows[2].cells[0].innerHTML = "";
+  ControlTb("date_edit", false);
 }
 // 確定修改時間
 function setTm() {
@@ -119,13 +145,13 @@ function appSche(i) {
 }
 // 刪除時間設定
 function delRule(i) {
-  if (act != "[修改]") return;
+  if (act != "edit") return;
   str = "del Sche " + parseInt(i);
   postCmd(str);
 }
 // 切換灑水狀態
 function BTSW(bt) {
-  if (act != "[手動]") return;
+  if (act != "manual") return;
   str = "swap " + bt.id;
   postCmd(str);
 }
