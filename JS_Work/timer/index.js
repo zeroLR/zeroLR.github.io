@@ -80,24 +80,34 @@ function wkMsg(e) {
       ControlTb("MAGIC_edit", false);
     }
     for (i = 0; i < e.data["SCHE"].length; ++i) {
-      if (i >= tb.rows.length - 2) {
-        row = tb.insertRow(tb.rows.length - 1);
-        for (j = 0; j < 6; ++j) {
-          row.insertCell(j);
-        }
+      if (i >= tb.rows.length - 3) {
+        row = tb.insertRow(tb.rows.length - 2); //每個row添加id
+        row.id = String(i + 1);
       }
       row = tb.rows[i + 1];
       dt = e.data["SCHE"][i].split(",");
       console.log(dt);
-      row.cells[0].innerHTML = dt[1];
-      row.cells[1].innerHTML = dt[2];
-      row.cells[2].innerHTML = dt[3];
-      row.cells[3].innerHTML = dt[4];
-      row.cells[4].innerHTML = dt[5];
-      row.cells[5].innerHTML =
+      row.innerHTML =
+        "<td data-label='週期'>" +
+        dt[1] +
+        "</td>" +
+        "<td data-label='時間'>" +
+        dt[2] +
+        "</td>" +
+        "<td data-label='1站'>" +
+        dt[3] +
+        "</td>" +
+        "<td data-label='2站'>" +
+        dt[4] +
+        "</td>" +
+        "<td data-label='3站'>" +
+        dt[5] +
+        "</td>" +
+        "<td>" +
         "<input class='button-cancel' type='button' value='刪除' onclick=delRule('" +
         String(i) +
-        "')>";
+        "')>" +
+        "</td>";
     }
   }
 }

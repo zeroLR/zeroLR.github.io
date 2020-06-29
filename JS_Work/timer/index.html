@@ -115,14 +115,6 @@
 						<th>3站</th>
 						<th>功能</th>
 					</thead>
-					<tr id="time1">
-						<td data-label="週期">日一二三四五六</th>
-						<td data-label="時間">下午 12：00</td>
-						<td data-label="1站">08分</td>
-						<td data-label="2站">08分</td>
-						<td data-label="3站">08分</td>
-						<td data-label="功能"><button class="button-cancel">刪除</button></td>
-					</tr>
 					<tr id="time_add" style="display: none;">
 						<td colspan="6">
 							<button class="button-ok" onclick="newRule()">新增</button>
@@ -177,7 +169,7 @@
 					<tr id="MAGIC_edit" style="display: none;">
 						<td>
 							<label for="all">
-								<input type="checkbox" name="all" id="all">
+								<input type="checkbox" name="all" id="all" onchange="ckAll()">
 								<span>全開</span>
 							</label>
 							<input type='number' id='alltm' value='0' style="display: none;">

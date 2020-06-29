@@ -83,6 +83,7 @@ function setTm() {
 
 // 開始灑水時間設定
 function newRule() {
+  onScheEdit = 1;
   ControlTb("time_edit", true);
   ControlTb("MAGIC_edit", true);
 }
@@ -96,23 +97,26 @@ function addckbox(boxname, prompt, ckfunc) {
 }
 // 控制器全開同時灑水
 function ckAll(i) {
-  $("MAGIC").rows[0].cells[0].innerHTML = addckbox(
-    "all",
-    "全開",
-    i ? "ckAll(0)" : "ckAll(1)"
-  );
-  if (i) {
-    $("MAGIC").rows[0].cells[0].innerHTML +=
-      "<input type='number' id='alltm' value='0'>";
-    $("all").checked = true;
-  }
+  // $("MAGIC").rows[0].cells[0].innerHTML = addckbox(
+  //   "all",
+  //   "全開",
+  //   i ? "ckAll(0)" : "ckAll(1)"
+  // );
+  // if (i) {
+  //   $("MAGIC").rows[0].cells[0].innerHTML +=
+  //     "<input type='number' id='alltm' value='0'>";
+  //   $("all").checked = true;
+  // }
+  $("all").checked == true
+    ? ControlTb("alltm", true)
+    : ControlTb("alltm", false);
 }
 // 新增灑水時間設定
 function appSche(i) {
   onScheEdit = 0;
   if (i) {
     var row = $("SCHE").rows[$("SCHE").rows.length - 3];
-    mm = parseInt($("SCHE").rows.length - 3);
+    mm = parseInt($("SCHE").rows.length - 2);
     str = "add Sche ";
     str += mm > 9 ? mm : "0" + mm;
     str += ",";
@@ -147,8 +151,8 @@ function appSche(i) {
     str += tall;
     postCmd(str);
   }
-  $("SCHE").deleteRow($("SCHE").rows.length - 3);
-  ControlTb("MAGIC", false);
+  ControlTb("time_edit", false);
+  ControlTb("MAGIC_edit", false);
 }
 // 刪除時間設定
 function delRule(i) {
@@ -177,7 +181,7 @@ function setSM(i) {
 // 輸入文字執行命令
 function execCmd() {
   editCmd = 0;
-  str = $("CMD").value;
+  str = $("CMD_text").value;
   // str = $("CMD").options[$("CMD").selectedIndex].text;
   postCmd(str);
 }
