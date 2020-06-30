@@ -64,6 +64,54 @@
 					</tr>
 				</table>
 			</div>
+			<div class="div-sendmessage">
+				<table id="EVENT">
+					<caption>
+						<h1>事件判斷發送訊息</h1>
+					</caption>
+					<thead>
+						<th>Line權杖</th>
+						<th>事件</th>
+						<th>訊息</th>
+					</thead>
+					<tr></tr>
+					<tr id="event_add" style="display: table-row;">
+						<td colspan="6">
+							<button class="button-ok" onclick="addEvent()">新增</button>
+						</td>
+					</tr>
+					<tr id="evnet_edit" style="display: none;">
+						<td data-label="Line權杖">
+							<input type="text" name="token" id="token" placeholder="請輸入Line權杖...">
+						</td>
+						<td data-label="事件">
+							<span>如果溫度</span>
+							<select name="mark1" id="mark1">
+								<option value="more">大於</option>
+								<option value="less">小於</option>
+							</select>
+							<input type="number" name="temperature" id="temperature" placeholder="溫度...">
+							<select name="bool" id="bool">
+								<option value="and">和</option>
+								<option value="or">或</option>
+							</select>
+							<span>水位</span>
+							<select name="mark2" id="mark2">
+								<option value="more">大於</option>
+								<option value="less">小於</option>
+							</select>
+							<input type="number" name="water" id="water" placeholder="水位...">
+						</td>
+						<td data-label="訊息">
+							<input type="text" name="message" id="message" placeholder="請輸入發送訊息...">
+						</td>
+						<td>
+							<button class="button-ok" onclick="appEvent(1)">儲存</button>
+							<button class="button-cancel" onclick="appEvent(0)">取消</button>
+						</td>
+					</tr>
+				</table>
+			</div>
 			<div class="div-outletWater">
 				<table>
 					<caption>
@@ -182,12 +230,12 @@
 
 	<!-- <script src='./func.js'></script>
 	<script src='./index.js'></script> -->
-	<script src="test.js"></script>
+	<script src="../test.js"></script>
 	<!-- <script src="style.js"></script> -->
 
-	<script>
+	<!-- <script>
 		setTimeout('connect()', 3000);
-	</script>
+	</script> -->
 </body>
 
 </html>

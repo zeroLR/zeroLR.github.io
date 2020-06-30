@@ -57,29 +57,6 @@ function setTm() {
   postCmd(str);
   abET();
 }
-// 開始灑水時間設定
-// function newRule() {
-//   var row = $("SCHE").insertRow($("SCHE").rows.length - 1);
-//   row.insertCell(0).innerHTML =
-//     "<input type='button' value='儲存' onclick='appSche(1)'><input type='button' value='取消' onclick='appSche(0)'>";
-//   row.insertCell(0).innerHTML = "<input type='number' id='v3' value='0'>";
-//   row.insertCell(0).innerHTML = "<input type='number' id='v2' value='0'>";
-//   row.insertCell(0).innerHTML = "<input type='number' id='v1'value='0'>";
-//   row.insertCell(0).innerHTML = "<input type='time' id='tm'>";
-//   str = addckbox("d0", "每一天");
-//   str += addckbox("w0", "星期日");
-//   str += addckbox("w1", "星期一");
-//   str += addckbox("w2", "星期二");
-//   str += addckbox("w3", "星期三");
-//   str += addckbox("w4", "星期四");
-//   str += addckbox("w5", "星期五");
-//   str += addckbox("w6", "星期六");
-//   row.insertCell(0).innerHTML = str;
-//   $("MAGIC").rows[0].cells[0].innerHTML = addckbox("all", "全開", "ckAll(1)");
-//   $("SCHE").rows[$("SCHE").rows.length - 1].cells[0].innerHTML = "";
-
-//   onScheEdit = 1;
-// }
 
 // 開始灑水時間設定
 function newRule() {
@@ -97,16 +74,6 @@ function addckbox(boxname, prompt, ckfunc) {
 }
 // 控制器全開同時灑水
 function ckAll(i) {
-  // $("MAGIC").rows[0].cells[0].innerHTML = addckbox(
-  //   "all",
-  //   "全開",
-  //   i ? "ckAll(0)" : "ckAll(1)"
-  // );
-  // if (i) {
-  //   $("MAGIC").rows[0].cells[0].innerHTML +=
-  //     "<input type='number' id='alltm' value='0'>";
-  //   $("all").checked = true;
-  // }
   $("all").checked == true
     ? ControlTb("alltm", true)
     : ControlTb("alltm", false);

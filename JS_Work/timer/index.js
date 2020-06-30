@@ -81,7 +81,7 @@ function wkMsg(e) {
     }
     for (i = 0; i < e.data["SCHE"].length; ++i) {
       if (i >= tb.rows.length - 3) {
-        row = tb.insertRow(tb.rows.length - 2); //每個row添加id
+        row = tb.insertRow(tb.rows.length - 2);
         row.id = String(i + 1);
       }
       row = tb.rows[i + 1];
@@ -105,7 +105,7 @@ function wkMsg(e) {
         "</td>" +
         "<td>" +
         "<input class='button-cancel' type='button' value='刪除' onclick=delRule('" +
-        String(i) +
+        String(i + 1) +
         "')>" +
         "</td>";
     }
