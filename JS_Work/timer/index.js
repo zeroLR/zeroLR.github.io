@@ -59,6 +59,9 @@ function wkMsg(e) {
   if (act != "edit") {
     ControlTb("MOISTURE_edit", false);
   }
+  if ("WP" in e.data) {
+    $("WP").innerHTML = e.data["WP"];
+  }
   if ("SMCV" in e.data) {
     $("MOISTURE_detect").innerHTML = e.data["SMCV"];
   }
@@ -95,12 +98,15 @@ function wkMsg(e) {
         dt[2] +
         "</td>" +
         "<td data-label='1站'>" +
+        "1-" +
         dt[3] +
         "</td>" +
         "<td data-label='2站'>" +
+        "2-" +
         dt[4] +
         "</td>" +
         "<td data-label='3站'>" +
+        "3-" +
         dt[5] +
         "</td>" +
         "<td>" +

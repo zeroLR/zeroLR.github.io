@@ -9,7 +9,7 @@
 </head>
 
 <body>
-	<div class=" container">
+	<div class="container">
 		<div class="div-main">
 			<table>
 				<caption>
@@ -52,7 +52,7 @@
 					</td>
 				</tr>
 			</table>
-			<div class=" div-station">
+			<div class="div-station">
 				<table id="STATION">
 					<caption>
 						<h1>站別</h1>
@@ -64,70 +64,97 @@
 					</tr>
 				</table>
 			</div>
-			<div class="div-sendmessage">
-				<table id="EVENT">
+			<div class="div-panel">
+				<table>
 					<caption>
-						<h1>事件判斷發送訊息</h1>
+						<h1>訊息佈告欄</h1>
+						<button class="button-ok" onclick="message()">添加訊息</button>
 					</caption>
-					<thead>
-						<th>Line權杖</th>
-						<th>事件</th>
-						<th>訊息</th>
-					</thead>
-					<tr></tr>
-					<tr id="event_add" style="display: table-row;">
-						<td colspan="6">
-							<button class="button-ok" onclick="addEvent()">新增</button>
-						</td>
-					</tr>
-					<tr id="evnet_edit" style="display: none;">
-						<td data-label="Line權杖">
-							<input type="text" name="token" id="token" placeholder="請輸入Line權杖...">
-						</td>
-						<td data-label="事件">
-							<span>如果溫度</span>
-							<select name="mark1" id="mark1">
-								<option value="more">大於</option>
-								<option value="less">小於</option>
-							</select>
-							<input type="number" name="temperature" id="temperature" placeholder="溫度...">
-							<select name="bool" id="bool">
-								<option value="and">和</option>
-								<option value="or">或</option>
-							</select>
-							<span>水位</span>
-							<select name="mark2" id="mark2">
-								<option value="more">大於</option>
-								<option value="less">小於</option>
-							</select>
-							<input type="number" name="water" id="water" placeholder="水位...">
-						</td>
-						<td data-label="訊息">
-							<input type="text" name="message" id="message" placeholder="請輸入發送訊息...">
-						</td>
-						<td>
-							<button class="button-ok" onclick="appEvent(1)">儲存</button>
-							<button class="button-cancel" onclick="appEvent(0)">取消</button>
-						</td>
-					</tr>
 				</table>
+				<nav>
+					<ul id="content">
+						<li>時間：0701 16:41 <br>
+							通知： 馬達啟動</li>
+						<li>時間：0701 16:41 <br>
+							警告： 出口壓力過大,馬達關閉</li>
+						<li>時間：0701 16:41 <br>
+							通知： 馬達啟動</li>
+						<li>時間：0701 16:41 <br>
+							通知： 馬達啟動</li>
+						<li>時間：0701 16:41 <br>
+							通知： 馬達啟動</li>
+						<li>時間：0701 16:41 <br>
+							通知： 馬達啟動</li>
+						<li>時間：0701 16:41 <br>
+							通知： 馬達啟動</li>
+						<li>時間：0701 16:41 <br>
+							通知： 馬達啟動</li>
+						<li>時間：0701 16:41 <br>
+							通知： 馬達啟動</li>
+						<li>時間：0701 16:41 <br>
+							通知： 馬達啟動</li>
+						<li>時間：0701 16:41 <br>
+							通知： 馬達啟動</li>
+					</ul>
+				</nav>
+
 			</div>
 			<div class="div-outletWater">
 				<table>
 					<caption>
-						<h1>出口壓力&水位</h1>
+						<h1>出口壓力(kg/cm<sup>2</sup>)</h1>
 					</caption>
-					<thead>
-						<th>出口壓力</th>
-						<th>水位</th>
-					</thead>
 					<tr>
-						<td id="" data-label="出口壓力">20</td>
-						<td id="" data-label="水位">10</td>
+						<td id="WP">20</td>
 					</tr>
 				</table>
 			</div>
-			<div class="div-moisture">
+
+			<div class="div-setWP">
+				<table>
+					<caption>
+						<h1>出口壓力設定</h1>
+						<button id="btn_WP" class="button-ok" style="display: block;" onclick="setWP()">設定壓力</button>
+					</caption>
+
+					<tr id="setWP" style="display: none;">
+						<td>
+							一、設定壓力上限（請開啟馬達並按下按鈕）
+							<br>
+							<button class="button-ok">設定</button>
+						</td>
+						<td>
+							二、設定壓力下限（請將抽水管移至外面抽空氣並按下按鈕)
+							<br>
+							<button class="button-ok" disabled>設定</button>
+						</td>
+						<td>
+							三、1站壓力標準值（放回抽水管後,只開啟1站灑水並按下按鈕）
+							<br>
+							<button class="button-ok" disabled>設定</button>
+						</td>
+						<td>
+							四、2站壓力標準值（關閉1站,只開啟2站灑水並按下按鈕）
+							<br>
+							<button class="button-ok" disabled>設定</button>
+						</td>
+						<td>
+							五、3站壓力標準值（關閉2站,只開啟3站灑水並按下按鈕）
+							<br>
+							<button class="button-ok" disabled>設定</button>
+						</td>
+						<td>
+							六、閥值設定（+-）(壓力容許範圍值)
+							<br>
+							<input type="number" name="threshold" id="threshold">
+						</td>
+						<td>
+							七、以上設定完畢後可回自動或手動模式操作
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="div-moisture" style="display: none;">
 				<table>
 					<caption>
 						<h1>土壤濕度偵測</h1>
@@ -230,7 +257,7 @@
 
 	<!-- <script src='./func.js'></script>
 	<script src='./index.js'></script> -->
-	<script src="../test.js"></script>
+	<script src="test.js"></script>
 	<!-- <script src="style.js"></script> -->
 
 	<!-- <script>
