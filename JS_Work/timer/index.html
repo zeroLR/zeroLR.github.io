@@ -5,7 +5,7 @@
 	<meta charset='utf-8'>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>定時灑水</title>
-	<link rel="stylesheet" type="text/css" href="./dist/css/webstyle.css">
+	<link rel="stylesheet" type="text/css" href="../dist/css/webstyle.css">
 </head>
 
 <body>
@@ -75,26 +75,6 @@
 					<ul id="content">
 						<li>時間：0701 16:41 <br>
 							通知： 馬達啟動</li>
-						<li>時間：0701 16:41 <br>
-							警告： 出口壓力過大,馬達關閉</li>
-						<li>時間：0701 16:41 <br>
-							通知： 馬達啟動</li>
-						<li>時間：0701 16:41 <br>
-							通知： 馬達啟動</li>
-						<li>時間：0701 16:41 <br>
-							通知： 馬達啟動</li>
-						<li>時間：0701 16:41 <br>
-							通知： 馬達啟動</li>
-						<li>時間：0701 16:41 <br>
-							通知： 馬達啟動</li>
-						<li>時間：0701 16:41 <br>
-							通知： 馬達啟動</li>
-						<li>時間：0701 16:41 <br>
-							通知： 馬達啟動</li>
-						<li>時間：0701 16:41 <br>
-							通知： 馬達啟動</li>
-						<li>時間：0701 16:41 <br>
-							通知： 馬達啟動</li>
 					</ul>
 				</nav>
 
@@ -105,7 +85,7 @@
 						<h1>出口壓力(kg/cm<sup>2</sup>)</h1>
 					</caption>
 					<tr>
-						<td id="WP">20</td>
+						<td id="WP">2.5</td>
 					</tr>
 				</table>
 			</div>
@@ -114,66 +94,49 @@
 				<table>
 					<caption>
 						<h1>出口壓力設定</h1>
-						<button id="btn_WP" class="button-ok" style="display: block;" onclick="setWP()">設定壓力</button>
+						<button id="btn_WP" class="button-ok" style="display: none;" onclick="setWP()">設定壓力</button>
 					</caption>
 
 					<tr id="setWP" style="display: none;">
-						<td>
-							一、設定壓力上限（請開啟馬達並按下按鈕）
+
+						<td id="step1" style="display: none;">
+							一、1站壓力標準值<br>（開啟馬達後,只開啟1站灑水並按下按鈕）
 							<br>
-							<button class="button-ok">設定</button>
+							<button id="btn_step1" class="button-ok" onclick="step(2)">開啟馬達+1站</button>
+							<button id="btn_set1" class="button-ok" onclick="step(2)" style="display: none;">設定</button>
 						</td>
-						<td>
-							二、設定壓力下限（請將抽水管移至外面抽空氣並按下按鈕)
+						<td id="step2" style="display: none;">
+							二、2站壓力標準值<br>（關閉1站,只開啟2站灑水並按下按鈕）
 							<br>
-							<button class="button-ok" disabled>設定</button>
+							<button id="btn_step2" class="button-ok" onclick="step(3)">關閉1站,開2站</button>
+							<button id="btn_set2" class="button-ok" onclick="step(3)" style="display: none;">設定</button>
 						</td>
-						<td>
-							三、1站壓力標準值（放回抽水管後,只開啟1站灑水並按下按鈕）
+						<td id="step3" style="display: none;">
+							三、3站壓力標準值<br>（關閉2站,只開啟3站灑水並按下按鈕）
 							<br>
-							<button class="button-ok" disabled>設定</button>
+							<button id="btn_step3" class="button-ok" onclick="step(4)">關閉2站,開3站</button>
+							<button id="btn_set3" class="button-ok" onclick="step(4)" style="display: none;">設定</button>
 						</td>
-						<td>
-							四、2站壓力標準值（關閉1站,只開啟2站灑水並按下按鈕）
+
+						<td id="step4" style="display: none;">
+							五、設定壓力下限<br>（請將抽水管移至外面抽空氣並按下按鈕)
 							<br>
-							<button class="button-ok" disabled>設定</button>
+							<button class="button-ok" onclick="step(5)">設定</button>
 						</td>
-						<td>
-							五、3站壓力標準值（關閉2站,只開啟3站灑水並按下按鈕）
+						<td id="step5" style="display: none;">
+							四、設定壓力上限<br>（請關閉馬達後按下按鈕）
 							<br>
-							<button class="button-ok" disabled>設定</button>
+							<button id="btn_step5" class="button-ok" onclick="step(6)">關閉馬達</button>
+							<button id="btn_set5" class="button-ok" onclick="step(6)" style="display: none;">設定</button>
 						</td>
-						<td>
-							六、閥值設定（+-）(壓力容許範圍值)
+						<td id="step6" style="display: none;">
+							六、閥值設定（+-）<br>(壓力容許範圍值)
 							<br>
-							<input type="number" name="threshold" id="threshold">
+							<input type="number" name="threshold" id="threshold"><br>
+							<button class="button-ok" onclick="step(7)">設定</button>
 						</td>
-						<td>
-							七、以上設定完畢後可回自動或手動模式操作
-						</td>
-					</tr>
-				</table>
-			</div>
-			<div class="div-moisture" style="display: none;">
-				<table>
-					<caption>
-						<h1>土壤濕度偵測</h1>
-					</caption>
-					<thead>
-						<th>偵測點</th>
-						<th>設定值(%)</th>
-						<th>範圍 (+-%)</th>
-					</thead>
-					<tr>
-						<td id="MOISTURE_detect" data-label="偵測點">20.5%</td>
-						<td id="MOISTURE_set" data-label="設定值">10</td>
-						<td id="MOISTURE_range" data-label="範圍">10</td>
-						<td id="MOISTURE_edit">
-							<span>設定值（％）<input type="number" id="SETSM" value=""><input type="button" value="確認"
-									class="button-ok" onclick="setSM(1)"></span>
-							<span>範圍（±）<input type="number" id="SETSMD" value=""><input type="button" value="確認"
-									class="button-ok" onclick="setSM(2)"></span>
-						</td>
+						<td id="step7" style="display: none;"></td>
+						<td id="final" style="display: none;"></td>
 					</tr>
 				</table>
 			</div>
@@ -257,7 +220,7 @@
 
 	<!-- <script src='./func.js'></script>
 	<script src='./index.js'></script> -->
-	<script src="test.js"></script>
+	<script src="../test.js"></script>
 	<!-- <script src="style.js"></script> -->
 
 	<!-- <script>

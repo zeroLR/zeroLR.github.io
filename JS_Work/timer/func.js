@@ -20,6 +20,13 @@ function postCmd(str) {
   console.log(jsonCmd);
   w.postMessage(jsonCmd);
 }
+
+// 關閉壓力設定
+function closeWP() {
+  for (let i = 0; i < 7; i++) {
+    $(`step${i + 1}`).style.display = "none";
+  }
+}
 // 切換模式(0停止, 1自動, 2修改, 3手動)
 function ckchm() {
   console.log("mode change");
@@ -28,9 +35,11 @@ function ckchm() {
   switch ($("ACT").options[$("ACT").selectedIndex].value) {
     case "stop":
       str = "change mode 0";
+      closeWP();
       break;
     case "auto":
       str = "change mode 1";
+      closeWP();
       break;
     case "edit":
       str = "change mode 2";
@@ -39,6 +48,8 @@ function ckchm() {
       str = "change mode 3";
       break;
   }
+
+  $("btn_WP").style.display = "none";
   postCmd(str);
 }
 // 開始修改時間
@@ -132,19 +143,161 @@ function BTSW(bt) {
   if (act != "manual") return;
   str = "swap " + bt.id;
   postCmd(str);
+  closeWP();
+}
+// 開始設定出口壓力
+function setWP() {
+  $("setWP").style.display = "table-row";
+  $("step1").style.display = "table-cell";
+  $("btn_WP").style.display = "none";
+  $("final").style.display = "none";
+  postCmd("change mode 3"); //校正時進入手動狀態
 }
 
-// 溼度偵測設定值修改
-function setSM(i) {
-  kM = 0;
-  str =
-    i == 1
-      ? "set SM SV " + $("SETSM").value
-      : i == 2
-      ? "set SM Delta " + $("SETSMD").value
-      : "";
-  postCmd(str);
+// 等待函數
+const delay = (interval) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, interval);
+  });
+};
+var n = 0;
+// 依步驟設定
+function step(i) {
+  var cur = $("step" + (i - 1));
+  var next = $("step" + i);
+
+  if (i == 2) {
+    const swap = async () => {
+      // postCmd("swap motor"); //開啟馬達
+      console.log("Open motor...");
+      await delay(1000); // 等待一秒
+      postCmd("swap SW1"); //開啟1站
+      console.log("SW1 ON");
+      await delay(5000); // 等待五秒
+    };
+    if (n) {
+      $(`btn_set${i - 1}`).style.display = "none";
+      next.style.display = "table-cell";
+      store[i - 2] = parseFloat($("WP").innerText);
+      console.log(store);
+      cur.style.display = "none";
+      n = 0;
+    } else {
+      swap();
+      $(`btn_step${i - 1}`).style.display = "none";
+      $(`btn_set${i - 1}`).style.display = "block";
+      n = 1;
+    }
+  } else if (i == 3) {
+    const swap = async () => {
+      postCmd("swap SW1"); //關閉1站
+      console.log("SW1 OFF");
+      await delay(1000); // 等待一秒
+      postCmd("swap SW2"); //開啟2站
+      console.log("SW2 ON");
+      await delay(5000); // 等待五秒
+    };
+    if (n) {
+      $(`btn_set${i - 1}`).style.display = "none";
+      next.style.display = "table-cell";
+      store[i - 2] = parseFloat($("WP").innerText);
+      console.log(store);
+      cur.style.display = "none";
+      n = 0;
+    } else {
+      swap();
+      $(`btn_step${i - 1}`).style.display = "none";
+      $(`btn_set${i - 1}`).style.display = "block";
+      n = 1;
+    }
+  } else if (i == 4) {
+    const swap = async () => {
+      postCmd("swap SW2"); //關閉2站
+      console.log("SW2 OFF");
+      await delay(1000); // 等待一秒
+      postCmd("swap SW3"); //開啟3站
+      console.log("SW3 ON");
+      await delay(5000); // 等待五秒
+    };
+    if (n) {
+      $(`btn_set${i - 1}`).style.display = "none";
+      next.style.display = "table-cell";
+      store[i - 2] = parseFloat($("WP").innerText);
+      console.log(store);
+      cur.style.display = "none";
+      n = 0;
+    } else {
+      swap();
+      $(`btn_step${i - 1}`).style.display = "none";
+      $(`btn_set${i - 1}`).style.display = "block";
+      n = 1;
+    }
+  } else if (i == 5) {
+    next.style.display = "table-cell";
+    store[i - 2] = parseFloat($("WP").innerText);
+    console.log(store);
+    cur.style.display = "none";
+  } else if (i == 6) {
+    const swap = async () => {
+      // postCmd("swap motor"); //關閉馬達
+      console.log("SW2 OFF");
+      await delay(500); // 等待0.5秒
+    };
+    if (n) {
+      $(`btn_set${i - 1}`).style.display = "none";
+      next.style.display = "table-cell";
+      store[i - 2] = parseFloat($("WP").innerText);
+      console.log(store);
+      cur.style.display = "none";
+      n = 0;
+    } else {
+      swap();
+      $(`btn_step${i - 1}`).style.display = "none";
+      $(`btn_set${i - 1}`).style.display = "block";
+      n = 1;
+    }
+  } else if (i == 7) {
+    next.style.display = "table-cell";
+    store[5] = parseFloat($("threshold").value);
+    next.innerHTML = `請確認設定值<br><br>
+      1站標準值 : ${store[0]} <br>
+      2站標準值 : ${store[1]} <br>
+      3站標準值 : ${store[2]} <br>
+      壓力下限 : ${store[3]} <br>
+      壓力上限 : ${store[4]} <br>
+      閥值(+-) : ${store[5]} <br><br>
+      若無誤請按儲存,重設請按取消並重複步驟<br>
+      <button class="button-ok" onclick="step(8)">儲存</button><br>
+      <button class="button-cancel" onclick="step(9)">取消</button>`;
+    cur.style.display = "none";
+  } else if (i == 8) {
+    $("final").innerHTML = `1站標準值 : ${store[0]} <br>
+     2站標準值 : ${store[1]} <br>
+     3站標準值 : ${store[2]} <br>
+     壓力下限 : ${store[3]} <br>
+     壓力上限 : ${store[4]} <br>
+     閥值(+-) : ${store[5]} <br>`;
+    $("final").style.display = "table-cell";
+    $("btn_WP").style.display = "block";
+    cur.style.display = "none";
+    mark = store;
+    console.log(store);
+    str =
+      "setWP" +
+      ` ${mark[0]}` +
+      ` ${mark[1]}` +
+      ` ${mark[2]}` +
+      ` ${mark[3]}` +
+      ` ${mark[4]}` +
+      ` ${mark[5]}`;
+    postCmd(str);
+    cur.style.display = "none";
+  } else if (i == 9) {
+    $("step7").style.display = "none";
+    $("btn_WP").style.display = "block";
+  }
 }
+
 // 輸入文字執行命令
 function execCmd() {
   editCmd = 0;

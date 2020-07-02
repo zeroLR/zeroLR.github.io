@@ -3,6 +3,8 @@ var act;
 var onScheEdit = 0;
 var editCmd = 0;
 var kM;
+var store = [0, 0, 0, 0, 0, 0];
+var mark = [0, 0, 0, 0, 0, 0];
 // 取得id
 function $(id) {
   return document.getElementById(id);
@@ -56,23 +58,13 @@ function wkMsg(e) {
     }
   }
 
-  if (act != "edit") {
-    ControlTb("MOISTURE_edit", false);
-  }
   if ("WP" in e.data) {
     $("WP").innerHTML = e.data["WP"];
-  }
-  if ("SMCV" in e.data) {
-    $("MOISTURE_detect").innerHTML = e.data["SMCV"];
-  }
-  if ("SMSV" in e.data) {
-    $("MOISTURE_set").innerHTML = e.data["SMSV"];
-    $("MOISTURE_range").innerHTML = e.data["SMSVD"];
     if (act == "edit" && kM == 0) {
       kM = 1;
-      ControlTb("MOISTURE_edit", true);
-      $("SETSM").value = e.data["SMSV"];
-      $("SETSMD").value = e.data["SMSVD"];
+      $("btn_WP").style.display = "block";
+    } else if (act != "edit" || $("final").innerText === undefined) {
+      ControlTb("final", false);
     }
   }
 
