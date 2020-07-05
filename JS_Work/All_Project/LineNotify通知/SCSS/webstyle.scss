@@ -67,12 +67,10 @@ $main-bgcolor: #e98b2a;
   }
   input[type="text"] {
     border: none;
-    font-size: 20px;
     text-align: center;
   }
   input[type="number"] {
     border: none;
-    font-size: 20px;
     text-align: center;
   }
   h2 {
@@ -274,6 +272,7 @@ h1 {
 // 命令執行
 .div-cmd {
   @include div-style;
+  @include table-style;
 }
 
 // 訊息顯示
