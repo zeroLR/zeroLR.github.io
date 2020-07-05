@@ -1,8 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 
 <head>
-	<meta charset='utf-8'>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>WIFI連線測試器</title>
 	<!-- <script src='./func.js'></script>
 	<script src='./index.js'></script> -->
@@ -28,21 +29,133 @@
 				<table id="wifi">
 					<caption>
 						<h1>外網連線測試</h1>
+						<h2>目前連線wifi</h2>
 					</caption>
-					<tr>
+					<thead>
 						<th>連線</th>
+						<th>功能</th>
+					</thead>
+					<tr>
+						<!-- <th>連線</th>
 						<td>---</td>
-						<td><input type="button" value="搜尋AP" onclick="networkscan()"></td>
+						<td><input type="button" value="搜尋AP" onclick="networkscan()" class="button-ok"></td>
 						<th>SSID:</th>
 						<td><input type="text" id="ssid"></td>
 						<th>PWD:</th>
 						<td><input type="text" id="pwd"></td>
-						<td><input type="button" value="連線" onclick="connectAP()">
+						<td><input type="button" value="連線" onclick="connectAP()" class="button-ok"> -->
+						<td data-label="連線">---</td>
+						<td data-label="功能"><input type="button" value="搜尋AP" onclick="networkscan()" class="button-ok">
+						</td>
+					</tr>
+				</table>
+				<table>
+					<caption>
+						<h2>連線至wifi</h2>
+					</caption>
+					<thead>
+						<th>SSID</th>
+						<th>密碼</th>
+						<th>功能</th>
+					</thead>
+					<tr>
+						<td data-label="SSID"><input type="text" name="ssid" id="ssid"></td>
+						<td data-label="密碼"><input type="text" name="pwd" id="pwd"></td>
+						<td data-label="功能"><input type="button" value="連線" onclick="connectAP()" class="button-ok">
+						</td>
 					</tr>
 				</table>
 			</div>
 			<div class="div-notify">
-				<table>
+				<table id="LineToken">
+					<caption>
+						<h1>Line 訊息通知</h1>
+						<h2>Line權杖</h2>
+					</caption>
+					<thead>
+						<th>名稱</th>
+						<th>權杖</th>
+						<th>功能</th>
+
+					</thead>
+					<tr id="token1">
+						<td data-label="名稱">客戶A</td>
+						<td data-label="權杖">QAsfjkwlvfadsfajdfixjc</td>
+						<td data-label="功能">
+							<input type="button" value="啟用" class="button-ok">
+							<input type="button" value="刪除" class="button-cancel">
+						</td>
+					</tr>
+					<tr>
+						<td data-label="名稱"><input type="text" name="名稱" id="tokenName">
+						</td>
+						<td data-label="權杖"><input type="text" name="token" id="token"></td>
+						<td data-label="功能">
+							<input type="button" value="儲存" class="button-ok">
+							<input type="button" value="取消" class="button-cancel">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3"><input type="button" class="button-ok" value="新增權杖">
+						</td>
+					</tr>
+
+				</table>
+				<table id="LineNotify">
+					<caption>
+						<h2>通知訊息</h2>
+					</caption>
+					<thead>
+						<th>通知對象</th>
+						<th>狀態</th>
+						<th>裝置點</th>
+						<th>標題</th>
+						<th>內容</th>
+						<th>觸發延時</th>
+						<th>發送週期</th>
+						<th>功能</th>
+					</thead>
+					<tr id="notify1">
+						<td data-label="通知對象">客戶A</td>
+						<td data-label="狀態">觸發</td>
+						<td data-label="裝置點">住家大門</td>
+						<td data-label="標題">不明人士進入</td>
+						<td data-label="內容">未編輯</td>
+						<td data-label="觸發延時">持續狀態5秒後通知</td>
+						<td data-label="發送週期">10後再發送通知</td>
+						<td data-label="功能">
+							<input type="button" value="啟用" class="button-ok">
+							<input type="button" value="刪除" class="button-cancel">
+						</td>
+					</tr>
+					<tr>
+						<td data-label="通知對象">
+							<select name="target" id="target">
+								<option value="token1">客戶A</option>
+							</select>
+						</td>
+						<td data-label="狀態">
+							<select name="status" id="status">
+								<option value="normal">正常</option>
+								<option value="trigger">觸發</option>
+							</select>
+						</td>
+						<td data-label="裝置點"><input type="text" name="position" id="position"></td>
+						<td data-label="標題"><input type="text" name="title" id="title"></td>
+						<td data-label="內容"><input type="text" name="detail" id="detail"></td>
+						<td data-label="觸發延時"><input type="number" name="delay" id="delay"></td>
+						<td data-label="發送週期"><input type="number" name="turn" id="turn"></td>
+						<td data-label="功能">
+							<input type="button" value="啟用" class="button-ok">
+							<input type="button" value="刪除" class="button-cancel">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="8" style="border-bottom: 0em;"><input type="button" class="button-ok" value="新增通知">
+						</td>
+					</tr>
+				</table>
+				<!-- <table>
 					<caption>
 						<h1>Line Notify 測試</h1>
 					</caption>
@@ -100,18 +213,24 @@
 						<td><input type="text" id="V3"></td>
 						<td><input type="button" value="Line" onclick="LineNotify()"></td>
 					</tr>
-				</table>
+				</table> -->
 			</div>
-
 			</br /></br />
 			<div class="div-cmd">
 				<table id="cmdtb">
-					<tr>
-						<th><input type="button" value="清除內容" onclick="cleanCnt()"></th>
+					<caption>
+						<h1>命令測試</h1>
+					</caption>
+					<thead>
 						<th>命令</th>
-						<td><input type="text" id="cmd" size="70"></td>
-						<th tidth="20%"><input type="button" value="執行" onclick="execCmd()"></th>
-						<th></th>
+						<th>功能</th>
+					</thead>
+					<tr>
+						<td data-label="命令"><input type="text" name="cmd" id="cmd"></td>
+						<td data-label="功能">
+							<input type="button" value="執行" onclick="execCmd()" class="button-ok">
+							<input type="button" value="清除內容" onclick="cleanCnt()" class="button-cancel">
+						</td>
 					</tr>
 				</table>
 			</div>
