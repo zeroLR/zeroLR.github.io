@@ -21,6 +21,13 @@ $main-bgcolor: #e98b2a;
     background-color: #dcb879;
     border-radius: 20px;
   }
+
+  h2 {
+    margin: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
   th {
     color: #734338;
     font-size: 35px;
@@ -402,6 +409,9 @@ h1 {
   h1 {
     font-size: 32px;
   }
+  h2 {
+    font-size: 25px;
+  }
   .div-main {
     th {
       font-size: 30px;
@@ -414,6 +424,9 @@ h1 {
 @media screen and (max-width: 770px) {
   h1 {
     font-size: 25px;
+  }
+  h2 {
+    font-size: 20px;
   }
   .div-main {
     th {
