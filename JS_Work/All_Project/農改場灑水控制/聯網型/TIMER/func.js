@@ -44,7 +44,6 @@ function ckchm() {
       message(`通知 ： 切換到手動模式<br>CMD:${str}`);
       break;
   }
-
   postCmd(str);
 }
 // 開始修改時間
