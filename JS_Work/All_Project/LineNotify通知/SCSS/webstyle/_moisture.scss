@@ -1,0 +1,67 @@
+// 物件區塊風格屬性
+@mixin div-style {
+  // background-image: linear-gradient(#c0a8b5b7, #7c85dfc4);
+  background-color: #f0ece6;
+  border-radius: 34px;
+  box-shadow: 5px 5px 2px #888888a2;
+  padding-bottom: 2em;
+  margin: 1em 1em 1em 1em;
+  h1 {
+    background-color: #dcb879;
+    border-radius: 20px;
+    width: auto;
+  }
+}
+
+// 表格物件風格屬性
+@mixin table-style($th-color: cadetblue, $td-color: khaki, $width: 80%) {
+  table {
+    width: $width;
+  }
+  th {
+    background-color: $th-color;
+    font-size: 35px;
+    inline-size: 10em;
+  }
+  td {
+    background-color: $td-color;
+    color: #4a593d;
+    font-size: 35px;
+  }
+  input[type="text"] {
+    border: none;
+    text-align: center;
+  }
+  input[type="number"] {
+    border: none;
+    text-align: center;
+  }
+  h2 {
+    background-color: #f04b82;
+    color: #3b38dd;
+    width: 50%;
+    border-radius: 20px;
+  }
+}
+// 土壤濕度偵測屬性
+.div-moisture {
+  @include div-style;
+  @include table-style;
+  th {
+    font-size: 35px;
+    inline-size: 10em;
+  }
+  td {
+    color: #4a593d;
+    font-size: 35px;
+  }
+  span {
+    display: block;
+    text-align: center;
+    input {
+      padding: 0.5em;
+      font-size: 20px;
+      text-align: center;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+// 物件區塊風格屬性
+@mixin div-style {
+  // background-image: linear-gradient(#c0a8b5b7, #7c85dfc4);
+  background-color: #f0ece6;
+  border-radius: 34px;
+  box-shadow: 5px 5px 2px #888888a2;
+  padding-bottom: 2em;
+  margin: 1em 1em 1em 1em;
+  h1 {
+    background-color: #dcb879;
+    border-radius: 20px;
+    width: auto;
+  }
+}
+// 站別物件屬性
+.div-station {
+  @include div-style;
+  tr {
+    td {
+      display: contents;
+    }
+  }
+}

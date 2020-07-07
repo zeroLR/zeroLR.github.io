@@ -1,0 +1,87 @@
+// 核取方塊風格屬性
+@mixin checkbox-style {
+  label {
+    padding: 0;
+    margin-right: 3px;
+    cursor: pointer;
+  }
+  input[type="checkbox"] {
+    display: none;
+  }
+  input[type="checkbox"] + span {
+    display: inline-block;
+    background-color: rgb(179, 179, 179);
+    padding: 5px 8px;
+    border-radius: 20px;
+    color: #444;
+    user-select: none; /* 防止文字被滑鼠選取反白 */
+  }
+
+  input[type="checkbox"]:checked + span {
+    color: rgb(255, 255, 255);
+    background-color: rgb(41, 121, 226);
+  }
+}
+// 物件區塊風格屬性
+@mixin div-style {
+  // background-image: linear-gradient(#c0a8b5b7, #7c85dfc4);
+  background-color: #f0ece6;
+  border-radius: 34px;
+  box-shadow: 5px 5px 2px #888888a2;
+  padding-bottom: 2em;
+  margin: 1em 1em 1em 1em;
+  h1 {
+    background-color: #dcb879;
+    border-radius: 20px;
+    width: auto;
+  }
+}
+
+// 表格物件風格屬性
+@mixin table-style($th-color: cadetblue, $td-color: khaki, $width: 80%) {
+  table {
+    width: $width;
+  }
+  th {
+    background-color: $th-color;
+    font-size: 35px;
+    inline-size: 10em;
+  }
+  td {
+    background-color: $td-color;
+    color: #4a593d;
+    font-size: 35px;
+  }
+  input[type="text"] {
+    border: none;
+    text-align: center;
+  }
+  input[type="number"] {
+    border: none;
+    text-align: center;
+  }
+  h2 {
+    background-color: #f04b82;
+    color: #3b38dd;
+    width: 50%;
+    border-radius: 20px;
+  }
+}
+// 時間設定表屬性
+.div-sche {
+  @include div-style;
+  @include table-style;
+  @include checkbox-style;
+  th {
+    font-size: 35px;
+    inline-size: 10em;
+  }
+  td {
+    color: #4a593d;
+    font-size: 35px;
+  }
+  input {
+    text-align: center;
+    padding: 1em;
+  }
+}
