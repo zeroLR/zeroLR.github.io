@@ -59,6 +59,18 @@ function wkMsg(e) {
   if ("WP" in e.data) {
     $("WP").innerHTML = e.data["WP"];
   }
+  if ("WPH" in e.data) {
+    $("WPH").innerHTML = e.data["WPH"];
+  }
+  if ("WPL" in e.data) {
+    $("WPL").innerHTML = e.data["WPL"];
+  }
+  if ("WPR" in e.data) {
+    $("WPR").innerHTML = e.data["WPR"];
+  }
+  if ("WPS" in e.data) {
+    $("WPS").innerHTML = e.data["WPS"];
+  }
 
   if ("SCHE" in e.data) {
     tb = $("SCHE");
