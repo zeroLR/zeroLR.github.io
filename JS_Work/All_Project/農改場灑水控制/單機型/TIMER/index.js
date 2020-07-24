@@ -3,6 +3,7 @@ var act;
 var onScheEdit = 0;
 var editCmd = 0;
 var kM;
+var WPsetting;
 // 取得id
 function $(id) {
   return document.getElementById(id);
@@ -66,16 +67,13 @@ function wkMsg(e) {
     $("WP").innerHTML = e.data["WP"];
   }
   if ("WPH" in e.data) {
-    $("WPH").innerHTML = e.data["WPH"];
+    WPsetting = e.data;
   }
   if ("WPL" in e.data) {
-    $("WPL").innerHTML = e.data["WPL"];
   }
   if ("WPR" in e.data) {
-    $("WPR").innerHTML = e.data["WPR"];
   }
   if ("WPS" in e.data) {
-    $("WPS").innerHTML = e.data["WPS"];
   }
 
   if ("SCHE" in e.data) {

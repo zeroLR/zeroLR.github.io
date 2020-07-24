@@ -135,3 +135,19 @@ function execCmd() {
   // str = $("CMD").options[$("CMD").selectedIndex].text;
   postCmd(str);
 }
+
+// 顯示壓力設定值
+function showWPInfo() {
+  postCmd("get WP setting");
+  var li = document.createElement("li");
+  setTimeout(() => {
+    li.innerHTML = String(JSON.stringify(WPsetting));
+    $("content").insertBefore(li, $("content").firstChild);
+  }, 500);
+}
+// 顯示其他資訊
+function showInfo() {}
+// 清除訊息
+function clearInfo() {
+  $("content").innerHTML = "";
+}
