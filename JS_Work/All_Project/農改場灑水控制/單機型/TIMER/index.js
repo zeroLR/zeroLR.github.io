@@ -50,9 +50,15 @@ function wkMsg(e) {
     $("SW2").value = "2-" + dt[1];
     $("SW3").value = "3-" + dt[2];
     for (let i = 1; i < dt.length + 1; i++) {
-      dt[i - 1] == "ON" || dt[i - 1] == "M.ON"
-        ? ($("SW" + i).style.background = "lawngreen")
-        : ($("SW" + i).style.background = "red");
+      if (dt[i - 1] == "ON" || dt[i - 1] == "M.ON") {
+        $("SW" + i).style.background = "lawngreen";
+      } else if (dt[i - 1] == "IDLE" || dt[i - 1] == "M.IDLE") {
+        $("SW" + i).style.background = "blue";
+        $("SW" + i).style.color = "white";
+      } else if (dt[i - 1] == "OFF" || dt[i - 1] == "M.OFF") {
+        $("SW" + i).style.background = "red";
+        $("SW" + i).style.color = "#211e55";
+      }
     }
   }
 
