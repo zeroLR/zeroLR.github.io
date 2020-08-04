@@ -125,10 +125,12 @@ h1 {
     margin: 0.5em 0em 0.5em 0.6em;
   }
 
-  .div-setWP {
+  .div-info {
     @include table-RWD;
     td {
-      text-align: center;
+      padding-top: 0.7em;
+      margin: 0em 1em 0em 1em;
+      border-bottom: none;
     }
   }
   .div-WP {

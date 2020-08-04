@@ -11,46 +11,48 @@
 <body>
 	<div class="container">
 		<div class="div-main">
-			<table>
-				<caption>
-					<h1>台東區農業改良場灑水控制 V1.2測試</h1>
-				</caption>
-				<tr>
-					<th>日期</th>
-					<td id="date" onclick="upTm()">------</td>
-					<th>時間</th>
-					<td id="time" onclick="upTm()">--:--:--</td>
-					<td>
-						<label for="act">模式：</label>
-						<select name="act" id="ACT" onchange="ckchm()">
-							<option value="stop">停止</option>
-							<option value="auto">自動</option>
-							<option value="edit">修改</option>
-							<option value="manual">手動</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>連接網路</th>
-					<td id="wifi">----</td>
-					<th>訊號品質</th>
-					<td id="RSSI" colspan=2>------
-					</td>
-				</tr>
-				<tr id="CMD" style="display: none">
-					<td colspan=5>
-						<input id="CMD_text" type="text" value=""><button class="button-ok"
-							onclick="execCmd()">執行</button>
-					</td>
-				</tr>
-				<tr id="date_edit" style="display: none">
-					<td colspan=5>
-						修改日期:<input id="EDT" type="datetime-local">
-						<button class="button-ok" onclick="setTm()">確認</button>
-						<button class="button-cancel" onclick="abET()">取消</button>
-					</td>
-				</tr>
-			</table>
+			<div class="div-info">
+				<table>
+					<caption>
+						<h1>台東區農業改良場灑水控制 V1.2測試</h1>
+					</caption>
+					<thead>
+						<th>日期</th>
+						<th>時間</th>
+						<th>連接網路</th>
+						<th>訊號品質</th>
+						<th>模式</th>
+					</thead>
+					<tr>
+						<td data-label="日期" id="date" onclick="upTm()">2020-07-24 W5</td>
+						<td data-label="時間" id="time" onclick="upTm()">13:57:31</td>
+						<td data-label="連接網路" id="wifi">RD01</td>
+						<td data-label="訊號品質" id="RSSI">39 535</td>
+						<td data-label="模式">
+							<select name="act" id="ACT" onchange="ckchm()">
+								<option value="stop">停止</option>
+								<option value="auto">自動</option>
+								<option value="edit">修改</option>
+								<option value="manual">手動</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="CMD" style="display: none">
+						<td colspan=5>
+							<input id="CMD_text" type="text" value=""><button class="button-ok"
+								onclick="execCmd()">執行</button>
+						</td>
+					</tr>
+					<tr id="date_edit" style="display: none">
+						<td colspan=5>
+							修改日期:<input id="EDT" type="datetime-local">
+							<button class="button-ok" onclick="setTm()">確認</button>
+							<button class="button-cancel" onclick="abET()">取消</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+
 			<div class="div-station">
 				<table id="STATION">
 					<caption>
@@ -84,38 +86,11 @@
 				</table>
 				<nav>
 					<ul id="content">
-						<li>時間：0701 16:41 <br>
-							通知： 馬達啟動</li>
+					<li>{"WPL":"1.00","WPH":"0.00","WPR":"160.00","WPS":"123.00"}</li>
 					</ul>
 				</nav>
 
 			</div>
-
-			<!-- <div class="div-setWP">
-				<table>
-					<caption>
-						<h1>出口壓力設定值</h1>
-					</caption>
-					<thead>
-						<th>上限</th>
-						<th>下限</th>
-						<th>1 站</th>
-						<th>2 站</th>
-						<th>3 站</th>
-						<th>WPR</th>
-						<th>WPS</th>
-					</thead>
-					<tr>
-						<td id="WPH" data-label="上限">0</td>
-						<td id="WPL" data-label="下限">0</td>
-						<td id="WP1" data-label="1 站">0</td>
-						<td id="WP2" data-label="2 站">0</td>
-						<td id="WP3" data-label="3 站">0</td>
-						<td id="WPR" data-label="WPR">0</td>
-						<td id="WPS" data-label="WPS">0</td>
-					</tr>
-				</table>
-			</div> -->
 			<div class="div-sche">
 				<table id="SCHE">
 					<caption>
