@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>輔助升降器 </title> 
+		<meta charset="utf-8">
+		<script src="./elevator2.js" ></script>
+	</head>
+	<body>
+			輔助升降器網路連線 <br/><br/>
+			<input id="ugvurl" type="url" value="10.10.10.204:10000"><br/>
+			<input id="connect" type="button" value="CONNECT" onclick="connect( '1' )" >
+			<input id="disconn" type="button" value="DISCONNECT" onclick="connect( '0' )"><br/>
+			<br/>
+			<br/>
+			馬達啟動<br/>
+			<input type="button" value="解鎖" onclick="arm( '1' )">
+			<input type="button" value="鎖住" onclick="arm( '0' )"><br/>
+			<br/>
+			馬達動作<br/>
+			<input type="button" value="向上" onclick="active( 'UP' )"><br/>
+			<input type="button" value="停止" onclick="active( 'STOP' )"><br/>
+			<input type="button" value="向下" onclick="active( 'DOWN' )"><br/>
+			<br/>			<br/>
+			<input type="button" value="加速" onclick="active( 'SPDUP' )"><br/>
+			<input type="button" value="減速" onclick="active( 'SPDDOWN' )"><br/>
+			<br/>			<br/>
+			設定上下點位置>><br/>
+			移動至下方起始點<br/>
+			<input type="button" value="設定起始點" onclick="setCycle( 'STARTPT' )"><br/>
+			移動至上方終止點<br/>
+			<input type="button" value="設定終止點" onclick="setCycle( 'STOPPT' )"><br/>
+			<br/>
+			<input type="button" value="測試" onclick="setCycle( 'TEST' )"><br/>
+			<br/><br/>
+			循環動作功能<br/><br/>
+			<input type="button" value="啟動" onclick="setCycle( 'CYCLESET' )">
+			<input type="button" value="停止" onclick="setCycle( 'CYCLESTOP' )"><br/>
+			<div id="DISPLAY">
+			</div>
+	</body>
+</html>
