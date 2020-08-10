@@ -3,9 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./dist/css/webstyle.css" type="text/css">
-    <title>輔助升降器</title>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0"> -->
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport"
+        name="viewport">
+    <link rel=" stylesheet" href="./dist/css/webstyle.css" type="text/css">
+    <title>輔助肢體抬升機</title>
 </head>
 
 <body>
@@ -14,36 +16,68 @@
             <div class="header">
                 <h1>輔助升降器</h1>
             </div>
+            <div class="status">
+                <table>
+                    <thead>
+                        <th>連接網路</th>
+                        <th>訊號品質</th>
+                        <th>命令列</th>
+                        <th>連線</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>RD01</td>
+                            <td>-40 777</td>
+                            <td><input type="text" name="" id=""><input type="button" value="執行"></td>
+                            <td><input type="text" name="" id="ugvurl"><input type="button" value="連線"
+                                    onclick="connect('1')"><input type="button" value="取消連線" onclick="connect('0')">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <div class="motorState">
-                馬達狀態 <input class="button-switch" type="button" value="Lock">
+                馬達開關 <input class="button-switch" id="msw" type="button" value="Lock" onclick="arm('1')">
             </div>
             <div class="machineState">
-                機器狀態
+                機器狀態: <span id="mstate">stop</span> | 位置:<span id="mpos">0</span>
+
             </div>
             <div class="machineChart">
                 機器圖示
+                <div>
+                    <input id="slide-main" type="range" value="30" disabled>
+                </div>
             </div>
             <div class="motorCtl">
                 馬達控制
+                <div class="motor-container">
+                    <div class="up"><input type="button" id="up" onclick="active('UP')"></div>
+                    <div class="stop"><input type="button" id="stop" onclick="active('STOP')"></div>
+                    <div class="down"><input type="button" id="down" onclick="active('DOWN')"></div>
+                    <div class="speedup"><input type="button" id="speedup" onclick="active('SPDUP')"></div>
+                    <div class="speeddown"><input type="button" id="speeddown" onclick="active('SPDDOWN')"></div>
+                </div>
+            </div>
+            <div class="loop">
+                循環動作功能
                 <table>
                     <tr>
-                        <td><button class="btn-play"></button></td>
-                        <td><button></button></td>
+                        <td><input type="button" class="btn-min" value="設定起始點" onclick="setCycle( 'STARTPT' )"></td>
+                        <td><input type="button" class="btn-max" value="設定終止點" onclick="setCycle( 'STOPPT' )"></td>
                     </tr>
                     <tr>
-                        <td><button></button></td>
-                    </tr>
-                    <tr>
-                        <td><button></button></td>
-                        <td><button></button></td>
+                        <td><input type="button" class="btn-start" value="啟動" onclick="setCycle( 'CYCLESET' )"></td>
+                        <td><input type="button" class="btn-stop" value="停止" onclick="setCycle( 'CYCLESTOP' )"></td>
                     </tr>
                 </table>
             </div>
-            <div class="loop">
-                循環動作功能 <input type="button" value="啟動"><input type="button" value="停止">
+            <div id="DISPLAY">
             </div>
+
         </div>
     </div>
 </body>
+<script src="./elevator2.js"></script>
 
 </html>

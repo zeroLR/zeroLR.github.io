@@ -41,3 +41,15 @@ function loopACT(state) {
       console.log("循環停止");
   }
 }
+i = 30;
+setInterval(() => {
+  s = document.getElementById("slide-main");
+
+  i += 1;
+  s.value = i;
+  if (s.value === 100) {
+    i -= 1;
+  } else if (s.value === 0) {
+    i += 1;
+  }
+}, 1000);
