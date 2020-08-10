@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0"> -->
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport"
         name="viewport">
     <link rel=" stylesheet" href="./dist/css/webstyle.css" type="text/css">
@@ -21,13 +20,21 @@
                     <thead>
                         <th>連接網路</th>
                         <th>訊號品質</th>
-                        <th>命令列</th>
-                        <th>連線</th>
+
                     </thead>
                     <tbody>
                         <tr>
                             <td>RD01</td>
                             <td>-40 777</td>
+                        </tr>
+
+                    </tbody>
+                    <thead>
+                        <th>命令列</th>
+                        <th>連線</th>
+                    </thead>
+                    <tbody>
+                        <tr>
                             <td><input type="text" name="" id=""><input type="button" value="執行"></td>
                             <td><input type="text" name="" id="ugvurl"><input type="button" value="連線"
                                     onclick="connect('1')"><input type="button" value="取消連線" onclick="connect('0')">
