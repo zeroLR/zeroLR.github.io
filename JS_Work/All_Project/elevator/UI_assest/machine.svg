@@ -1,22 +1,10 @@
 <?xml version="1.0"?>
-<svg width="500" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:se="http://svg-edit.googlecode.com" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-inline--fa fa-caret-square-up fa-w-14" data-icon="caret-square-up" data-prefix="far">
+<svg width="500" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:se="http://svg-edit.googlecode.com" class="svg-inline--fa fa-caret-square-up fa-w-14" data-icon="caret-square-up" data-prefix="far">
  <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
- <defs>
-  <symbol class="svg-inline--fa fa-caret-square-up fa-w-14" data-icon="caret-square-up" data-prefix="far" height="500" id="svg_19" width="100" xmlns="http://www.w3.org/2000/svg" xmlns:se="http://svg-edit.googlecode.com" xmlns:svg="http://www.w3.org/2000/svg">
-   <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
-   <g class="layer">
-    <title>Layer 1</title>
-    <rect fill="#e0d9d9" height="498.000013" id="svg_18" stroke="#776e6e" stroke-width="3" width="26.000001" x="1.5" y="1.5"/>
-    <path d="m42.221501,57.990782l0,-70.00001l44.041994,70.00001l-44.041994,0z" fill="#e0d9d9" id="svg_17" stroke="#776e6e" stroke-width="3" transform="rotate(90.3399 64.2425 22.9908)"/>
-    <rect fill="#e0d9d9" height="61.999999" id="svg_16" stroke="#776e6e" stroke-width="3" width="70.999997" x="28" y="437"/>
-    <rect fill="#ffda56" height="27.5" id="svg_15" stroke="#ff2d2d" stroke-width="3" width="11.5" x="28" y="359.75"/>
-    <rect fill="#ffda56" height="27.5" id="svg_14" stroke="#ff2d2d" stroke-width="3" width="11.5" x="28" y="73.5"/>
-   </g>
-  </symbol>
- </defs>
  <g class="layer">
   <title>Layer 1</title>
-  <use id="svg_20" transform="rotate(90 250.812 50.378) matrix(1.00058 0 0 1.00109 197.629 -197.526)" x="2.715663" xlink:href="#svg_19" y="-2.497242"/>
-  <g id="svg_21"/>
+  <rect fill="#e0d9d9" height="498.000013" id="svg_5" stroke="#776e6e" stroke-width="3" transform="rotate(90 249.656 13)" width="26.000001" x="236.65625" y="-236"/>
+  <path d="m454.7215,96.27203l0,-70.00001l44.042,70.00001l-44.042,0z" fill="#e0d9d9" id="svg_6" stroke="#776e6e" stroke-width="3" transform="rotate(180 476.742 61.272)"/>
+  <rect fill="#e0d9d9" height="61.999999" id="svg_8" stroke="#776e6e" stroke-width="3" transform="rotate(90 32.25 63.3125)" width="70.999997" x="-3.25" y="32.3125"/>
  </g>
 </svg>

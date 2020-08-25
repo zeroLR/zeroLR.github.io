@@ -96,6 +96,14 @@
   margin: auto;
 }
 
+.title {
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  width: 50%;
+  margin: auto;
+  margin-top: 0.5em;
+}
+
 .status {
   border-radius: 10px;
   grid-area: status;
@@ -133,9 +141,6 @@
   grid-area: h1;
   background-color: rgb(252, 193, 0);
   font-size: 30px;
-  input {
-    font-size: 30px;
-  }
   box-shadow: 5px 5px 2px #888888a2;
 }
 
@@ -172,7 +177,7 @@
     height: 150px;
     background: blue;
     border-radius: 15px;
-    margin-top: 2em;
+    margin-top: 1.1em;
   }
 }
 
@@ -186,36 +191,37 @@
     width: 80px;
     height: 130px;
     background: no-repeat;
-    background-color: transparent;
+    background-color: rgb(59, 255, 222);
     outline: none;
     border: none;
     border-radius: 15px;
     cursor: pointer;
     overflow: hidden;
     box-shadow: 0 3px #999;
+    margin-top: 1em;
   }
   input:active {
     box-shadow: 0 5px #666;
     transform: translateY(4px);
     background-color: greenyellow;
   }
-  #up {
+  #Up {
     background-image: url(../../UI_assest/up.svg);
   }
-  #down {
+  #Down {
     background-image: url(../../UI_assest/down.svg);
   }
-  #stop {
+  #Stop {
     background-color: black;
     width: 80px;
     height: 80px;
   }
-  #speedup {
+  #SpdUp {
     background-image: url(../../UI_assest/speedup.svg);
     width: 60px;
     height: 100px;
   }
-  #speeddown {
+  #SpdDown {
     background-image: url(../../UI_assest/speeddown.svg);
     width: 60px;
     height: 100px;
@@ -228,6 +234,7 @@
   background-color: slateblue;
   box-shadow: 5px 5px 2px #888888a2;
   font-size: 30px;
+  padding-bottom: 1em;
   input {
     width: 250px;
     font-size: 30px;
@@ -236,6 +243,7 @@
     outline: none;
     border: none;
     cursor: pointer;
+    margin-top: 0.5em;
   }
   input:active {
     box-shadow: 0 5px #666;
@@ -244,15 +252,19 @@
   table {
     margin: auto;
   }
-  .btn-start {
-    background-color: lightseagreen;
-  }
-  .btn-stop {
-    background-color: tomato;
-  }
+}
+
+.btn-min {
+  background-color: rgb(124, 233, 74);
+}
+.btn-max {
+  background-color: rgb(255, 81, 0);
 }
 
 @media screen and (max-width: 1920px) {
+  #cmd {
+    font-size: 30px;
+  }
   .machineState {
     margin: auto;
     width: 60%;
@@ -316,6 +328,12 @@
 }
 
 @media screen and (max-width: 1096px) {
+  * {
+    font-size: 20px !important;
+  }
+  #cmd {
+    font-size: 20px;
+  }
   .status {
     th {
       font-size: 20px;
@@ -403,6 +421,9 @@
   }
 }
 @media screen and (max-width: 560px) {
+  #cmd {
+    font-size: 10px !important;
+  }
   .header {
     width: 90%;
   }
@@ -419,7 +440,7 @@
       "header header header header header header"
       "status status status status status status"
       "h1 h1 h1 h1 h1 h1"
-      "m1 m1 m1 m1 m1 m1"
+      "m1 m1 m1 main main main"
       "m2 m2 m2 main main main"
       "m2 m2 m2 main main main"
       "footer footer footer footer footer footer";

@@ -31,51 +31,54 @@
                     </tbody>
                     <thead>
                         <th>命令列</th>
-                        <th>連線</th>
+                        <th>模式</th>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><input type="text" name="" id=""><br><input type="button" value="執行"></td>
-                            <td><input type="text" name="" id="ugvurl"><br><input type="button" value="連線"
-                                    onclick="connect('1')"><input type="button" value="取消連線" onclick="connect('0')">
+                            <td><input type="text" name="" id="cmd"><br><input type="button" value="執行">
+                            </td>
+                            <td>
+                                <select name="act" id="ACT">
+                                    <option value="manual">手動</option>
+                                    <option value="loop">循環</option>
+                                </select>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="motorState">
-                馬達開關 <input class="button-switch" id="msw" type="button" value="Lock" onclick="arm('1')">
+                馬達狀態: <span id="state">----</span>
             </div>
             <div class="machineState">
-                機器狀態: <span id="mstate">stop</span> | 位置:<span id="mpos">0</span>
-
+                機器狀態: <span id="mstate">stop</span><br>
+                位置:<span id="POS">100</span><br>
+                速度: <span id="SPD">10000</span><br>
+                觸碰極限:<span id="LT">OFF</span><br>
+                起點: <span id="PosS">50</span> 終點: <span id="PosE">100</span>
             </div>
             <div class="machineChart">
-                機器圖示
+                <div class="title">機器圖示</div>
                 <div>
                     <input id="slide-main" type="range" value="30" disabled>
                 </div>
             </div>
             <div class="motorCtl">
-                馬達控制
+                <div class="title">馬達控制</div>
                 <div class="motor-container">
-                    <div class="up"><input type="button" id="up" onclick="active('UP')"></div>
-                    <div class="stop"><input type="button" id="stop" onclick="active('STOP')"></div>
-                    <div class="down"><input type="button" id="down" onclick="active('DOWN')"></div>
-                    <div class="speedup"><input type="button" id="speedup" onclick="active('SPDUP')"></div>
-                    <div class="speeddown"><input type="button" id="speeddown" onclick="active('SPDDOWN')"></div>
+                    <div class="up"><input type="button" id="Up" onclick="active('UP')"></div>
+                    <div class="stop"><input type="button" id="Stop" onclick="active('STOP')"></div>
+                    <div class="down"><input type="button" id="Down" onclick="active('DOWN')"></div>
+                    <div class="speedup"><input type="button" id="SpdUp" onclick="active('SPDUP')"></div>
+                    <div class="speeddown"><input type="button" id="SpdDown" onclick="active('SPDDOWN')"></div>
                 </div>
             </div>
             <div class="loop">
-                循環動作功能
+                <div class="title">循環動作功能</div>
                 <table>
                     <tr>
                         <td><input type="button" class="btn-min" value="設定起始點" onclick="setCycle( 'STARTPT' )"></td>
                         <td><input type="button" class="btn-max" value="設定終止點" onclick="setCycle( 'STOPPT' )"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="button" class="btn-start" value="啟動" onclick="setCycle( 'CYCLESET' )"></td>
-                        <td><input type="button" class="btn-stop" value="停止" onclick="setCycle( 'CYCLESTOP' )"></td>
                     </tr>
                 </table>
             </div>
