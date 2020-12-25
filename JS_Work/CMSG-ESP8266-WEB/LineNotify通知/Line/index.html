@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset='utf-8'>
+	<title>WIFI連線測試器</title>
+	<!-- <script src='./func.js'></script>
+	<script src='./index.js'></script> -->
+	<link rel="stylesheet" href="../dist/css/webstyle.css" type="text/css">
+</head>
+
+<body>
+	<div class="container">
+		<div class="div-main">
+			<table id="top">
+				<caption>
+					<h1>WIFI聯網測試</h1>
+				</caption>
+				<tr>
+					<th>RSSI:</th>
+					<td>---</td>
+					<th>執行時間</th>
+					<td>---</td>
+				</tr>
+			</table>
+			</br>
+			<div class="div-wifi">
+				<table id="wifi">
+					<caption>
+						<h1>外網連線測試</h1>
+					</caption>
+					<tr>
+						<th>連線</th>
+						<td>---</td>
+						<td><input type="button" value="搜尋AP" onclick="networkscan()"></td>
+						<th>SSID:</th>
+						<td><input type="text" id="ssid"></td>
+						<th>PWD:</th>
+						<td><input type="text" id="pwd"></td>
+						<td><input type="button" value="連線" onclick="connectAP()">
+					</tr>
+				</table>
+			</div>
+			<div class="div-notify">
+				<table>
+					<caption>
+						<h1>Line Notify 測試</h1>
+					</caption>
+					<tr>
+						<th colspan="2">Webhooks Key:</th>
+						<td colspan="2"></td>
+						<th colspan="2"></th>
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<th>接點狀態:</th>
+						<th>發報接點</th>
+						<td colspan="2">----</td>
+						<td></td>>
+					</tr>
+					<tr>
+						<td>Event Name:</th>
+						<td>狀況</th>
+						<td>客戶</th>
+						<td>說明</th>
+						<td>觸發延時</th>
+						<td>發送週期</th>
+						<td colspan="2">功能</th>
+					</tr>
+					<tr>
+						<td><input type="text" id="Event0" /></td>
+						<td><input type="text" id="Status0" /></td>
+						<td><input type="text" id="Cust0" /></td>
+						<td><input type="text" id="Note0" /></td>
+						<td><input type="number" id="delay0" /></td>
+						<td><input type="number" id="cycle0" /></td>
+						<td colspan="2"><input type="button" value="測試連線" onclick="FireNotify(0)"><input type="button"
+								value="儲存連線" onclick="saveNotify(0)"></td>
+					</tr>
+					<tr>
+						<td><input type="text" id="Event1" /></td>
+						<td><input type="text" id="Status1" /></td>
+						<td><input type="text" id="Cust1" /></td>
+						<td><input type="text" id="Note1" /></td>
+						<td><input type="number" id="delay1" /></td>
+						<td><input type="number" id="cycle1" /></td>
+						<td colspan="2"><input type="button" value="測試 通知一" onclick="FireNotify(1)"><input type="button"
+								value="儲存 通知一" onclick="saveNotify(1)"></td>
+					</tr>
+					<tr>
+						<td colspan="8"></br></td>
+					</tr>
+					<tr>
+						<td><input type="text" id="EN"></td>
+						<th>狀況</th>
+						<td><input type="text" id="V1"></td>
+						<th>客戶</th>
+						<td><input type="text" id="V2"></td>
+						<th>說明</th>
+						<td><input type="text" id="V3"></td>
+						<td><input type="button" value="Line" onclick="LineNotify()"></td>
+					</tr>
+				</table>
+			</div>
+
+			</br /></br />
+			<div class="div-cmd">
+				<table id="cmdtb">
+					<tr>
+						<th><input type="button" value="清除內容" onclick="cleanCnt()"></th>
+						<th>命令</th>
+						<td><input type="text" id="cmd" size="70"></td>
+						<th tidth="20%"><input type="button" value="執行" onclick="execCmd()"></th>
+						<th></th>
+					</tr>
+				</table>
+			</div>
+			<br />
+			<div id="msg"></div>
+			<div id="content"></div>
+		</div>
+	</div>
+	<!-- <script>
+		connect();
+	</script> -->
+</body>
+
+</html>
