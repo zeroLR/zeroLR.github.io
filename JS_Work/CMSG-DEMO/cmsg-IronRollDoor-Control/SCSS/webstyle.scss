@@ -1,0 +1,369 @@
+@mixin div-style($backcolor: #f0ece6) {
+  background-color: $backcolor;
+  border-radius: 34px;
+  box-shadow: 5px 5px 2px #888888a2;
+  padding-bottom: 2em;
+  margin: 1em 1em 1em 1em;
+}
+
+@mixin button-style() {
+  margin-bottom: 1em;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 5px #999;
+}
+
+.grid-container {
+  @include div-style();
+  display: grid;
+  grid-template-areas:
+    "header header header header header header"
+    "status status status status status status"
+    "m1 m1 m1 m1 m1 m1"
+    "m2 m2 m2 m2 m2 m2";
+  grid-gap: 10px;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.header {
+  font-size: 60px;
+}
+
+#CMD {
+  font-size: 20px;
+}
+
+.status {
+  font-size: 35px;
+  th {
+    font-size: 35px;
+  }
+  td {
+    font-size: 35px;
+  }
+}
+
+.temp-humidity-monitor {
+  @include div-style(#fad689);
+  margin: auto;
+  font-size: 30px;
+  table {
+    th {
+      font-size: 35px;
+    }
+    td {
+      font-size: 35px;
+    }
+  }
+  .title {
+    font-size: 40px;
+    width: 50%;
+    margin: auto;
+    margin-bottom: 1em;
+    background-color: #f0936e;
+    color: #554236;
+    border-radius: 10px;
+  }
+}
+
+.door-controller {
+  @include div-style(#787878);
+  margin: auto;
+  .title {
+    font-size: 40px;
+    grid-area: title;
+    width: 50%;
+    margin: auto;
+    margin-bottom: 1em;
+    background-color: #f0936e;
+    color: #554236;
+    border-radius: 10px;
+  }
+  grid-template-areas:
+    "title title title title"
+    "east south west north"
+    "east south west north"
+    "east south west north"
+    "east south west north";
+}
+
+.sw-east {
+  //   grid-area: east;
+  margin: auto;
+  //   background-image: url(../../img/bg.svg);
+  //   border-radius: 15px;
+  padding: 0.7em;
+
+  //   table {
+  //     font-size: 50px;
+  //     th {
+  //       color: yellow;
+  //     }
+  //   }
+
+  //   input:active {
+  //     box-shadow: 0 3px #666;
+  //     transform: translateY(6px);
+  //   }
+  .btn-east-up {
+    //     background-image: url(../../img/up.svg);
+    //     background-size: cover;
+    //     height: 0;
+    padding: 6em;
+    padding-bottom: calc(100% * 1 / 3);
+    @include button-style();
+  }
+  .btn-east-stop {
+    //     background-image: url(../../img/stop.svg);
+    //     background-size: cover;
+    //     height: 0;
+    padding: 6em;
+    padding-bottom: calc(100% * 1 / 3);
+    @include button-style();
+  }
+  .btn-east-down {
+    //     background-image: url(../../img/down.svg);
+    //     background-size: cover;
+    //     height: 0;
+    padding: 6em;
+    padding-bottom: calc(100% * 1 / 3);
+    @include button-style();
+  }
+}
+.sw-south {
+  //   grid-area: south;
+  margin: auto;
+  //   background-image: url(../../img/bg.svg);
+  //   border-radius: 15px;
+  padding: 0.7em;
+  //   table {
+  //     font-size: 50px;
+  //     th {
+  //       color: yellow;
+  //     }
+  //   }
+  //   input:active {
+  //     box-shadow: 0 3px #666;
+  //     transform: translateY(6px);
+  //   }
+  .btn-south-up {
+    //     background-image: url(../../img/up.svg);
+    //     background-size: cover;
+    //     height: 0;
+    padding: 6em;
+    padding-bottom: calc(100% * 1 / 3);
+    @include button-style();
+  }
+  .btn-south-stop {
+    //     background-image: url(../../img/stop.svg);
+    //     background-size: cover;
+    //     height: 0;
+    padding: 6em;
+    padding-bottom: calc(100% * 1 / 3);
+    @include button-style();
+  }
+  .btn-south-down {
+    //     background-image: url(../../img/down.svg);
+    //     background-size: cover;
+    //     height: 0;
+    padding: 6em;
+    padding-bottom: calc(100% * 1 / 3);
+    @include button-style();
+  }
+}
+
+.sw-west {
+  //   grid-area: west;
+  margin: auto;
+  //   background-image: url(../../img/bg.svg);
+  //   border-radius: 15px;
+  padding: 0.7em;
+  //   table {
+  //     font-size: 50px;
+  //     th {
+  //       color: yellow;
+  //     }
+  //   }
+  //   input:active {
+  //     box-shadow: 0 3px #666;
+  //     transform: translateY(6px);
+  //   }
+  .btn-west-up {
+    //     background-image: url(../../img/up.svg);
+    //     background-size: cover;
+    //     height: 0;
+    padding: 6em;
+    padding-bottom: calc(100% * 1 / 3);
+    @include button-style();
+  }
+  .btn-west-stop {
+    //     background-image: url(../../img/stop.svg);
+    //     background-size: cover;
+    //     height: 0;
+    padding: 6em;
+    padding-bottom: calc(100% * 1 / 3);
+    @include button-style();
+  }
+  .btn-west-down {
+    //     background-image: url(../../img/down.svg);
+    //     background-size: cover;
+    //     height: 0;
+    padding: 6em;
+    padding-bottom: calc(100% * 1 / 3);
+    @include button-style();
+  }
+}
+
+.sw-north {
+  //   grid-area: north;
+  margin: auto;
+  //   background-image: url(../../img/bg.svg);
+  //   border-radius: 15px;
+  padding: 0.7em;
+  //   table {
+  //     font-size: 50px;
+  //     th {
+  //       color: yellow;
+  //     }
+  //   }
+  //   input:active {
+  //     box-shadow: 0 3px #666;
+  //     transform: translateY(6px);
+  //   }
+  .btn-north-up {
+    //     background-image: url(../../img/up.svg);
+    //     background-size: cover;
+    //     height: 0;
+    padding: 6em;
+    padding-bottom: calc(100% * 1 / 3);
+    @include button-style();
+  }
+  .btn-north-stop {
+    //     background-image: url(../../img/stop.svg);
+    //     background-size: cover;
+    //     height: 0;
+    padding: 6em;
+    padding-bottom: calc(100% * 1 / 3);
+    @include button-style();
+  }
+  .btn-north-down {
+    //     background-image: url(../../img/down.svg);
+    //     background-size: cover;
+    //     height: 0;
+    padding: 6em;
+    padding-bottom: calc(100% * 1 / 3);
+    @include button-style();
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .header {
+    font-size: 50px;
+  }
+  .temp-humidity-monitor {
+    .title {
+      font-size: 35px;
+    }
+  }
+  .door-controller {
+    grid-template-areas:
+      "title title title title"
+      "east east south south"
+      "east east south south"
+      "west west north north"
+      "west west north north";
+    .title {
+      font-size: 35px;
+    }
+  }
+}
+
+@media screen and (max-width: 764px) {
+  #CMD {
+    font-size: 15px;
+  }
+  .header {
+    font-size: 25px;
+  }
+  .status {
+    table {
+      th {
+        font-size: 20px;
+      }
+      td {
+        font-size: 20px;
+      }
+    }
+  }
+  .temp-humidity-monitor {
+    .title {
+      font-size: 22px;
+    }
+  }
+  .door-controller {
+    .title {
+      font-size: 22px;
+    }
+  }
+  .sw-east {
+    padding: 0em;
+    .btn-east-up {
+      padding: 4em;
+      padding-bottom: calc(100% * 1 / 3);
+    }
+    .btn-east-stop {
+      padding: 4em;
+      padding-bottom: calc(100% * 1 / 3);
+    }
+    .btn-east-down {
+      padding: 4em;
+      padding-bottom: calc(100% * 1 / 3);
+    }
+  }
+  .sw-south {
+    padding: 0em;
+    .btn-south-up {
+      padding: 4em;
+      padding-bottom: calc(100% * 1 / 3);
+    }
+    .btn-south-stop {
+      padding: 4em;
+      padding-bottom: calc(100% * 1 / 3);
+    }
+    .btn-south-down {
+      padding: 4em;
+      padding-bottom: calc(100% * 1 / 3);
+    }
+  }
+  .sw-west {
+    padding: 0em;
+    .btn-west-up {
+      padding: 4em;
+      padding-bottom: calc(100% * 1 / 3);
+    }
+    .btn-west-stop {
+      padding: 4em;
+      padding-bottom: calc(100% * 1 / 3);
+    }
+    .btn-west-down {
+      padding: 4em;
+      padding-bottom: calc(100% * 1 / 3);
+    }
+  }
+  .sw-north {
+    padding: 0em;
+    .btn-north-up {
+      padding: 4em;
+      padding-bottom: calc(100% * 1 / 3);
+    }
+    .btn-north-stop {
+      padding: 4em;
+      padding-bottom: calc(100% * 1 / 3);
+    }
+    .btn-north-down {
+      padding: 4em;
+      padding-bottom: calc(100% * 1 / 3);
+    }
+  }
+}

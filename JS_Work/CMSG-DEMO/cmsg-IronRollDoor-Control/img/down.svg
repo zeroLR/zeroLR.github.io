@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<svg width="180" height="150" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+
+ <g class="layer">
+  <title>Layer 1</title>
+  <rect fill="#ff9c3f" height="0" id="svg_3" stroke="#000000" stroke-width="0" width="1" x="-459" y="420.171875"/>
+  <rect fill="#ff9c3f" height="150" id="svg_5" stroke="#000000" stroke-width="0" width="180"/>
+  <path d="m45.000001,112.99999l44.982138,-75.999991l44.982138,75.999991l-89.964277,0z" fill="#ff9c3f" id="svg_13" stroke="#ffffff" stroke-width="10" transform="rotate(180 89.9821 75)"/>
+ </g>
+</svg>

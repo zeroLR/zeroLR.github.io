@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<svg width="500" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:se="http://svg-edit.googlecode.com" class="svg-inline--fa fa-caret-square-up fa-w-14" data-icon="caret-square-up" data-prefix="far">
+ <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+ <g class="layer">
+  <title>Layer 1</title>
+  <rect fill="#e0d9d9" height="498.000013" id="svg_5" stroke="#776e6e" stroke-width="3" transform="rotate(90 249.656 13)" width="26.000001" x="236.65625" y="-236"/>
+  <path d="m454.7215,96.27203l0,-70.00001l44.042,70.00001l-44.042,0z" fill="#e0d9d9" id="svg_6" stroke="#776e6e" stroke-width="3" transform="rotate(180 476.742 61.272)"/>
+  <rect fill="#e0d9d9" height="61.999999" id="svg_8" stroke="#776e6e" stroke-width="3" transform="rotate(90 32.25 63.3125)" width="70.999997" x="-3.25" y="32.3125"/>
+ </g>
+</svg>

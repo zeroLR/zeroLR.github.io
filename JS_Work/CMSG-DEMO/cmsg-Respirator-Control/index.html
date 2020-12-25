@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <link rel="stylesheet" href="./webstyle.css" type="text/css">
+    <style type="text/css">
+        * {
+            font-weight: 700 !important;
+            text-shadow: 0.04em 0.04em 0.05em#cde086 !important;
+            color: rgb(6, 80, 10);
+            font-family: "Microsoft JhengHei";
+            transition: 0.2s;
+            -webkit-transition: 0.2s;
+            -moz-transition: 0.2s;
+        }
+    </style>
+    <title>呼吸器控制</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>緊急救護呼吸器</h1>
+        </div>
+        <div class="grid-container">
+
+            <div class="status">
+                <table>
+                    <thead>
+                        <th>連接網路</th>
+                        <th>訊號品質</th>
+                        <th>功能</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>------</td>
+                            <td>------</td>
+                            <td><input id="btn-cmd" class="btn-cmd" type="button" value="命令" onclick="openCMD()"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div id="main">
+            <div id="state" class="state">
+                <h1>裝置狀態 <input id="swMain" type="button" value="操作" onclick="switchPage()"></h1>
+                <table>
+                    <thead>
+                        <th>啟動時間</th>
+                        <th>結束時間</th>
+                        <th>運行狀況</th>
+                        <th>剩餘週期</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>16:00</td>
+                            <td>16:05</td>
+                            <td>運行中</td>
+                            <td>3次</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="control" class="control">
+                <h1>裝置操作<input id="swState" type="button" value="狀態" onclick="switchPage()">
+                </h1>
+                <form style="margin-top: 0.8em;">
+                    <span class="option">
+                        性別:
+                        <label for="male"><input type="checkbox" id="male" onchange="swMale()" checked><span
+                                id="span-male">男</span></label>
+                        <label for="female"><input type="checkbox" id="female" onchange="swFemale()"><span
+                                id="span-female">女</span></label>
+                    </span>
+                    <br>
+                    <br>
+                    <span class="option">年齡: <input type="number" min="1" max="150" id="AGE" placeholder="1-150"
+                            onchange="setOption('AGE')">
+                        歲</span>
+                    <br>
+                    <br>
+                    <span class="option">體重: <input type="number" min="1" max="300" id="W" placeholder="1-300"
+                            onchange="setOption('W')">
+                        公斤</span>
+                    <br>
+                    <br>
+                    <span class="option">肺活量: <input type="number" min="1" max="100" id="VC" placeholder="1-100"
+                            onchange="setOption('VC')">
+                        公升</span>
+                    <br>
+                    <br>
+                    <span class="option">週期: <input type="number" min="1" max="100" id="R" placeholder="1-100"
+                            onchange="setOption('R')">
+                        次/分</span>
+                    <br>
+                    <br>
+                    <span class="option">打氣量: <input type="number" min="1" max="5" id="AIR" placeholder="1-5"
+                            onchange="setOption('AIR')">
+                        公升/次</span>
+                    <br>
+                    <br>
+                    <br>
+                    <span class="trigger"><input type="button" id="reset" value="重設" onclick="Reset()"></span>
+                    <span class="trigger"><input type="button" id="start" value="啟動" onclick="Start()"></span>
+                    <span class="trigger"><input type="button" id="stop" value="停止" onclick="Stop()"></span>
+                </form>
+            </div>
+        </div>
+        <div id="sys" class="sys">
+            <div id="cmd" class="cmd">
+                <h1>命令列</h1>
+                <div><input type="text" id="cmd-text"><input type="button" class="btn-cmd" value="執行"
+                        onclick="execCMD()">
+                </div>
+            </div>
+            <div id="log" class="log">
+                <h1>運行記錄</h1>
+                <input class="btn-log" type="button" value="log" onclick="showLog()">
+                <input class="btn-log" type="button" value="clear" onclick="clearLog()">
+                <div id="log-result"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./func.js"></script>
+
+</html>

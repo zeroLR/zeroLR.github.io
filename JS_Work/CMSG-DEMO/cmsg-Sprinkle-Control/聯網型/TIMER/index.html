@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset='utf-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>定時灑水</title>
+	<link rel="stylesheet" type="text/css" href="../dist/css/webstyle.css">
+</head>
+
+<body>
+	<div class="container">
+		<div class="div-main">
+			<table>
+				<caption>
+					<h1>台東區農業改良場灑水控制 V1.2</h1>
+				</caption>
+				<tr>
+					<th>日期</th>
+					<td id="date" onclick="upTm()">------</td>
+					<th>時間</th>
+					<td id="time" onclick="upTm()">--:--:--</td>
+					<td>
+						<label for="act">模式：</label>
+						<select name="act" id="ACT" onchange="ckchm()">
+							<option value="stop">停止</option>
+							<option value="auto">自動</option>
+							<option value="edit">修改</option>
+							<option value="manual">手動</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>連接網路</th>
+					<td id="wifi">----</td>
+					<th>訊號品質</th>
+					<td id="RSSI" colspan=2>------
+					</td>
+				</tr>
+				<tr id="CMD" style="display: none">
+					<td colspan=5>
+						<input id="CMD_text" type="text" value=""><button class="button-ok"
+							onclick="execCmd()">執行</button>
+					</td>
+				</tr>
+				<tr id="date_edit" style="display: none">
+					<td colspan=5>
+						修改日期:<input id="EDT" type="datetime-local">
+						<button class="button-ok" onclick="setTm()">確認</button>
+						<button class="button-cancel" onclick="abET()">取消</button>
+					</td>
+				</tr>
+			</table>
+			<div class="div-station">
+				<table id="STATION">
+					<caption>
+						<h1>站別</h1>
+					</caption>
+					<tr>
+						<td><input id='SW1' class="button-switch" type="button" value="1" onclick="BTSW(this)"></td>
+						<td><input id='SW2' class="button-switch" type="button" value="2" onclick="BTSW(this)"></td>
+						<td><input id='SW3' class="button-switch" type="button" value="3" onclick="BTSW(this)"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="div-panel">
+				<table>
+					<caption>
+						<h1>訊息佈告欄</h1>
+						<button class="button-ok" onclick="message()" style="font-size: 25px;">最近20筆訊息</button>
+					</caption>
+				</table>
+				<nav>
+					<ul id="content">
+						<li>時間：0701 16:41 <br>
+							通知： 馬達啟動</li>
+					</ul>
+				</nav>
+
+			</div>
+			<div class="div-WP">
+				<table>
+					<caption>
+						<h1>出口壓力(kg/cm<sup>2</sup>)</h1>
+					</caption>
+					<tr>
+						<td id="WP">2.5</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="div-setWP">
+				<table>
+					<caption>
+						<h1>出口壓力設定值</h1>
+					</caption>
+					<thead>
+						<th>上限</th>
+						<th>下限</th>
+						<th>1 站</th>
+						<th>2 站</th>
+						<th>3 站</th>
+						<th>閥值</th>
+					</thead>
+					<tr>
+						<td id="WPmax" data-label="上限">0</td>
+						<td id="WPmin" data-label="下限">0</td>
+						<td id="WP1" data-label="1 站">0</td>
+						<td id="WP2" data-label="2 站">0</td>
+						<td id="WP3" data-label="3 站">0</td>
+						<td id="WPrange" data-label="閥值">0</td>
+					</tr>
+				</table>
+			</div>
+			<div class="div-sche">
+				<table id="SCHE">
+					<caption>
+						<h1>時間設定</h1>
+					</caption>
+					<thead>
+						<th>週期</th>
+						<th>時間</th>
+						<th>1站</th>
+						<th>2站</th>
+						<th>3站</th>
+						<th>功能</th>
+					</thead>
+					<tr id="time_add" style="display: none;">
+						<td colspan="6">
+							<button class="button-ok" onclick="newRule()">新增</button>
+						</td>
+					</tr>
+					<tr id="time_edit" style="display: none;">
+						<td data-label="週期">
+							<label for="d0">
+								<input type="checkbox" name="d0" id="d0">
+								<span>每天</span>
+							</label>
+							<label for="w0">
+								<input type="checkbox" name="w0" id="w0">
+								<span>週日</span>
+							</label>
+							<label for="w1">
+								<input type="checkbox" name="w1" id="w1">
+								<span>週一</span>
+							</label>
+							<label for="w2">
+								<input type="checkbox" name="w2" id="w2">
+								<span>週二</span>
+							</label>
+							<label for="w3">
+								<input type="checkbox" name="w3" id="w3">
+								<span>週三</span>
+							</label>
+							<label for="w4">
+								<input type="checkbox" name="w4" id="w4">
+								<span>週四</span>
+							</label>
+							<label for="w5">
+								<input type="checkbox" name="w5" id="w5">
+								<span>週五</span>
+							</label>
+							<label for="w6">
+								<input type="checkbox" name="w6" id="w6">
+								<span>週六</span>
+							</label>
+						</td>
+						<td data-label="時間"><input type="time" id="tm"></td>
+						<td data-label="1站"><input type='number' id='v1' value='0'></td>
+						<td data-label="2站"><input type='number' id='v2' value='0'></td>
+						<td data-label="3站"><input type='number' id='v3' value='0'></td>
+						<td>
+							<button class="button-ok" onclick="appSche(1)">儲存</button>
+							<button class="button-cancel" onclick="appSche(0)">取消</button>
+						</td>
+					</tr>
+				</table>
+				<table id="MAGIC">
+					<tr id="MAGIC_edit" style="display: none;">
+						<td>
+							<label for="all">
+								<input type="checkbox" name="all" id="all" onchange="ckAll()">
+								<span>全開</span>
+							</label>
+							<input type='number' id='alltm' value='0' style="display: none;">
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<!-- <script src='./func.js'></script>
+	<script src='./index.js'></script>
+	<script>
+		setTimeout('connect()', 3000);
+	</script> -->
+</body>
+
+</html>

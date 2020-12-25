@@ -1,0 +1,157 @@
+// 添加字體厚度,陰影,轉場效果,字體在不同瀏覽器上不同,需統一字體
+* {
+  font-weight: 700 !important;
+  text-shadow: 0.03em 0.03em 0.08em #d7c4bb !important;
+  font-family: "Microsoft JhengHei";
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+/*-------------------------常用混合元素-----------------------------*/
+$bg-color: #ecb88a;
+$main-bgcolor: #e98b2a;
+
+// 響應式表格屬性
+@mixin table-RWD {
+  thead {
+    clip: rect(0 0 0 0);
+    position: absolute;
+  }
+  tr {
+    background-color: khaki;
+    border-bottom: 3px solid #ddd;
+    display: block;
+    border-radius: 20px;
+  }
+  td {
+    border-bottom: 3px solid rgb(245, 144, 144);
+    display: block;
+    text-align: right;
+    margin: 0em 1em 1em 1em;
+    border-radius: 0px;
+    padding-top: 1em;
+    font-size: 28px;
+  }
+  td::before {
+    color: #734338;
+    content: attr(data-label);
+    float: left;
+  }
+}
+
+/*-------------------------HTML元素-----------------------------*/
+body {
+  background-color: $bg-color;
+}
+table {
+  text-align: center;
+  margin: auto;
+}
+h1 {
+  font-size: 50px;
+  color: #734338;
+}
+
+/*-------------------------導入元素-----------------------------*/
+
+//按鈕
+@import "webstyle/buttons";
+
+//開關
+@import "webstyle/buttonSwitch";
+
+//主要風格
+@import "webstyle/main";
+
+//站別
+@import "webstyle/station";
+
+//訊息顯示欄
+@import "webstyle/panel";
+
+//出口壓力
+@import "webstyle/wp";
+
+//土壤濕度
+// @import "webstyle/moisture";
+
+//時間設定
+@import "webstyle/sche";
+
+//wifi聯網
+// @import "webstyle/wifi";
+
+//LineNotify
+// @import "webstyle/notify";
+
+//命令欄位
+// @import "webstyle/cmd";
+
+/*-------------------------縮放時變化版面-----------------------------*/
+@media screen and (max-width: 1096px) {
+  h1 {
+    font-size: 32px;
+  }
+  h2 {
+    font-size: 25px;
+  }
+  .div-main {
+    th {
+      font-size: 30px;
+    }
+    td {
+      font-size: 30px;
+    }
+  }
+}
+@media screen and (max-width: 770px) {
+  h1 {
+    font-size: 25px;
+  }
+  h2 {
+    font-size: 20px;
+  }
+  .div-main {
+    th {
+      font-size: 23px;
+    }
+    td {
+      font-size: 23px;
+    }
+  }
+  .button-switch {
+    display: block;
+    // margin: auto;
+    width: 85%;
+    margin: 0.5em 0em 0.5em 0.6em;
+  }
+
+  .div-info {
+    @include table-RWD;
+    td {
+      padding-top: 0.7em;
+      margin: 0em 1em 0em 1em;
+      border-bottom: none;
+    }
+  }
+  .div-WP {
+    @include table-RWD;
+    td {
+      text-align: center;
+    }
+  }
+  .div-sche {
+    @include table-RWD;
+  }
+  // .div-moisture {
+  //   @include table-RWD;
+  // }
+  // .div-wifi {
+  //   @include table-RWD;
+  // }
+  // .div-notify {
+  //   @include table-RWD;
+  // }
+  // .div-cmd {
+  //   @include table-RWD;
+  // }
+}

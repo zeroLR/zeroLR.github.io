@@ -1,0 +1,76 @@
+// 背景主要風格屬性
+@mixin main-style {
+  background-color: $main-bgcolor;
+  border-radius: 34px;
+  box-shadow: 5px 5px 2px #888888a2;
+  padding-bottom: 2em;
+
+  h1 {
+    background-color: #dcb879;
+    border-radius: 20px;
+  }
+
+  h2 {
+    margin: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  th {
+    color: #734338;
+    font-size: 35px;
+    background-color: #dcb879;
+    border-radius: 10px;
+  }
+  td {
+    color: #4a593d;
+    font-size: 35px;
+    background-color: #f0ece6;
+    border-radius: 10px;
+  }
+}
+
+// 表格物件風格屬性
+@mixin table-style($th-color: cadetblue, $td-color: khaki, $width: 80%) {
+  table {
+    width: $width;
+  }
+  th {
+    background-color: $th-color;
+    font-size: 35px;
+    inline-size: 10em;
+  }
+  td {
+    background-color: $td-color;
+    color: #4a593d;
+    font-size: 35px;
+  }
+  input[type="text"] {
+    border: none;
+    text-align: center;
+  }
+  input[type="number"] {
+    border: none;
+    text-align: center;
+  }
+  h2 {
+    background-color: #f04b82;
+    color: #3b38dd;
+    width: 50%;
+    border-radius: 20px;
+  }
+}
+
+// 主頁面屬性
+.div-main {
+  @include main-style;
+  @include table-style;
+  select {
+    padding: 0.5em;
+    font-size: 20px;
+    background-color: #3ee7e7;
+    color: #554236;
+    border-radius: 10px;
+    border: none;
+  }
+}

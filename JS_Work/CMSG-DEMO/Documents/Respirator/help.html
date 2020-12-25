@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>help.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+	body {
+		/* font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif); */
+		padding: 0 26px;
+		line-height: 22px;
+		word-wrap: break-word;
+	}
+
+	/* hr {
+		border: 0;
+		height: 2px;
+		border-bottom: 2px solid;
+	} */
+
+	h1 {
+		padding-bottom: 0.3em;
+		line-height: 1.2;
+		border-bottom-width: 1px;
+		border-bottom-style: solid;
+	}
+
+	h1,
+	h2 {
+		font-weight: bolder;
+	}
+
+	h3 {
+		font-weight: normal;
+	}
+
+	table {
+		margin: auto;
+		border-collapse: collapse;
+	}
+
+	table>thead>tr>th {
+		text-align: left;
+		border-bottom: 1px solid;
+	}
+
+	table>thead>tr>th,
+	table>thead>tr>td,
+	table>tbody>tr>th,
+	table>tbody>tr>td {
+		padding: 5px 10px;
+		border: 0.5px solid #cccccc;
+		font-size: 16px;
+	}
+
+	table>tbody>tr:nth-child(even) {
+		background: rgb(222, 227, 255)
+	}
+
+	table>tbody>tr:nth-child(odd) {
+		background: #FFF
+	}
+	.t{
+		text-align:center
+	}
+</style>
+
+</head>
+<body>
+<h1 id="%E8%BC%94%E5%8A%A9%E5%91%BC%E5%90%B8%E5%99%A8-%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8A">輔助呼吸器 操作手冊</h1>
+<h2 id="%E8%A8%AD%E5%AE%9A%E6%8C%87%E4%BB%A4">設定指令</h2>
+<table>
+<thead>
+<tr>
+<th class="t">說明</th>
+<th class="t">指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="t">AP 設定</td>
+<td class="t">set [SSID]:[PWD]</td>
+</tr>
+<tr>
+<td class="t">日期設定</td>
+<td class="t">set time 2021-01-01T00:00</td>
+</tr>
+<tr>
+<td class="t">外網搜尋</td>
+<td class="t">AP scan</td>
+</tr>
+<tr>
+<td class="t">外網連線</td>
+<td class="t">AP connect [SSID]:[PWD]</td>
+</tr>
+<tr>
+<td class="t">訊息位址設定</td>
+<td class="t">set recv IP xxx.xxx.xxx.xxx:port</td>
+</tr>
+<tr>
+<td class="t">裝置名稱設定</td>
+<td class="t">set device name NAME</td>
+</tr>
+<tr>
+<td class="t">Line Token 設定</td>
+<td class="t">set Line Token [1]:[TOKEN]</td>
+</tr>
+<tr>
+<td class="t">Line 通知測試</td>
+<td class="t">Line&lt;MESSAGE</td>
+</tr>
+<tr>
+<td class="t">清除顯示訊息</td>
+<td class="t">clear msg</td>
+</tr>
+</tbody>
+</table>
+<h2 id="%E5%8F%83%E6%95%B8%E8%B3%87%E8%A8%8A">參數資訊</h2>
+<ul>
+<li>ESP8266 資訊</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th class="t">參數</th>
+<th class="t">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="t">SSID</td>
+<td class="t">ESP8266 WIFI 名稱</td>
+</tr>
+<tr>
+<td class="t">連接網路</td>
+<td class="t">已連上 WIFI 名稱</td>
+</tr>
+<tr>
+<td class="t">訊號品質</td>
+<td class="t">與 ESP8266 間的連線品質</td>
+</tr>
+<tr>
+<td class="t">時間</td>
+<td class="t">日期+24 小時制時間</td>
+</tr>
+<tr>
+<td class="t">訊息接收位址</td>
+<td class="t">接收資料 Server IP 位址</td>
+</tr>
+<tr>
+<td class="t">Line Token</td>
+<td class="t">已存 Token 組數</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>功能設定</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th class="t">參數</th>
+<th class="t">單位</th>
+<th class="t">TYPE</th>
+<th class="t">備註</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="t">性別</td>
+<td class="t">-</td>
+<td class="t">STRING</td>
+<td class="t">男/女</td>
+</tr>
+<tr>
+<td class="t">年齡</td>
+<td class="t">歲</td>
+<td class="t">INT</td>
+<td class="t">1-100</td>
+</tr>
+<tr>
+<td class="t">體重</td>
+<td class="t">公斤</td>
+<td class="t">FLOAT</td>
+<td class="t">1-200</td>
+</tr>
+<tr>
+<td class="t">肺活量</td>
+<td class="t">公升</td>
+<td class="t">FLOAT</td>
+<td class="t">1-10</td>
+</tr>
+<tr>
+<td class="t">週期</td>
+<td class="t">次/分</td>
+<td class="t">INT</td>
+<td class="t">1-10</td>
+</tr>
+<tr>
+<td class="t">打氣量</td>
+<td class="t">公升/次</td>
+<td class="t">FLOAT</td>
+<td class="t">1-5</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>顯示資訊</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th class="t">參數</th>
+<th class="t">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="t">啟動/結束 時間</td>
+<td class="t">裝置啟動/結束時間,24 小時制</td>
+</tr>
+<tr>
+<td class="t">運行狀態</td>
+<td class="t">執行、暫停、停止</td>
+</tr>
+<tr>
+<td class="t">剩餘週期</td>
+<td class="t">剩餘打氣週期次數</td>
+</tr>
+</tbody>
+</table>
+<h2 id="%E8%B3%87%E6%96%99%E5%82%B3%E8%BC%B8%E6%A0%BC%E5%BC%8F">資料傳輸格式</h2>
+<ul>
+<li>JSON</li>
+</ul>
+<h2 id="%E8%A3%9D%E7%BD%AE%E5%8A%9F%E8%83%BD">裝置功能</h2>
+<ul>
+<li>ESP8266 端</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th class="t">功能</th>
+<th class="t">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="t">功能頁切換</td>
+<td class="t">操作畫面/參數(狀態)/指令頁面切換</td>
+</tr>
+<tr>
+<td class="t">指令執行</td>
+<td class="t">發送指令進行設定/控制</td>
+</tr>
+<tr>
+<td class="t">顯示記錄</td>
+<td class="t">在畫面上顯示指令使用/裝置運行記錄(以時間為單位)</td>
+</tr>
+<tr>
+<td class="t">清除記錄</td>
+<td class="t">將所有記錄清除</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>裝置端</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th class="t">功能</th>
+<th class="t">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="t">啟動</td>
+<td class="t">依據設定參數啟動裝置</td>
+</tr>
+<tr>
+<td class="t">停止</td>
+<td class="t">完全停止裝置動作</td>
+</tr>
+<tr>
+<td class="t">重設</td>
+<td class="t">將設定參數清除</td>
+</tr>
+</tbody>
+</table>
+<h2 id="%E7%89%88%E6%9C%AC%E8%B3%87%E8%A8%8A">版本資訊</h2>
+<ul>
+<li>
+<h3 id="v10">v1.0</h3>
+</li>
+</ul>
+
+</body>
+</html>
