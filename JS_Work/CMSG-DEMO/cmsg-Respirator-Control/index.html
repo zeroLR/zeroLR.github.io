@@ -9,11 +9,11 @@
         * {
             font-weight: 700 !important;
             text-shadow: 0.04em 0.04em 0.05em#cde086 !important;
-            color: rgb(6, 80, 10);
+            color: #06500a;
             font-family: "Microsoft JhengHei";
-            transition: 0.2s;
-            -webkit-transition: 0.2s;
-            -moz-transition: 0.2s;
+            transition: 0.1s;
+            -webkit-transition: 0.1s;
+            -moz-transition: 0.1s;
         }
     </style>
     <title>呼吸器控制</title>
@@ -24,20 +24,27 @@
         <div class="header">
             <h1>緊急救護呼吸器</h1>
         </div>
+
         <div class="grid-container">
 
             <div class="status">
                 <table>
                     <thead>
                         <th>連接網路</th>
-                        <th>訊號品質</th>
+                        <th>訊號</th>
                         <th>功能</th>
                     </thead>
                     <tbody>
                         <tr>
+                            <td><input id="wifi" type="button" value="------" onclick="showWifi()">
+                            </td>
                             <td>------</td>
-                            <td>------</td>
-                            <td><input id="btn-cmd" class="btn-cmd" type="button" value="命令" onclick="openCMD()"></td>
+                            <td><select name="act" id="page" onchange="swPage()">
+                                    <option value="control">操作</option>
+                                    <option value="state">狀態</option>
+                                    <option value="sys">指令</option>
+                                    <option value="help">幫助</option>
+                                </select></td>
                         </tr>
                     </tbody>
                 </table>
@@ -46,7 +53,7 @@
         </div>
         <div id="main">
             <div id="state" class="state">
-                <h1>裝置狀態 <input id="swMain" type="button" value="操作" onclick="switchPage()"></h1>
+                <h1>裝置狀態</h1>
                 <table>
                     <thead>
                         <th>啟動時間</th>
@@ -67,7 +74,7 @@
             </div>
 
             <div id="control" class="control">
-                <h1>裝置操作<input id="swState" type="button" value="狀態" onclick="switchPage()">
+                <h1>裝置操作
                 </h1>
                 <form style="margin-top: 0.8em;">
                     <span class="option">
@@ -105,17 +112,16 @@
                     <br>
                     <br>
                     <br>
-                    <span class="trigger"><input type="button" id="reset" value="重設" onclick="Reset()"></span>
-                    <span class="trigger"><input type="button" id="start" value="啟動" onclick="Start()"></span>
-                    <span class="trigger"><input type="button" id="stop" value="停止" onclick="Stop()"></span>
+                    <span class="btn-trigger"><input type="button" id="reset" value="重設" onclick="Reset()"></span>
+                    <span class="btn-trigger"><input type="button" id="start" value="啟動" onclick="Start()"></span>
+                    <span class="btn-trigger"><input type="button" id="stop" value="停止" onclick="Stop()"></span>
                 </form>
             </div>
         </div>
         <div id="sys" class="sys">
             <div id="cmd" class="cmd">
                 <h1>命令列</h1>
-                <div><input type="text" id="cmd-text"><input type="button" class="btn-cmd" value="執行"
-                        onclick="execCMD()">
+                <div><input type="text" id="cmd-text"><input type="button" value="執行" onclick="execCMD()">
                 </div>
             </div>
             <div id="log" class="log">
@@ -125,8 +131,29 @@
                 <div id="log-result"></div>
             </div>
         </div>
+        <div id="mask" class="mask" onclick="closeWifi()"></div>
+        <div id="wifi-content">
+            <h2>目前網路</h2>
+            <div id="wifi-now"></div>
+            <div id="wifi-list">
+                <h2>可用網路</h2>
+                <input type="button" value="重新整理" class="w-scan" onclick="scanWifi()">
+                <ul id="wifi-result">
+
+                </ul>
+            </div>
+
+            <div id="wifi-pwd">
+                <h2>輸入密碼(沒有則按確認)</h2>
+                <input type="text" id="pwd" onkeypress="APconnect()">
+                <br>
+                <input type="button" value="確認" onclick="APconnect()">
+                <input type="button" value="取消" onclick="APcancel()">
+            </div>
+        </div>
     </div>
+
 </body>
-<script src="./func.js"></script>
+<script src="./mock.js"></script>
 
 </html>

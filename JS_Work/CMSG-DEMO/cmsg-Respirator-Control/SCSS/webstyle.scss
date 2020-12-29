@@ -16,6 +16,7 @@
     color: rgb(255, 255, 255);
     // color: #444;
     user-select: none; /* 防止文字被滑鼠選取反白 */
+    cursor: default;
   }
 
   input[type="checkbox"]:checked + span {
@@ -46,11 +47,32 @@
 }
 
 // 按鈕物件風格屬性
-@mixin button-style() {
-  margin-bottom: 1em;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 5px #999;
+@mixin button-style(
+  $color: white,
+  $h: 8px,
+  $w: 20px,
+  $font: 28px,
+  $back: white
+) {
+  input[type="button"] {
+    border: none;
+    outline: none;
+    padding: $h $w;
+    font-size: $font;
+    color: $color;
+    border-radius: 34px;
+    box-shadow: 0 0 4px #999;
+    background-color: $back;
+  }
+
+  input[type="button"]:active {
+    box-shadow: 0 0 10px #999;
+    transform: scale(0.8);
+  }
+
+  input[type="button"]:hover {
+    background-color: #fdf8a9;
+  }
 }
 
 input[type="text"] {
@@ -69,23 +91,6 @@ input[type="number"] {
   text-align: center;
   font-size: 24px;
   width: 100px;
-}
-
-// 輸入(按鈕)
-input[type="button"] {
-  transition: none;
-  border: none;
-  border-radius: 2px;
-  padding: 8px 20px;
-  font-size: 28px;
-  text-transform: uppercase;
-  cursor: pointer;
-  color: white;
-  border-radius: 34px;
-  box-shadow: 0 0 4px #999;
-  outline: none;
-  background-position: center;
-  transition: background 0.3s;
 }
 
 // 主要背景風格
@@ -125,10 +130,90 @@ input[type="button"] {
   }
 }
 
+.mask {
+  display: none;
+  background-color: #0000008a;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+}
+
+#wifi-content {
+  display: none;
+  @include button-style(white);
+  height: 75%;
+  box-shadow: 0px 2px 10px #888888a2;
+  padding-bottom: 1em;
+  border-radius: 15px;
+  background-color: #f0ece6;
+  margin: auto;
+  position: absolute;
+  top: 5%;
+  left: 2.5%;
+  width: 95%;
+  h2 {
+    color: brown;
+    background-color: white;
+    border-radius: 10px;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    font-size: 30px;
+  }
+
+  ul {
+    display: block;
+    height: 350px;
+    overflow: hidden;
+    overflow-y: auto;
+    margin-right: 3em;
+  }
+  li {
+    display: block;
+    margin-bottom: 0.1em;
+  }
+  input[type="button"] {
+    color: #06500a;
+  }
+}
+#wifi-now {
+  font-size: 30px;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
+#wifi-pwd {
+  display: none;
+}
+#pwd {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.w-btn {
+  background-color: white;
+  width: 95%;
+  border-radius: 34px;
+  margin-top: 0.5em;
+  font-size: 24px;
+}
+.w-btn:hover {
+  background-color: rgb(216, 216, 216);
+}
+
+.w-scan {
+  padding: 0px !important;
+  width: 100%;
+  height: 40px;
+  background-color: rgb(202, 248, 246) !important;
+  margin-top: 0.5em;
+}
+
 // 聯網狀態列
 .status {
   // display: none;
   @include div-style();
+  @include button-style(#06500a, 3px, 10px, 20px, #eaff9d);
   grid-area: status;
   background-color: white;
   margin: auto;
@@ -143,6 +228,16 @@ input[type="button"] {
       width: 200px;
     }
   }
+  select {
+    font-size: 24px;
+    color: #06500a;
+    border-radius: 34px;
+    box-shadow: 0 0 4px #999;
+    background-color: #eaff9d;
+    border: none;
+    outline: none;
+    padding: 3px 3px 1px 5px;
+  }
 }
 
 // 裝置操作
@@ -150,6 +245,7 @@ input[type="button"] {
   // display: none;
   @include div-style();
   @include checkbox-style();
+  @include button-style();
   background-color: white;
   margin: auto;
   width: 95%;
@@ -163,7 +259,9 @@ input[type="button"] {
 // 裝置狀態
 .state {
   display: none;
+  @include button-style();
   @include div-style();
+
   background-color: white;
   width: 95%;
   margin: auto;
@@ -176,21 +274,14 @@ input[type="button"] {
   }
 }
 
-// 功能按鈕
-.btn-cmd {
-  font-size: 18px !important;
-  padding: 5px !important;
-  color: rgb(0, 0, 0) !important;
-  background-color: lime;
-}
-
 // 參數設定
 .option {
   font-size: 28px;
 }
 
 // 啟動相關按鈕
-.trigger {
+.btn-trigger {
+  @include button-style(#ffffff);
   padding: 8px;
 }
 
@@ -202,6 +293,7 @@ input[type="button"] {
 // 命令列
 .cmd {
   @include div-style();
+  @include button-style(#000000, 8px, 12px, 20px, white);
   background-color: white;
   width: 95%;
   margin: auto;
@@ -214,6 +306,7 @@ input[type="button"] {
 .log {
   // display: none;
   @include div-style();
+  @include button-style(white);
   background-color: white;
   width: 95%;
   margin: auto;
@@ -241,27 +334,36 @@ input[type="button"] {
 
 // 裝置狀態切換
 #swState {
-  margin-top: 4px;
+  margin-top: 5px;
   font-size: 26px;
   padding: 0px 5px;
   position: absolute;
-  left: 75%;
+  left: 80%;
   color: rgb(13, 30, 180);
+  font-size: 24px;
 }
 
 // 裝置操作切換
 #swMain {
-  margin-top: 4px;
+  margin-top: 5px;
   font-size: 26px;
   padding: 0px 5px;
   position: absolute;
-  left: 75%;
+  left: 80%;
   color: rgb(96, 0, 185);
+  font-size: 24px;
 }
 
 // 畫面適應
 @media screen and (max-width: 400px) {
+  .header {
+    width: 90%;
+    h1 {
+      font-size: 28px !important;
+    }
+  }
   input[type="button"] {
-    padding: 3px 6px;
+    padding: 3px 6px !important;
+    font-size: 26px !important;
   }
 }
