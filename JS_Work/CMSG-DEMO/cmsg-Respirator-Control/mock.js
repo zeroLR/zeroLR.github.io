@@ -61,6 +61,7 @@ function swPage() {
       $("control").style = "display: block";
       $("state").style = "display: none";
       $("sys").style = "display: none";
+
       break;
     default:
       break;
