@@ -11,7 +11,7 @@ tags:
   - Jekyll
 ---
 
-在 [jekyll-next-theme](https://github.com/simpleyyt/jekyll-theme-next) 中已經將 [gitalk](https://github.com/gitalk/gitalk) 功能整合好了，但是在出現 gitalk 留言功能的文章以外的頁面，會出現一個找不到 **gitalk-container** 這個 element 的錯誤訊息，回去看程式碼發現 gitalk 會在所有頁面啟用，試著將 gitalk 限制在 post 類型(文章)的頁面中啟用就成功了。
+> 在 [jekyll-next-theme](https://github.com/simpleyyt/jekyll-theme-next) 中已經將 [gitalk](https://github.com/gitalk/gitalk) 功能整合好了，但是在出現 gitalk 留言功能的文章以外的頁面，會出現一個找不到 **gitalk-container** 這個 element 的錯誤訊息，回去看程式碼發現 gitalk 會在所有頁面啟用，試著將 gitalk 限制在 post 類型(文章)的頁面中啟用就成功了。
 
 ## 解決方法
 
@@ -25,6 +25,10 @@ if site.gitalk.enable
 <!-- new -->
 if site.gitalk.enable and page.id
 ```
+
+## 總結
+
+總覺得這解決方法不怎麼優，但對 jekyll 也不熟就湊合著用了。
 
 ## 參考資料
 
