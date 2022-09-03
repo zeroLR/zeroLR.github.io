@@ -1,8 +1,9 @@
 ---
-title: Netlify CMS 導入 GitHub Page 記錄
+title: Netlify CMS 導入 GitHub Pages 記錄
 description: 每次新增或修改文章都要開檔案改完 push 上去，為了要更懶，還是要找方法吧！
+slug: netlify-cms-import-github-pages
 date: 2022-03-05T01:17:30.996Z
-image: cover.png
+image: /post/images/netlify/截圖-2022-03-05-下午10.39.43.png
 categories:
   - Blog
   - Libs

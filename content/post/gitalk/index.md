@@ -1,8 +1,8 @@
 ---
 title: 【Jekyll】解決gitalk啟用後錯誤訊息問題
 description: 有點治標不治本，參考就好。
-slug: 解決gitalk啟用後錯誤訊息問題
-date: 2021-12-22 00:00:00
+slug: jekyll-gitalk-issue
+date: 2021-12-22
 categories:
   - Blog
   - Issues

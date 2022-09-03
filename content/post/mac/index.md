@@ -1,7 +1,7 @@
 ---
 title: 【Jekyll】Mac M1 安裝 Jekyll 踩雷記錄
 description: 唸大學時開的那隻 github page 太久沒管理直接砍掉重做，當初也沒規劃好筆記的風格就隨便做了XD
-slug: Mac M1 安裝 Jekyll 踩雷記錄
+slug: jekyll-mac-m1-issue
 date: 2021-12-20 18:00:00
 categories:
   - Blog
