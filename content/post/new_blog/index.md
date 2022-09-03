@@ -22,7 +22,7 @@ tags:
 
 使用 **[hugo-theme-stack-starter](https://github.com/CaiJimmy/hugo-theme-stack-starter)** 建立 repo 後如下，作者: **[Jimmy Cai](https://jimmycai.com/)**。
 
-![](/post/images/new_blog/1.png)
+![1](/post/images/new_blog/1.png)
 
 ## 觀察檔案與調整
 
@@ -30,7 +30,7 @@ tags:
 
 將 repo clone 到電腦中，可以看到在 .github/workflows 中，作者已經寫好部署網站的`deploy.yml`檔了，在電腦中測試完用 git push 後就會幫你部署至 gh-pages 的分支囉！
 
-![](/post/images/new_blog/2.png)
+![2](/post/images/new_blog/2.png)
 
 > 當 push 新的 commit 上去時，GitHub Actions 會根據 workflows 中的 yml 進行一連串的動作將網站部署完成，想了解如何做到的可以參考 [GitHub Actions](https://docs.github.com/en/actions) 。
 
@@ -42,13 +42,13 @@ tags:
 
 在 **.devcontainer** 中還有提供 **Dockerfile** 能夠將網站包裝成 **Docker Image**，對於想部署在不同平台上的人來說很方便，可以先留著日用有機會試試。
 
-![](/post/images/new_blog/3.png)
+![3](/post/images/new_blog/3.png)
 
 ### config/\_default
 
 網站的標題、外觀主題、語言、頭像、連結…基本上都由這邊的檔案進行設定，參考 **[Configure Hugo](https://gohugo.io/getting-started/configuration/#all-configuration-settings)** 或是網路上有很多文章解說如何設定喔！
 
-![](/post/images/new_blog/4.png)
+![4](/post/images/new_blog/4.png)
 
 ### content/post
 
@@ -62,7 +62,7 @@ tags:
 hugo server
 ```
 
-![](/post/images/new_blog/5.png)
+![5](/post/images/new_blog/5.png)
 
 在專案根目錄中執行以下指令建置網站，靜態檔案輸出在 **public** 資料夾中，指令部分參考 [hugo commands](https://gohugo.io/commands/hugo/) 。
 
@@ -74,7 +74,7 @@ hugo --minify --gc
 
 可以直接把剛才 build 出來的靜態檔直接推上去，不過這邊就利用 GitHub Actions 來完成建置及部署的動作。
 
-![](/post/images/new_blog/6.png)
+![6](/post/images/new_blog/6.png)
 
 ## 總結
 
