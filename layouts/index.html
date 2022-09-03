@@ -1,0 +1,29 @@
+{{ define "main" }}
+    {{ $pages := where .Site.RegularPages "Type" "in" .Site.Params.mainSections }}
+    {{ $notHidden := where .Site.RegularPages "Params.hidden" "!=" true }}
+    {{ $filtered := ($pages | intersect $notHidden) }}
+    {{ $pag := .Paginate ($filtered) }}
+
+    {{- with .OutputFormats.Get "json" -}} 
+        <!-- <link rel="preload" href="{{ .Permalink }}" as="fetch" crossorigin="anonymous"> -->
+        <link rel="manifest" href="manifest.json">
+    {{- end -}}
+
+
+    <!-- {{ range .AlternativeOutputFormats -}}
+    
+    {{ end -}} -->
+
+    <section class="article-list">
+        {{ range $index, $element := $pag.Pages }}
+            {{ partial "article-list/default" . }}
+        {{ end }}
+    </section>
+
+    {{- partial "pagination.html" . -}}
+    {{- partial "footer/footer" . -}}
+{{ end }}
+
+{{ define "right-sidebar" }}
+    {{ partial "sidebar/right.html" (dict "Context" . "Scope" "homepage") }}
+{{ end }}
