@@ -6,17 +6,17 @@
     "description": "Start learning from zero.",
     "icons": [
       {
-        "src": "/zero_v2_72x72.png",
+        "src": "/assets/images/zero_v2_72x72.png",
         "sizes": "72x72",
         "type": "image/png"
       },
       {
-        "src": "/zero_v2_152x152.png",
+        "src": "/assets/images/zero_v2_152x152.png",
         "sizes": "152x152",
         "type": "image/png"
       },
       {
-        "src": "/zero_v2_192x192.png",
+        "src": "/assets/images/zero_v2_192x192.png",
         "sizes": "192x192",
         "type": "image/png"
       }
