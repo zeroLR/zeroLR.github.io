@@ -64,7 +64,7 @@ src = "/img/cover.jpg"
 
 [colorScheme]
 toggle = true
-default = "auto"
+default = "light"
 
 [imageProcessing.cover]
 enabled = true
