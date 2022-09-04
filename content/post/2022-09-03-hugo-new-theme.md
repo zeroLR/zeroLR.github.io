@@ -12,7 +12,7 @@ tags:
 ---
 
 > 用了一陣子簡約風的 jekyll 後，覺得還是太空了，要找相關主題的文章還要找好久，沒有預覽圖可以快速檢視想看的文章，加上之前就很想用 [Hugo](https://gohugo.io/) 來部署個人 blog 了，這次買了個 Domain 後就想來重新裝潢一下 blog。
-> [Hugo Themes](https://themes.gohugo.io/) 中真的一堆大神做超好看的模板 RRR，這篇紀錄如何使用 Hugo Themes 中的 [Stack](https://themes.gohugo.io/themes/hugo-theme-stack/) 模板，觀察其中檔案以及部分設定修改，至於 CMS 的部分可以參考之前寫的 [Netlify CMS 導入 GitHub Pages 記錄](/p/2022/03/netlify-cms-import-github-pages)，不過在 Hugo 中導入的流程有些不同，就留到下一篇紀錄囉！
+> [Hugo Themes](https://themes.gohugo.io/) 中真的一堆大神做超好看的模板 RRR，這篇紀錄如何使用 Hugo Themes 中的 [Stack](https://themes.gohugo.io/themes/hugo-theme-stack/) 模板，觀察其中檔案以及部分設定修改，至於 CMS 的部分可以參考之前寫的 [Netlify CMS 導入 GitHub Pages 記錄](/p/2022/03/05/netlify-cms-import-github-pages)，不過在 Hugo 中導入的流程有些不同，就留到下一篇紀錄囉！
 
 ## 安裝 Hugo
 
