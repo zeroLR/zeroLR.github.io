@@ -1,4 +1,4 @@
-name: Deploy to Github Pages
+name: Deploy to Github Pages - Feture test
 
 on:
     push:
@@ -48,7 +48,7 @@ jobs:
             - name: Deploy 🚀
               uses: JamesIves/github-pages-deploy-action@4.1.4
               with:
-                  branch: gh-pages
+                  branch: gh-pages-feature-test
                   folder: public
                   clean: true
                   single-commit: true
