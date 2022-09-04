@@ -1,7 +1,7 @@
 backend:
   name: github
   repo: zeroLR/zeroLR.github.io
-  branch: cms # Branch to update (optional; defaults to master)
+  branch: master # Branch to update (optional; defaults to master)
   site_domain: musing-swanson-deda90
 media_folder: static/assets/images
 public_folder: assets/images
