@@ -5,13 +5,15 @@ description: this post is created by cms
 image: https://i.imgur.com/0LINzxs.jpeg
 categories:
   - Other
+  - Blog
 tags:
-  - NetlifyCMS
+  - Netlify CMS
+  - Cats
 date: 2022-09-04T05:31:29.365Z
 ---
-\# createByCMS
+# createByCMS
 
-Nice!
+Nice! Nice! Nice!
 
 ![cat](assets/images/avatar.jpg "cat")
 
