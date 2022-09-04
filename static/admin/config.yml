@@ -5,6 +5,7 @@ backend:
   site_domain: musing-swanson-deda90
 media_folder: static/assets/images
 public_folder: assets/images
+publish_mode: editorial_workflow
 collections:
   - name: "blog"
     label: "Blog"
@@ -12,7 +13,7 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     editor:
-      preview: false
+      preview: true
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Slug", name: "slug", widget: "string" }
