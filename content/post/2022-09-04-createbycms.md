@@ -10,3 +10,6 @@ tags:
 \# createByCMS
 
 Nice!
+
+
+![cat](assets/images/avatar.jpg "cat")
