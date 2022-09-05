@@ -347,7 +347,7 @@ push 完後到網頁查看 GitHub repo，左邊清單可以看到目前有的分
 
 若有啟用 **publish_mode: editorial_workflow** ，文章會分成三種階段狀態儲存，分別為Draft, In Review, Ready，一開始儲存會在 Draft 狀態，只有將狀態切換為 Ready 才能 publish 至網站中。
 
-img
+![截圖 2022-09-05 下午11.19.47.png](assets/images/截圖-2022-09-05-下午11.19.47.png)
 
 當文章不斷修改儲存時，網站會先建立暫存的 commit ，每一次的 Save 都會建立一次，直到 publish 後才會一併 push 至 repo 中，並且會自動建立 pull request 去合併中間產生的 commit 再 merge 回 repo 中。
 
