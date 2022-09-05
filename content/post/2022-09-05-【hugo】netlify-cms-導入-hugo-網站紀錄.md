@@ -12,8 +12,6 @@ tags:
   - Netlify CMS
 date: 2022-09-05T14:30:19.036Z
 ---
-# 【Hugo】Netlify CMS 導入 Hugo 網站紀錄
-
 > Blog 搬家完後，需要重新配置 Netlify CMS 所需的檔案才能啟用，之前的 Blog 是用 Jekyll 生成的，與現在 Hugo 參數配置的部分相似，不過 Hugo 的檔案結構與 Jekyll 還是有些許不同，這篇會記錄我調整了哪些參數，建立新分支導入 CMS 功能部署測試，最後透過 CMS 建立文章後的 markdown 會長什麼樣子。
 
 ## Netlify 網站建立
