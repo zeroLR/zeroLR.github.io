@@ -19,7 +19,7 @@ jobs:
           cache-name: cache-hugo-resources
         with:
           path: resources
-          key: ${{ env.cache-name }}
+          key: ${{ env.cache-name }}-${{ github.sha }}
 
       - uses: actions/setup-go@v2
         with:
