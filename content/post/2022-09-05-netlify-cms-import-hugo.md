@@ -12,8 +12,10 @@ tags:
   - Netlify CMS
 date: 2022-09-05T14:30:19.036Z
 ---
-
 > Blog 搬家完後，需要重新配置 Netlify CMS 所需的檔案才能啟用，之前的 Blog 是用 Jekyll 生成的，與現在 Hugo 參數配置的部分相似，不過 Hugo 的檔案結構與 Jekyll 還是有些許不同，這篇會記錄我調整了哪些參數，建立新分支導入 CMS 功能部署測試，最後透過 CMS 建立文章後的 markdown 會長什麼樣子。
+
+
+> 2022-09-06 Debug： 文章中使用 cms 這個名稱作為測試功能分支，會導致 Netlify CMS 在更新 repo 時出錯，請使用 cms 以外的名稱，詳細參考：https://github.com/netlify/netlify-cms/issues/3065
 
 ## Netlify 網站建立
 
@@ -93,21 +95,21 @@ collections:
 
 ### 主要的配置簡介
 
-- repo: blog 的 repo 名稱
-- branch: 透過 CMS 修改的部分會更新至這個分支中
-- site_domain: 填入在 Netlify 上建立網站的 domain
-- media_folder: 在 CMS 中上傳的圖片存放資料夾路徑
-- public_folder: 部署後文章存取資源的資料夾路徑
-- publish_mode: 文章的發布模式，有分一般及暫存模式
-- collections: 可以定義多種文章配置，例：tech-artcle, life-article
+* repo: blog 的 repo 名稱
+* branch: 透過 CMS 修改的部分會更新至這個分支中
+* site_domain: 填入在 Netlify 上建立網站的 domain
+* media_folder: 在 CMS 中上傳的圖片存放資料夾路徑
+* public_folder: 部署後文章存取資源的資料夾路徑
+* publish_mode: 文章的發布模式，有分一般及暫存模式
+* collections: 可以定義多種文章配置，例：tech-artcle, life-article
 
-  - name: 文章的類型名稱
-  - label: 文章配置名稱，僅影響顯示文字
-  - folder: 文章資料夾路徑
-  - create: 新增文章功能
-  - slug: 自動產生的文章檔案名稱，例：2022-09-04-new-post
-  - editor(preview): 預覽文章功能
-  - fields: 依據底下的配置在檔案中產生對應的欄位
+  * name: 文章的類型名稱
+  * label: 文章配置名稱，僅影響顯示文字
+  * folder: 文章資料夾路徑
+  * create: 新增文章功能
+  * slug: 自動產生的文章檔案名稱，例：2022-09-04-new-post
+  * editor(preview): 預覽文章功能
+  * fields: 依據底下的配置在檔案中產生對應的欄位
 
 若是使用 VSCode 編輯，可以將滑鼠移至參數上，會顯示詳細說明
 
@@ -115,9 +117,9 @@ collections:
 
 ### 我主要改了什麼？
 
-- media_folder: Hugo 在 build 後會將 static 中的檔案放在 root 下， 而 CMS 上傳的圖片會存在這個路徑，如此 build 後的資源才可被網頁存取
-- public_folder: 承上，文章從此路徑存取圖片
-- fields: 原本照之前的配置時，會有 Tags 與 Categories 只能輸入一個字串的問題，且字串中不能有空格，後來在[這篇 issue](https://github.com/netlify/netlify-cms/issues/4646#issuecomment-1145575376)中找到方法處理，利用 summary 來組合不同參數，結果如下圖
+* media_folder: Hugo 在 build 後會將 static 中的檔案放在 root 下， 而 CMS 上傳的圖片會存在這個路徑，如此 build 後的資源才可被網頁存取
+* public_folder: 承上，文章從此路徑存取圖片
+* fields: 原本照之前的配置時，會有 Tags 與 Categories 只能輸入一個字串的問題，且字串中不能有空格，後來在[這篇 issue](https://github.com/netlify/netlify-cms/issues/4646#issuecomment-1145575376)中找到方法處理，利用 summary 來組合不同參數，結果如下圖
 
 ![截圖 2022-09-05 上午12.38.05.png](assets/images/截圖-2022-09-05-上午12.38.05.png)
 
@@ -269,7 +271,7 @@ d5bf87b (HEAD -> master) initial commit
 git checkout -b cms
 ```
 
-檢查所在分支用 git branch 指令，\*符號位置表示所在分支。
+檢查所在分支用 git branch 指令，*符號位置表示所在分支。
 
 ```bash
 git branch
@@ -340,7 +342,7 @@ push 完後到網頁查看 GitHub repo，左邊清單可以看到目前有的分
 
 這時在 **Pull requests** 中就有個合併請求產生，合併前可以檢查 **Files changed** 中的資訊，確定變動的內容都沒有問題後就可以合併了。
 
-![截圖 2022-09-05 下午11.48.35.png](assets/images/截圖-2022-09-05-下午11.48.35.png)
+![截圖 2022-09-05 下午11.48.35.png](assets/images/截圖-2022-09-05-下午11.48.10.png)
 
 合併之後記得回到 Settings → Pages 中將部署的 Branch 更改為 gh-pages 作為正式部署的網站。
 
@@ -372,9 +374,9 @@ push 完後到網頁查看 GitHub repo，左邊清單可以看到目前有的分
 
 就跟使用其他需登入的網站服務一樣，有以下幾個點需注意：
 
-- 除非是自己的電腦，在其他電腦上請開無痕視窗使用。
-- 使用時會需要登入 GitHub，在 CMS 這邊登入完後會發現 GitHub 那邊也登入了，所以請記得離開或不用時登出。
-- 使用未註冊 provider 的 GitHub 帳號登入時會被擋下來，若要增加共同編輯的帳號，需在其帳號下建立 OAuth APP，並且將 Client ID 及 Secret 提供給管理員去 provider
+* 除非是自己的電腦，在其他電腦上請開無痕視窗使用。
+* 使用時會需要登入 GitHub，在 CMS 這邊登入完後會發現 GitHub 那邊也登入了，所以請記得離開或不用時登出。
+* 使用未註冊 provider 的 GitHub 帳號登入時會被擋下來，若要增加共同編輯的帳號，需在其帳號下建立 OAuth APP，並且將 Client ID 及 Secret 提供給管理員去 provider
 
 ## 總結
 
