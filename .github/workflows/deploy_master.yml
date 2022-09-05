@@ -1,4 +1,4 @@
-name: Deploy to Github Pages - Feture test
+name: Deploy to Github Pages
 
 on:
   push:
