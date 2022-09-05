@@ -2,7 +2,7 @@ backend:
   name: github
   repo: zeroLR/zeroLR.github.io
   branch: master # Branch to update (optional; defaults to master)
-  site_domain: musing-swanson-deda90
+  site_domain: musing-swanson-deda90.netlify.com
 media_folder: static/assets/images
 public_folder: assets/images
 publish_mode: editorial_workflow
