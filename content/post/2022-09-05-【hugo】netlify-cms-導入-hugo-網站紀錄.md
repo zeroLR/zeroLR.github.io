@@ -16,7 +16,7 @@ date: 2022-09-05T14:30:19.036Z
 
 ## Netlify 網站建立
 
-使用此功能前需至 Netlify 建立一個網站，參考我之前的文章 [Netlify CMS 導入 GitHub Pages 記錄](https://blog.zerolr.net/p/2022/03/netlify-cms-import-github-pages) 。
+使用此功能前需至 Netlify 建立一個網站，參考我之前的文章 [Netlify CMS 導入 GitHub Pages 記錄](https://blog.zerolr.net/p/2022/03/05/netlify-cms-import-github-pages) 。
 
 ## Config 配置比較
 
