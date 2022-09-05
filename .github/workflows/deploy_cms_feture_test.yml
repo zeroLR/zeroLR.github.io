@@ -2,9 +2,9 @@ name: Deploy to Github Pages - Feture test
 
 on:
   push:
-    branches: [cms]
+    branches: [cms_feature_test]
   pull_request:
-    branches: [cms]
+    branches: [cms_feature_test]
 
 jobs:
   build:
