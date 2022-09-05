@@ -22,7 +22,7 @@ date: 2022-09-05T14:30:19.036Z
 
 ## Config 配置比較
 
-> 更詳細的配置可以參考 [Configuration Options](https://backlog.com/git-tutorial/tw/stepup/stepup2_2.html)
+> 更詳細的配置可以參考 [Configuration Options](https://www.netlifycms.org/docs/configuration-options/#header)
 
 之前在 Jekyll 上使用的 config 如下：
 
