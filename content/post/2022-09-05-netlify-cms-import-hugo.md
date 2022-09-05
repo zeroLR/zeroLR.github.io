@@ -14,6 +14,9 @@ date: 2022-09-05T14:30:19.036Z
 ---
 > Blog 搬家完後，需要重新配置 Netlify CMS 所需的檔案才能啟用，之前的 Blog 是用 Jekyll 生成的，與現在 Hugo 參數配置的部分相似，不過 Hugo 的檔案結構與 Jekyll 還是有些許不同，這篇會記錄我調整了哪些參數，建立新分支導入 CMS 功能部署測試，最後透過 CMS 建立文章後的 markdown 會長什麼樣子。
 
+
+> 2022-09-06 Debug： 文章中使用 cms 這個名稱作為測試功能分支，會導致 Netlify CMS 在更新 repo 時出錯，請使用 cms 以外的名稱，詳細參考：https://github.com/netlify/netlify-cms/issues/3065
+
 ## Netlify 網站建立
 
 使用此功能前需至 Netlify 建立一個網站，參考我之前的文章 [Netlify CMS 導入 GitHub Pages 記錄](https://blog.zerolr.net/p/2022/03/05/netlify-cms-import-github-pages) 。
