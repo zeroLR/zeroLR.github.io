@@ -351,7 +351,7 @@ push 完後到網頁查看 GitHub repo，左邊清單可以看到目前有的分
 
 * 除非是自己的電腦，在其他電腦上請開無痕視窗使用。
 * 使用時會需要登入 GitHub，在 CMS 這邊登入完後會發現 GitHub 那邊也登入了，所以請記得離開或不用時登出。
-* 使用未註冊 provider 的 GitHub 帳號登入時會被擋下來，若要增加共同編輯的帳號，需在其帳號下建立 OAuth APP，並且將 Client ID 及 Secret 提供給管理員去 provider
+* 使用未註冊 provider 的 GitHub 帳號登入時會被擋下來，若要增加共同編輯的帳號，需在其帳號下建立 OAuth APP，並且將 Client ID 及 Secret 提供給管理員去 provider 
 
 ## 總結
 
