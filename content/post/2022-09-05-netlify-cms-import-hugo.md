@@ -12,6 +12,7 @@ tags:
   - Netlify CMS
 date: 2022-09-05T14:30:19.036Z
 ---
+
 > Blog 搬家完後，需要重新配置 Netlify CMS 所需的檔案才能啟用，之前的 Blog 是用 Jekyll 生成的，與現在 Hugo 參數配置的部分相似，不過 Hugo 的檔案結構與 Jekyll 還是有些許不同，這篇會記錄我調整了哪些參數，建立新分支導入 CMS 功能部署測試，最後透過 CMS 建立文章後的 markdown 會長什麼樣子。
 
 ## Netlify 網站建立
@@ -92,21 +93,21 @@ collections:
 
 ### 主要的配置簡介
 
-* repo: blog 的 repo 名稱
-* branch: 透過 CMS 修改的部分會更新至這個分支中
-* site_domain: 填入在 Netlify 上建立網站的 domain
-* media_folder: 在 CMS 中上傳的圖片存放資料夾路徑
-* public_folder: 部署後文章存取資源的資料夾路徑
-* publish_mode: 文章的發布模式，有分一般及暫存模式
-* collections: 可以定義多種文章配置，例：tech-artcle, life-article
+- repo: blog 的 repo 名稱
+- branch: 透過 CMS 修改的部分會更新至這個分支中
+- site_domain: 填入在 Netlify 上建立網站的 domain
+- media_folder: 在 CMS 中上傳的圖片存放資料夾路徑
+- public_folder: 部署後文章存取資源的資料夾路徑
+- publish_mode: 文章的發布模式，有分一般及暫存模式
+- collections: 可以定義多種文章配置，例：tech-artcle, life-article
 
-  * name:  文章的類型名稱
-  * label: 文章配置名稱，僅影響顯示文字
-  * folder: 文章資料夾路徑
-  * create: 新增文章功能
-  * slug: 自動產生的文章檔案名稱，例：2022-09-04-new-post
-  * editor(preview):  預覽文章功能
-  * fields: 依據底下的配置在檔案中產生對應的欄位
+  - name: 文章的類型名稱
+  - label: 文章配置名稱，僅影響顯示文字
+  - folder: 文章資料夾路徑
+  - create: 新增文章功能
+  - slug: 自動產生的文章檔案名稱，例：2022-09-04-new-post
+  - editor(preview): 預覽文章功能
+  - fields: 依據底下的配置在檔案中產生對應的欄位
 
 若是使用 VSCode 編輯，可以將滑鼠移至參數上，會顯示詳細說明
 
@@ -114,9 +115,9 @@ collections:
 
 ### 我主要改了什麼？
 
-* media_folder: Hugo 在 build 後會將 static 中的檔案放在 root 下， 而 CMS 上傳的圖片會存在這個路徑，如此 build 後的資源才可被網頁存取
-* public_folder: 承上，文章從此路徑存取圖片
-* fields: 原本照之前的配置時，會有 Tags 與 Categories 只能輸入一個字串的問題，且字串中不能有空格，後來在[這篇issue](https://github.com/netlify/netlify-cms/issues/4646#issuecomment-1145575376)中找到方法處理，利用 summary 來組合不同參數，結果如下圖
+- media_folder: Hugo 在 build 後會將 static 中的檔案放在 root 下， 而 CMS 上傳的圖片會存在這個路徑，如此 build 後的資源才可被網頁存取
+- public_folder: 承上，文章從此路徑存取圖片
+- fields: 原本照之前的配置時，會有 Tags 與 Categories 只能輸入一個字串的問題，且字串中不能有空格，後來在[這篇 issue](https://github.com/netlify/netlify-cms/issues/4646#issuecomment-1145575376)中找到方法處理，利用 summary 來組合不同參數，結果如下圖
 
 ![截圖 2022-09-05 上午12.38.05.png](assets/images/截圖-2022-09-05-上午12.38.05.png)
 
@@ -126,14 +127,14 @@ collections:
 
 ### 觀察模板提供的 deploy.yml
 
-這段表示當 repo 被 push 或 pull_request 到 master 分支時，會執行這個 yml 檔的部署工作。 
+這段表示當 repo 被 push 或 pull_request 到 master 分支時，會執行這個 yml 檔的部署工作。
 
 ```yaml
 on:
-    push:
-        branches: [master]
-    pull_request:
-        branches: [master]
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
 ```
 
 中間還有安裝套件、暫存資源、建置靜態檔案等等流程，直接拉到最下面 Deploy 的地方，這邊表示部署 gh-pages 中的檔案。
@@ -150,7 +151,7 @@ on:
 
 ### 建立給新分支部署用的 deploy.yml
 
-將原本的deploy.yml 改為 deploy_master.yml,，並建立一個 deploy_cms.yml，修改觸發部署的分支為 cms，以及部署分支改為 gh-pages-feature-test。
+將原本的 deploy.yml 改為 deploy_master.yml,，並建立一個 deploy_cms.yml，修改觸發部署的分支為 cms，以及部署分支改為 gh-pages-feature-test。
 
 ```yaml
 # deploy_cms.yml
@@ -230,11 +231,7 @@ git checkout -b cms
 將 Netlify CMS 所需的檔案放在 static 目錄底下，後面 build 後才能讓 admin 輸出在根目錄中。
 
 ```html
-root
-- static
-  - admin
-    - config.yml
-    - index.html
+root - static - admin - config.yml - index.html
 ```
 
 建立 commit 記錄本次修改。
@@ -272,7 +269,7 @@ d5bf87b (HEAD -> master) initial commit
 git checkout -b cms
 ```
 
-檢查所在分支用 git branch 指令，*符號位置表示所在分支。
+檢查所在分支用 git branch 指令，\*符號位置表示所在分支。
 
 ```bash
 git branch
@@ -331,6 +328,24 @@ push 完後到網頁查看 GitHub repo，左邊清單可以看到目前有的分
 
 ![截圖 2022-09-05 下午8.26.17.png](assets/images/截圖-2022-09-05-下午8.26.17.png)
 
+### 合併新功能至 master 分支
+
+新增的功能測試完成後，就可以合併回 master 分支進行正式網站的部署，在 repo 可以看到提示你合併分支的訊息。
+
+![截圖 2022-09-05 下午11.35.48.png](assets/images/截圖-2022-09-05-下午11.35.48.png)
+
+點擊 **Compare & pull request** ，這邊會檢查有無衝突，往下拉可以看到從 cms 分支 合併回 master 分支時的內容差異，確認都沒問題後填寫 commit 訊息，按下 Create pull request 就成功發送合併請求。
+
+![截圖 2022-09-05 下午11.36.16.png](assets/images/截圖-2022-09-05-下午11.36.16.png)
+
+這時在 **Pull requests** 中就有個合併請求產生，合併前可以檢查 **Files changed** 中的資訊，確定變動的內容都沒有問題後就可以合併了。
+
+![截圖 2022-09-05 下午11.48.35.png](assets/images/截圖-2022-09-05-下午11.48.35.png)
+
+合併之後記得回到 Settings → Pages 中將部署的 Branch 更改為 gh-pages 作為正式部署的網站。
+
+![截圖 2022-09-05 下午11.59.16.png](assets/images/截圖-2022-09-05-下午11.59.16.png)
+
 ## 使用 CMS 建立文章
 
 這邊建立文章填入內容，注意 SLUG 欄位會變成文章的網站路徑，建議以英文加分隔符號的格式命名，讓人看網址就知道主題是什麼，COVER 欄位為文章預覽圖，填絕對路徑會從部署的檔案中查找，也可使用圖片 URL。
@@ -345,7 +360,7 @@ push 完後到網頁查看 GitHub repo，左邊清單可以看到目前有的分
 
 ![截圖 2022-09-05 下午10.50.32.png](assets/images/截圖-2022-09-05-下午10.51.55.png)
 
-若有啟用 **publish_mode: editorial_workflow** ，文章會分成三種階段狀態儲存，分別為Draft, In Review, Ready，一開始儲存會在 Draft 狀態，只有將狀態切換為 Ready 才能 publish 至網站中。
+若有啟用 **publish_mode: editorial_workflow** ，文章會分成三種階段狀態儲存，分別為 Draft, In Review, Ready，一開始儲存會在 Draft 狀態，只有將狀態切換為 Ready 才能 publish 至網站中。
 
 ![截圖 2022-09-05 下午11.19.47.png](assets/images/截圖-2022-09-05-下午11.19.47.png)
 
@@ -357,9 +372,9 @@ push 完後到網頁查看 GitHub repo，左邊清單可以看到目前有的分
 
 就跟使用其他需登入的網站服務一樣，有以下幾個點需注意：
 
-* 除非是自己的電腦，在其他電腦上請開無痕視窗使用。
-* 使用時會需要登入 GitHub，在 CMS 這邊登入完後會發現 GitHub 那邊也登入了，所以請記得離開或不用時登出。
-* 使用未註冊 provider 的 GitHub 帳號登入時會被擋下來，若要增加共同編輯的帳號，需在其帳號下建立 OAuth APP，並且將 Client ID 及 Secret 提供給管理員去 provider 
+- 除非是自己的電腦，在其他電腦上請開無痕視窗使用。
+- 使用時會需要登入 GitHub，在 CMS 這邊登入完後會發現 GitHub 那邊也登入了，所以請記得離開或不用時登出。
+- 使用未註冊 provider 的 GitHub 帳號登入時會被擋下來，若要增加共同編輯的帳號，需在其帳號下建立 OAuth APP，並且將 Client ID 及 Secret 提供給管理員去 provider
 
 ## 總結
 
@@ -367,7 +382,7 @@ push 完後到網頁查看 GitHub repo，左邊清單可以看到目前有的分
 
 ## 參考資料
 
-1. [N﻿etlify CMS - Hugo](https://www.netlifycms.org/docs/hugo/)[](https://backlog.com/git-tutorial/tw/stepup/stepup2_2.html)
+1. [Netlify CMS - Hugo](https://www.netlifycms.org/docs/hugo/)[](https://backlog.com/git-tutorial/tw/stepup/stepup2_2.html)
 2. [List widget form input prevents whitespace and commas](https://github.com/netlify/netlify-cms/issues/4646#issuecomment-1145575376)
 3. [Configuration Options](https://www.netlifycms.org/docs/configuration-options/#summary)
-4. [建立分支【教學1 使用分支】  | 連猴子都能懂的Git入門指南  | 貝格樂（Backlog）](https://backlog.com/git-tutorial/tw/stepup/stepup2_2.html)
+4. [建立分支【教學 1 使用分支】 | 連猴子都能懂的 Git 入門指南 | 貝格樂（Backlog）](https://backlog.com/git-tutorial/tw/stepup/stepup2_2.html)
