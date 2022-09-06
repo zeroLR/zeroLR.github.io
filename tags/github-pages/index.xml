@@ -1,0 +1,1124 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GitHub Pages on Zero's Blog</title><link>https://blog.zerolr.net/tags/github-pages/</link><description>Recent content in GitHub Pages on Zero's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 05 Sep 2022 14:30:19 +0000</lastBuildDate><atom:link href="https://blog.zerolr.net/tags/github-pages/index.xml" rel="self" type="application/rss+xml"/><item><title>【Hugo】Netlify CMS 導入 Hugo 網站紀錄</title><link>https://blog.zerolr.net/p/2022/09/05/netlify-cms-import-hugo/</link><pubDate>Mon, 05 Sep 2022 14:30:19 +0000</pubDate><guid>https://blog.zerolr.net/p/2022/09/05/netlify-cms-import-hugo/</guid><description>&lt;img src="https://blog.zerolr.net/post/images/cover/hugo-wide.jpeg" alt="Featured image of post 【Hugo】Netlify CMS 導入 Hugo 網站紀錄" />&lt;blockquote>
+&lt;p>Blog 搬家完後，需要重新配置 Netlify CMS 所需的檔案才能啟用，之前的 Blog 是用 Jekyll 生成的，與現在 Hugo 參數配置的部分相似，不過 Hugo 的檔案結構與 Jekyll 還是有些許不同，這篇會記錄我調整了哪些參數，建立新分支導入 CMS 功能部署測試，最後透過 CMS 建立文章後的 markdown 會長什麼樣子。&lt;/p>
+&lt;p>2022-09-06 Debug： 文章中使用 cms 這個名稱作為測試功能分支，會導致 Netlify CMS 在更新 repo 時出錯，請使用 cms 以外的名稱，詳細參考：&lt;a class="link" href="https://github.com/netlify/netlify-cms/issues/3065" target="_blank" rel="noopener"
+>https://github.com/netlify/netlify-cms/issues/3065&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="netlify-網站建立">Netlify 網站建立&lt;/h2>
+&lt;p>使用此功能前需至 Netlify 建立一個網站，參考我之前的文章 &lt;a class="link" href="https://blog.zerolr.net/p/2022/03/05/netlify-cms-import-github-pages" target="_blank" rel="noopener"
+>Netlify CMS 導入 GitHub Pages 記錄&lt;/a> 。&lt;/p>
+&lt;h2 id="config-配置比較">Config 配置比較&lt;/h2>
+&lt;blockquote>
+&lt;p>更詳細的配置可以參考 &lt;a class="link" href="https://www.netlifycms.org/docs/configuration-options/#header" target="_blank" rel="noopener"
+>Configuration Options&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>之前在 Jekyll 上使用的 config 如下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">backend&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">github&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">repo&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">zerolr/zerolr.github.io&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">branch&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">main&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">site_domain&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">musing-swanson-deda90.netlify.com&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">publish_mode&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">editorial_workflow&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">media_folder&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;images/uploads&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">collections&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;blog&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Used in routes, e.g., /admin/collections/blog&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Blog&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Used in the UI&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">folder&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;_posts/&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># The path to the folder where the documents are stored&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">create&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Allow users to create new documents in this collection&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">slug&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;{{year}}-{{month}}-{{day}}-{{slug}}&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Filename template, e.g., YYYY-MM-DD-title.md&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">fields&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># The fields for each document, usually in front matter&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Title&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;title&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;string&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Publish Date&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;date&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;datetime&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Categories&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;categories&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;list&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Tags&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;tags&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;list&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Body&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;body&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;markdown&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>現在 Hugo 上使用的 config 如下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">backend&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">github&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">repo&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">zerolr/zerolr.github.io&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">branch&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">master&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Branch to update (optional; defaults to master)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">site_domain&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">musing-swanson-deda90.netlify.com&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">media_folder&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">static/assets/images&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">public_folder&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">assets/images&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">publish_mode&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">editorial_workflow&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">collections&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;blog&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Blog&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">folder&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;content/post&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">create&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">slug&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;{{year}}-{{month}}-{{day}}-{{slug}}&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">editor&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">preview&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">false&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">fields&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Title&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;title&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;string&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Slug&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;slug&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;string&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Description&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;description&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;string&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Cover&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;image&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;string&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Categories&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;categories&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;list&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">summary&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;{{fields.category}}&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">field&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>{&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Category&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;category&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;string&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="p">,&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Tags&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;tags&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;list&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">summary&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;{{fields.tag}}&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">field&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>{&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Tag&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;tag&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;string&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="p">,&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Publish Date&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;date&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;datetime&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Body&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;body&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;markdown&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="主要的配置簡介">主要的配置簡介&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>repo: blog 的 repo 名稱&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>branch: 透過 CMS 修改的部分會更新至這個分支中&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>site_domain: 填入在 Netlify 上建立網站的 domain&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>media_folder: 在 CMS 中上傳的圖片存放資料夾路徑&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>public_folder: 部署後文章存取資源的資料夾路徑&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>publish_mode: 文章的發布模式，有分一般及暫存模式&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>collections: 可以定義多種文章配置，例：tech-artcle, life-article&lt;/p>
+&lt;ul>
+&lt;li>name: 文章的類型名稱&lt;/li>
+&lt;li>label: 文章配置名稱，僅影響顯示文字&lt;/li>
+&lt;li>folder: 文章資料夾路徑&lt;/li>
+&lt;li>create: 新增文章功能&lt;/li>
+&lt;li>slug: 自動產生的文章檔案名稱，例：2022-09-04-new-post&lt;/li>
+&lt;li>editor(preview): 預覽文章功能&lt;/li>
+&lt;li>fields: 依據底下的配置在檔案中產生對應的欄位&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>若是使用 VSCode 編輯，可以將滑鼠移至參數上，會顯示詳細說明&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-04-%e4%b8%8b%e5%8d%8810.57.25.png"
+loading="lazy"
+alt="截圖 2022-09-04 下午10.57.25.png"
+>&lt;/p>
+&lt;h3 id="我主要改了什麼">我主要改了什麼？&lt;/h3>
+&lt;ul>
+&lt;li>media_folder: Hugo 在 build 後會將 static 中的檔案放在 root 下， 而 CMS 上傳的圖片會存在這個路徑，如此 build 後的資源才可被網頁存取&lt;/li>
+&lt;li>public_folder: 承上，文章從此路徑存取圖片&lt;/li>
+&lt;li>fields: 原本照之前的配置時，會有 Tags 與 Categories 只能輸入一個字串的問題，且字串中不能有空格，後來在&lt;a class="link" href="https://github.com/netlify/netlify-cms/issues/4646#issuecomment-1145575376" target="_blank" rel="noopener"
+>這篇 issue&lt;/a>中找到方法處理，利用 summary 來組合不同參數，結果如下圖&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8a%e5%8d%8812.38.05.png"
+loading="lazy"
+alt="截圖 2022-09-05 上午12.38.05.png"
+>&lt;/p>
+&lt;h2 id="建立新分支加入-netlify-cms-部署測試">建立新分支加入 Netlify CMS 部署測試&lt;/h2>
+&lt;p>在加入 Netlify CMS 的檔案前，先分別建立給 master 及 cms 分支使用的 workflows。&lt;/p>
+&lt;h3 id="觀察模板提供的-deployyml">觀察模板提供的 deploy.yml&lt;/h3>
+&lt;p>這段表示當 repo 被 push 或 pull_request 到 master 分支時，會執行這個 yml 檔的部署工作。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">push&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">branches&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="l">master]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">pull_request&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">branches&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="l">master]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>中間還有安裝套件、暫存資源、建置靜態檔案等等流程，直接拉到最下面 Deploy 的地方，這邊表示部署 gh-pages 中的檔案。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Deploy 🚀&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">JamesIves/github-pages-deploy-action@4.1.4&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">branch&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">gh-pages&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">folder&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">public&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">clean&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">single-commit&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="建立給新分支部署用的-deployyml">建立給新分支部署用的 deploy.yml&lt;/h3>
+&lt;p>將原本的 deploy.yml 改為 deploy_master.yml,，並建立一個 deploy_cms.yml，修改觸發部署的分支為 cms，以及部署分支改為 gh-pages-feature-test。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># deploy_cms.yml&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Deploy to Github Pages - Feture test&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">push&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">branches&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="l">cms]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">pull_request&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">branches&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="l">cms]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">jobs&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">build&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">runs-on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">ubuntu-latest&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">steps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">actions/checkout@v2&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Cache Hugo resources&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">actions/cache@v2&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">env&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">cache-name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">cache-hugo-resources&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">path&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">resources&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">key&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">${{ env.cache-name }}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">actions/setup-go@v2&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">go-version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;^1.17.0&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">go version&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Cache Go Modules&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">actions/cache@v2&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">path&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">|&lt;/span>&lt;span class="sd">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="sd"> ~/.cache/go-build
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="sd"> ~/go/pkg/mod&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">key&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">${{ runner.os }}-go-${{ hashFiles(&amp;#39;**/go.sum&amp;#39;) }}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">restore-keys&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">|&lt;/span>&lt;span class="sd">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="sd"> &lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">${{ runner.os }}-go-&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Setup Hugo&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">peaceiris/actions-hugo@v2&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">hugo-version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;latest&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">extended&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Build&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">hugo --minify --gc&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Deploy 🚀&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">JamesIves/github-pages-deploy-action@4.1.4&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">branch&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">gh-pages-feature-test&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">folder&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">public&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">clean&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">single-commit&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>修改完後在 master 分支加入紀錄。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git add .
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git commit -m &lt;span class="s2">&amp;#34;feat: update workflow for master branch, add new workflow for cms branch&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>此時這個版本的紀錄會留在&lt;strong>已建立好 master 與 cms 分支用的 workflows&lt;/strong> 上，下一步再將 Netlify CMS 所需的檔案加入。&lt;/p>
+&lt;h3 id="建立-cms-分支並將-netlify-cms-檔案加入">建立 cms 分支並將 Netlify CMS 檔案加入&lt;/h3>
+&lt;p>首先建立並切換至 cms 分支。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git checkout -b cms
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>將 Netlify CMS 所需的檔案放在 static 目錄底下，後面 build 後才能讓 admin 輸出在根目錄中。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">root - static - admin - config.yml - index.html
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>建立 commit 記錄本次修改。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git add .
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git commit -m &lt;span class="s2">&amp;#34;feat: add netlify cms&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>此時 cms 分支會領先 master 分支一個 commit，可以參考下面的補充，接下來要準備部署上去。&lt;/p>
+&lt;h3 id="補充-git-branch-分支建立">補充： git branch 分支建立&lt;/h3>
+&lt;p>這邊用範例來解釋分支，新開資料夾加入一個 blog.txt 檔案，並建立 git 環境加入 commit。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">mkdir git-branch-test
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> git-branch-test
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git init
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;This is blog file&amp;#34;&lt;/span> &amp;gt;&amp;gt; blog.txt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git add .
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git commit -m &lt;span class="s2">&amp;#34;initial commit&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>使用 git log 查看狀態，目前有一個 commit ，HEAD 表示目前所在的 commit，箭頭指向的位置表示 commit 所在的分支。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git log --oneline
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">d5bf87b &lt;span class="o">(&lt;/span>HEAD -&amp;gt; master&lt;span class="o">)&lt;/span> initial commit
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>建立分支並切換過去，使用以下指令達成，加上 -b 可以新增分支同時切換過去。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git checkout -b cms
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>檢查所在分支用 git branch 指令，*符號位置表示所在分支。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git branch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">*cms
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>加入 config.yml 檔案並建立 commit 後，使用 git log 查看狀態，由於是基於此時的 master 分支上建立分支，在 cms 分支中會有 master 分支的 commit，且比 master 分支領先一個 commit ，意思就是比 master 分支領先一筆修改紀錄。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;This is config file&amp;#34;&lt;/span> &amp;gt;&amp;gt; config.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git add .
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git commit -m &lt;span class="s2">&amp;#34;feat: add config.yml&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git log --oneline
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">09103bc &lt;span class="o">(&lt;/span>HEAD -&amp;gt; cms&lt;span class="o">)&lt;/span> feat: add config.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">d5bf87b &lt;span class="o">(&lt;/span>master&lt;span class="o">)&lt;/span> initial commit
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>我們可以切回去 master 分支查看 git log，剛才前面那個 commit 及 config.yml 不見了！ 因為剛才是在 cms 分支中建立 commit ，新增 config.yml 這筆紀錄只有在 cms 的分支中才能看到，所以可以依據想加入的功能開對應的分支。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git checkout master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Switched to branch &lt;span class="s1">&amp;#39;master&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git log --oneline
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">d5bf87b &lt;span class="o">(&lt;/span>HEAD -&amp;gt; master&lt;span class="o">)&lt;/span> initial commit
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>可以把 branch 想像成是資料夾，開分支就是從 master 資料夾複製一份並重新命名成 cms，commit 就是對資料夾內的內容做編輯，以範例來說最後 master 有一份檔案，而 cms 則有兩份檔案囉！&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="部署測試版網站">部署測試版網站&lt;/h3>
+&lt;p>將程式 push 至 遠端 repo 的 cms 分支上，push 遠端不存在的分支時 GitHub 會幫我們建立，且因 cms 分支被 push 還會觸發 deploy_cms.yml 的 workflow。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git push origin cms
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>push 完後到網頁查看 GitHub repo，左邊清單可以看到目前有的分支，可以比較 master 與 cms 中的檔案是否如預期不同。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8a%e5%8d%881.02.03.png"
+loading="lazy"
+alt="截圖 2022-09-05 上午1.02.03.png"
+>&lt;/p>
+&lt;p>至 repo 中的 Actions 查看結果，可以看到執行工作流程的檔案及名稱，以及底下完成過的工作。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8b%e5%8d%887.59.46.png"
+loading="lazy"
+alt="截圖 2022-09-05 下午7.59.46.png"
+>&lt;/p>
+&lt;p>待 workflow 工作完成後，至 repo → Settings → Pages 底下，在 Branch 的欄位中選擇你要部署網站的分支，這邊選擇由 deploy_cms.yml 所產生的 gh-pages-feature-test 分支，按下 Save 後就會開始部署。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8a%e5%8d%881.00.19.png"
+loading="lazy"
+alt="截圖 2022-09-05 上午1.00.19.png"
+>&lt;/p>
+&lt;p>部署中的過程一樣可以在 Actions 中查看，可以點進去看更詳細的過程，失敗的錯誤訊息在這邊都可以查得到。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8b%e5%8d%888.22.29.png"
+loading="lazy"
+alt="截圖 2022-09-05 下午8.22.29.png"
+>&lt;/p>
+&lt;p>成功部署後開啟網站進入 CMS 管理畫面，登入已授權的 GitHub 帳號後就可以開始建立文章囉！&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8b%e5%8d%888.26.17.png"
+loading="lazy"
+alt="截圖 2022-09-05 下午8.26.17.png"
+>&lt;/p>
+&lt;h3 id="合併新功能至-master-分支">合併新功能至 master 分支&lt;/h3>
+&lt;p>新增的功能測試完成後，就可以合併回 master 分支進行正式網站的部署，在 repo 可以看到提示你合併分支的訊息。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8b%e5%8d%8811.35.48.png"
+loading="lazy"
+alt="截圖 2022-09-05 下午11.35.48.png"
+>&lt;/p>
+&lt;p>點擊 &lt;strong>Compare &amp;amp; pull request&lt;/strong> ，這邊會檢查有無衝突，往下拉可以看到從 cms 分支 合併回 master 分支時的內容差異，確認都沒問題後填寫 commit 訊息，按下 Create pull request 就成功發送合併請求。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8b%e5%8d%8811.36.16.png"
+loading="lazy"
+alt="截圖 2022-09-05 下午11.36.16.png"
+>&lt;/p>
+&lt;p>這時在 &lt;strong>Pull requests&lt;/strong> 中就有個合併請求產生，合併前可以檢查 &lt;strong>Files changed&lt;/strong> 中的資訊，確定變動的內容都沒有問題後就可以合併了。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8b%e5%8d%8811.48.10.png"
+loading="lazy"
+alt="截圖 2022-09-05 下午11.48.35.png"
+>&lt;/p>
+&lt;p>合併之後記得回到 Settings → Pages 中將部署的 Branch 更改為 gh-pages 作為正式部署的網站。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8b%e5%8d%8811.59.16.png"
+loading="lazy"
+alt="截圖 2022-09-05 下午11.59.16.png"
+>&lt;/p>
+&lt;h2 id="使用-cms-建立文章">使用 CMS 建立文章&lt;/h2>
+&lt;p>這邊建立文章填入內容，注意 SLUG 欄位會變成文章的網站路徑，建議以英文加分隔符號的格式命名，讓人看網址就知道主題是什麼，COVER 欄位為文章預覽圖，填絕對路徑會從部署的檔案中查找，也可使用圖片 URL。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8b%e5%8d%888.35.44.png"
+loading="lazy"
+alt="截圖 2022-09-05 下午8.35.44.png"
+>&lt;/p>
+&lt;p>檢查完沒問題後就可以發布文章囉！&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8b%e5%8d%8810.50.32.png"
+loading="lazy"
+alt="截圖 2022-09-05 下午10.50.32.png"
+>&lt;/p>
+&lt;p>透過 CMS 發佈的文章檔案，上方的欄位配置就是依照編輯器中的內容產生的！&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8b%e5%8d%8810.51.55.png"
+loading="lazy"
+alt="截圖 2022-09-05 下午10.50.32.png"
+>&lt;/p>
+&lt;p>若有啟用 &lt;strong>publish_mode: editorial_workflow&lt;/strong> ，文章會分成三種階段狀態儲存，分別為 Draft, In Review, Ready，一開始儲存會在 Draft 狀態，只有將狀態切換為 Ready 才能 publish 至網站中。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8b%e5%8d%8811.19.47.png"
+loading="lazy"
+alt="截圖 2022-09-05 下午11.19.47.png"
+>&lt;/p>
+&lt;p>當文章不斷修改儲存時，網站會先建立暫存的 commit ，每一次的 Save 都會建立一次，直到 publish 後才會一併 push 至 repo 中，並且會自動建立 pull request 去合併中間產生的 commit 再 merge 回 repo 中。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/%e6%88%aa%e5%9c%96-2022-09-05-%e4%b8%8b%e5%8d%8811.07.41.png"
+loading="lazy"
+alt="截圖 2022-09-05 下午11.07.41.png"
+>&lt;/p>
+&lt;h2 id="安全問題">安全問題&lt;/h2>
+&lt;p>就跟使用其他需登入的網站服務一樣，有以下幾個點需注意：&lt;/p>
+&lt;ul>
+&lt;li>除非是自己的電腦，在其他電腦上請開無痕視窗使用。&lt;/li>
+&lt;li>使用時會需要登入 GitHub，在 CMS 這邊登入完後會發現 GitHub 那邊也登入了，所以請記得離開或不用時登出。&lt;/li>
+&lt;li>使用未註冊 provider 的 GitHub 帳號登入時會被擋下來，若要增加共同編輯的帳號，需在其帳號下建立 OAuth APP，並且將 Client ID 及 Secret 提供給管理員去 provider&lt;/li>
+&lt;/ul>
+&lt;h2 id="總結">總結&lt;/h2>
+&lt;p>重新再跑過一遍安裝流程後對配置又更熟悉了一點，也發現 CMS 連側邊欄位那些頁面也能編輯，之後會再更新上去。同時也是第一次嘗試另外開分支加入新功能測試部署，在嘗試的過程中一直在想這種做法是否合適，若對本篇做法有任何看法非常歡迎留言指教！&lt;/p>
+&lt;h2 id="參考資料">參考資料&lt;/h2>
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.netlifycms.org/docs/hugo/" target="_blank" rel="noopener"
+>Netlify CMS - Hugo&lt;/a>&lt;a class="link" href="https://backlog.com/git-tutorial/tw/stepup/stepup2_2.html" target="_blank" rel="noopener"
+>&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/netlify/netlify-cms/issues/4646#issuecomment-1145575376" target="_blank" rel="noopener"
+>List widget form input prevents whitespace and commas&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.netlifycms.org/docs/configuration-options/#summary" target="_blank" rel="noopener"
+>Configuration Options&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://backlog.com/git-tutorial/tw/stepup/stepup2_2.html" target="_blank" rel="noopener"
+>建立分支【教學 1 使用分支】 | 連猴子都能懂的 Git 入門指南 | 貝格樂（Backlog）&lt;/a>&lt;/li>
+&lt;/ol></description></item><item><title>【Hugo】又…又改主題!!!</title><link>https://blog.zerolr.net/p/2022/09/03/hugo-new-theme/</link><pubDate>Sat, 03 Sep 2022 00:00:00 +0000</pubDate><guid>https://blog.zerolr.net/p/2022/09/03/hugo-new-theme/</guid><description>&lt;img src="https://blog.zerolr.net/post/images/cover/hugo-wide.jpeg" alt="Featured image of post 【Hugo】又…又改主題!!!" />&lt;blockquote>
+&lt;p>用了一陣子簡約風的 jekyll 後，覺得還是太空了，要找相關主題的文章還要找好久，沒有預覽圖可以快速檢視想看的文章，加上之前就很想用 &lt;a class="link" href="https://gohugo.io/" target="_blank" rel="noopener"
+>Hugo&lt;/a> 來部署個人 blog 了，這次買了個 Domain 後就想來重新裝潢一下 blog。
+&lt;a class="link" href="https://themes.gohugo.io/" target="_blank" rel="noopener"
+>Hugo Themes&lt;/a> 中真的一堆大神做超好看的模板 RRR，這篇紀錄如何使用 Hugo Themes 中的 &lt;a class="link" href="https://themes.gohugo.io/themes/hugo-theme-stack/" target="_blank" rel="noopener"
+>Stack&lt;/a> 模板，觀察其中檔案以及部分設定修改，至於 CMS 的部分可以參考之前寫的 &lt;a class="link" href="https://blog.zerolr.net/p/2022/03/05/netlify-cms-import-github-pages" >Netlify CMS 導入 GitHub Pages 記錄&lt;/a>，不過在 Hugo 中導入的流程有些不同，就留到下一篇紀錄囉！&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="安裝-hugo">安裝 Hugo&lt;/h2>
+&lt;p>安裝 Hugo 的部分就不說了，都在&lt;a class="link" href="https://gohugo.io/getting-started/" target="_blank" rel="noopener"
+>官方文件&lt;/a>中！&lt;/p>
+&lt;h2 id="從作者提供的-template-建立-repo">從作者提供的 Template 建立 repo&lt;/h2>
+&lt;p>使用 &lt;strong>&lt;a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack-starter" target="_blank" rel="noopener"
+>hugo-theme-stack-starter&lt;/a>&lt;/strong> 建立 repo 後如下，作者: &lt;strong>&lt;a class="link" href="https://jimmycai.com/" target="_blank" rel="noopener"
+>Jimmy Cai&lt;/a>&lt;/strong>。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/post/images/new_blog/1.png"
+loading="lazy"
+alt="1"
+>&lt;/p>
+&lt;h2 id="觀察檔案與調整">觀察檔案與調整&lt;/h2>
+&lt;h3 id="githubworkflowsdeployyml">.github/workflows/deploy.yml&lt;/h3>
+&lt;p>將 repo clone 到電腦中，可以看到在 .github/workflows 中，作者已經寫好部署網站的&lt;code>deploy.yml&lt;/code>檔了，在電腦中測試完用 git push 後就會幫你部署至 gh-pages 的分支囉！&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/post/images/new_blog/2.png"
+loading="lazy"
+alt="2"
+>&lt;/p>
+&lt;blockquote>
+&lt;p>當 push 新的 commit 上去時，GitHub Actions 會根據 workflows 中的 yml 進行一連串的動作將網站部署完成，想了解如何做到的可以參考 &lt;a class="link" href="https://docs.github.com/en/actions" target="_blank" rel="noopener"
+>GitHub Actions&lt;/a> 。&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="githubworkflowsupdate-themeyml">.github/workflows/update-theme.yml&lt;/h3>
+&lt;p>在 &lt;strong>.github/workflows&lt;/strong> 中還可以看到另一個檔案 &lt;code>update-theme.yml&lt;/code> ，看了內容後個人覺得是用來自動更新模板檔的流程，我自己不需要就刪掉了。&lt;/p>
+&lt;h3 id="githubdevcontainer">.github/.devcontainer&lt;/h3>
+&lt;p>在 &lt;strong>.devcontainer&lt;/strong> 中還有提供 &lt;strong>Dockerfile&lt;/strong> 能夠將網站包裝成 &lt;strong>Docker Image&lt;/strong>，對於想部署在不同平台上的人來說很方便，可以先留著日用有機會試試。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/post/images/new_blog/3.png"
+loading="lazy"
+alt="3"
+>&lt;/p>
+&lt;h3 id="config_default">config/_default&lt;/h3>
+&lt;p>網站的標題、外觀主題、語言、頭像、連結…基本上都由這邊的檔案進行設定，參考 &lt;strong>&lt;a class="link" href="https://gohugo.io/getting-started/configuration/#all-configuration-settings" target="_blank" rel="noopener"
+>Configure Hugo&lt;/a>&lt;/strong> 或是網路上有很多文章解說如何設定喔！&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/post/images/new_blog/4.png"
+loading="lazy"
+alt="4"
+>&lt;/p>
+&lt;h3 id="contentpost">content/post&lt;/h3>
+&lt;p>模板預設已經有一篇 hello-world 的文章，可以參考內文格式撰寫文章，這邊我就把之前寫的搬過來，也能加上標題圖片。&lt;/p>
+&lt;h2 id="local-端執行建置網站">Local 端執行/建置網站&lt;/h2>
+&lt;p>在專案根目錄中執行以下指令開啟網站檢視。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">hugo server
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://blog.zerolr.net/post/images/new_blog/5.png"
+loading="lazy"
+alt="5"
+>&lt;/p>
+&lt;p>在專案根目錄中執行以下指令建置網站，靜態檔案輸出在 &lt;strong>public&lt;/strong> 資料夾中，指令部分參考 &lt;a class="link" href="https://gohugo.io/commands/hugo/" target="_blank" rel="noopener"
+>hugo commands&lt;/a> 。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">hugo --minify --gc
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="部署至-github-pages">部署至 GitHub pages&lt;/h2>
+&lt;p>可以直接把剛才 build 出來的靜態檔直接推上去，不過這邊就利用 GitHub Actions 來完成建置及部署的動作。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/post/images/new_blog/6.png"
+loading="lazy"
+alt="6"
+>&lt;/p>
+&lt;h2 id="總結">總結&lt;/h2>
+&lt;p>直接搬別人提供的東西來用是很方便，但對於 Hugo 本身是如何藉由模板的方式來產生網頁不熟悉的話，往後要修改就不容易了，如果想更客製化自己的 blog ，最好還是把官方文件看熟才是王道！&lt;/p>
+&lt;h2 id="參考資源">參考資源&lt;/h2>
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://themes.gohugo.io/" target="_blank" rel="noopener"
+>Hugo Themes&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://themes.gohugo.io/themes/hugo-theme-stack/" target="_blank" rel="noopener"
+>Theme - Stack&lt;/a>&lt;/li>
+&lt;/ol></description></item><item><title>Netlify CMS 導入 GitHub Pages 記錄</title><link>https://blog.zerolr.net/p/2022/03/05/netlify-cms-import-github-pages/</link><pubDate>Sat, 05 Mar 2022 01:17:30 +0000</pubDate><guid>https://blog.zerolr.net/p/2022/03/05/netlify-cms-import-github-pages/</guid><description>&lt;img src="https://blog.zerolr.net/post/images/netlify/%E6%88%AA%E5%9C%96-2022-03-05-%E4%B8%8B%E5%8D%8810.39.43.png" alt="Featured image of post Netlify CMS 導入 GitHub Pages 記錄" />&lt;blockquote>
+&lt;p>原本部落格文章的新增或更新需要修改檔案，就在想有沒有像是 Wordpress 那種有後台能夠直接新增文章的功能可以使用，翻一下 google 就找到一個蠻多人用的 Netlify CMS，嘗試導入這個部落格後覺得真的很方便。能夠在原本的網站中新增一個控制台管理文章，文章的新增/修改/刪除只要一鍵就幫你完成 commit, publish, deploy 這些步驟，雖然原理還沒有很深入了解，但不用每次開 VSCode 起來改檔案新增文章就是舒服啦(已知用火)！&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="導入流程">導入流程&lt;/h2>
+&lt;h3 id="建立-github-oauth-app">建立 GitHub OAuth APP&lt;/h3>
+&lt;p>前往 &lt;a class="link" href="https://github.com/settings/developers" target="_blank" rel="noopener"
+>GitHub Dev Settings&lt;/a> 建立 &lt;strong>GitHub OAuth APP&lt;/strong>，使用這個 CMS 時會需要登入自己的 GitHub。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/post/images/netlify/%e6%88%aa%e5%9c%96-2022-03-06-%e4%b8%8a%e5%8d%889.47.50.png"
+loading="lazy"
+alt="1"
+>&lt;/p>
+&lt;p>&lt;strong>Authorization callback URL&lt;/strong> 填入&lt;code>https://api.netlify.com/auth/done&lt;/code>，透過 GitHub OAuth APP 登入時取得的 Access token 會再拿去 &lt;strong>Authorization callback URL&lt;/strong> 這個 API(Serve-to-server)驗證。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/post/images/netlify/%e6%88%aa%e5%9c%96-2022-03-06-%e4%b8%8a%e5%8d%889.49.55.png"
+loading="lazy"
+alt="2"
+>&lt;/p>
+&lt;h3 id="netlify-註冊-provider">Netlify 註冊 Provider&lt;/h3>
+&lt;p>前往 &lt;a class="link" href="https://app.netlify.com/account/sites" target="_blank" rel="noopener"
+>Netlify&lt;/a> 建立一個網站，repo 任意選擇即可，網站並不會部署在選擇的 repo 上。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/post/images/netlify/%e6%88%aa%e5%9c%96-2022-03-06-%e4%b8%8a%e5%8d%889.51.26.png"
+loading="lazy"
+alt="3"
+>&lt;/p>
+&lt;p>前往 &lt;strong>Site settings&lt;/strong> ，記下這個網站的名稱後面會用到，格式應該長得像 &lt;strong>octopus-cat-123456&lt;/strong>。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/post/images/netlify/%e6%88%aa%e5%9c%96-2022-03-06-%e4%b8%8a%e5%8d%889.52.23.png"
+loading="lazy"
+alt="4"
+>&lt;/p>
+&lt;p>側邊欄選擇 &lt;strong>Domain Management&lt;/strong> ，新增 &lt;strong>Custom domains&lt;/strong> 為 &lt;code>you.github.io&lt;/code> 。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/post/images/netlify/%e6%88%aa%e5%9c%96-2022-03-06-%e4%b8%8a%e5%8d%889.57.15.png"
+loading="lazy"
+alt="5"
+>&lt;/p>
+&lt;p>側邊欄選擇 &lt;strong>Access control&lt;/strong> ，選擇 &lt;strong>OAuth&lt;/strong> ，點擊 &lt;strong>Install provider&lt;/strong>。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/post/images/netlify/%e6%88%aa%e5%9c%96-2022-03-06-%e4%b8%8a%e5%8d%889.58.37.png"
+loading="lazy"
+alt="6"
+>&lt;/p>
+&lt;p>&lt;strong>Provider&lt;/strong> 選擇 &lt;strong>GitHub&lt;/strong>，輸入從 &lt;strong>GitHub OAuth APP&lt;/strong> 中的 &lt;strong>Client ID&lt;/strong> 與 &lt;strong>Client Secret&lt;/strong>。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/post/images/netlify/%e6%88%aa%e5%9c%96-2022-03-06-%e4%b8%8a%e5%8d%8810.00.01.png"
+loading="lazy"
+alt="7"
+>&lt;/p>
+&lt;h3 id="在網站中啟用-netlify-cms-管理頁面">在網站中啟用 Netlify CMS 管理頁面&lt;/h3>
+&lt;p>在自己部落格的根資料夾中新增 &lt;strong>admin&lt;/strong> 資料夾，建立 &lt;strong>index.html&lt;/strong> 與 &lt;strong>config.yml&lt;/strong>，內容如下，在 &lt;strong>config.yml&lt;/strong> 中記得將 repo 與 site_domain 修改成自己的部落格與剛剛記下的 Netlify 網站名稱，以及要注意自己部落格的 branch 是否跟 config 中的相同。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/post/images/netlify/%e6%88%aa%e5%9c%96-2022-03-06-%e4%b8%8a%e5%8d%8810.01.57.png"
+loading="lazy"
+alt="8"
+>&lt;/p>
+&lt;h4 id="adminindexhtml">admin/index.html&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&amp;lt;!DOCTYPE html&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">meta&lt;/span> &lt;span class="na">charset&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;utf-8&amp;#34;&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">meta&lt;/span> &lt;span class="na">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;viewport&amp;#34;&lt;/span> &lt;span class="na">content&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;width=device-width, initial-scale=1.0&amp;#34;&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Content Manager&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c">&amp;lt;!-- Include the script that builds the page and powers Netlify CMS --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;https://unpkg.com/netlify-cms@^2.10.187/dist/netlify-cms.js&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="adminconfigyml">admin/config.yml&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">backend&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">github&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">repo&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">you/you.github.io&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">branch&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">master&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">site_domain&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">octopus-cat-123456.netlify.com&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">media_folder&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;images/uploads&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">collections&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;blog&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Used in routes, e.g., /admin/collections/blog&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Blog&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Used in the UI&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">folder&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;_posts/&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># The path to the folder where the documents are stored&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">create&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Allow users to create new documents in this collection&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">slug&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;{{year}}-{{month}}-{{day}}-{{slug}}&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Filename template, e.g., YYYY-MM-DD-title.md&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">fields&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># The fields for each document, usually in front matter&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Title&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;title&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;string&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Publish Date&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;date&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;datetime&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Tags&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;tags&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;list&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- {&lt;span class="w"> &lt;/span>&lt;span class="nt">label&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Body&amp;#34;&lt;/span>&lt;span class="nt">, name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;body&amp;#34;&lt;/span>&lt;span class="nt">, widget&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;markdown&amp;#34;&lt;/span>&lt;span class="w"> &lt;/span>}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>推送上去 GitHub 後，就可開啟 &lt;code>https://you.github.io/admin&lt;/code> 進入 CMS 管理系統囉！&lt;/p>
+&lt;h2 id="補充">補充&lt;/h2>
+&lt;p>如果想要暫時保存新文章或修改，可以在 &lt;strong>config.yml&lt;/strong> 加上下方的參數 ，就可以開啟暫存相關功能了，還分成 Draft, In review, Ready 三種階段來管理各個文章進度喔！&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">publish_mode&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">editorial_workflow&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://blog.zerolr.net/post/images/netlify/%e6%88%aa%e5%9c%96-2022-03-05-%e4%b8%8b%e5%8d%8810.39.43.png"
+loading="lazy"
+alt="9"
+>&lt;/p>
+&lt;h2 id="總結">總結&lt;/h2>
+&lt;p>實際用過後有些點需要注意，預設文章連結會用 titile 作為 path，若超過 50 個字就會報錯(忘記哪邊的限制)，文字在 url 中會被轉換為 base64 格式，很容易就會超過上限，另一個問題是用 CMS 發布文章後，bot 會幫你 merge 新的 post 到 repo 中，若想修改檔案記得要先 git pull 同步。&lt;/p>
+&lt;h2 id="參考資料">參考資料&lt;/h2>
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://cnly.github.io/2018/04/14/just-3-steps-adding-netlify-cms-to-existing-github-pages-site-within-10-minutes.html" target="_blank" rel="noopener"
+>Just 3 Steps: Adding Netlify CMS to Existing GitHub Pages Site Within 10 Minutes&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.netlifycms.org/docs/intro/" target="_blank" rel="noopener"
+>NetlifyCMS - Overview&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.netlifycms.org/docs/configuration-options/#publish-mode" target="_blank" rel="noopener"
+>NetlifyCMS - Publish Mode&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.community/t/what-is-user-authorization-callback-url-for/13990" target="_blank" rel="noopener"
+>What is &amp;ldquo;User authorization callback URL&amp;rdquo; for?&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps" target="_blank" rel="noopener"
+>Authorizing OAuth Apps - GitHub Docs&lt;/a>&lt;/li>
+&lt;/ol></description></item><item><title>【Jekyll】Mac M1 安裝 Jekyll 踩雷記錄</title><link>https://blog.zerolr.net/p/2021/12/20/jekyll-mac-m1-issue/</link><pubDate>Mon, 20 Dec 2021 18:00:00 +0000</pubDate><guid>https://blog.zerolr.net/p/2021/12/20/jekyll-mac-m1-issue/</guid><description>&lt;blockquote>
+&lt;p>由於工作上的需求入手了 MacBook Air M1，順便提早熟悉在 ARM 架構上開發會遇到的問題。
+重生後的第一篇就來記錄一下這個 blog 架設中所遇到的問題囉！&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="系統環境">系統環境&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>MacOS: Monterey&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>版本: 12.1&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>架構: aarch64&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="使用軟體工具">使用軟體/工具&lt;/h2>
+&lt;ul>
+&lt;li>ruby 2.6.8&lt;/li>
+&lt;li>jekyll 3.26.0&lt;/li>
+&lt;li>bundler 1.17.2&lt;/li>
+&lt;/ul>
+&lt;h2 id="架設流程">架設流程&lt;/h2>
+&lt;ul>
+&lt;li>準備好自己的 Github 帳號。&lt;/li>
+&lt;li>建立 github page 與挑選自己喜歡的 jekyll 主題套用，參考的文章放在底部的&lt;a class="link" href="#%e5%8f%83%e8%80%83%e8%b3%87%e6%96%99" >參考資料&lt;/a>中囉。&lt;/li>
+&lt;/ul>
+&lt;h2 id="嘗試處理-jekyll-安裝問題">嘗試處理 jekyll 安裝問題&lt;/h2>
+&lt;h3 id="jekyll-安裝失敗">jekyll 安裝失敗&lt;/h3>
+&lt;p>首先用 gem 安裝 jekyll，結果出現以下錯誤訊息：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo gem install -n /usr/local/bin jekyll --user-install
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Successfully installed jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Parsing documentation &lt;span class="k">for&lt;/span> jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Before reporting this, could you check that the file you&lt;span class="s1">&amp;#39;re documenting
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">has proper syntax:
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/bin/ruby -c lib/jekyll/commands/doctor.rb
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">RDoc is not a full Ruby parser and will fail when fed invalid ruby programs.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">The internal error was:
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> (NoMethodError) undefined method `[]&amp;#39;&lt;/span> &lt;span class="k">for&lt;/span> nil:NilClass
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ERROR: While executing gem ... &lt;span class="o">(&lt;/span>NoMethodError&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> undefined method &lt;span class="sb">`&lt;/span>&lt;span class="o">[]&lt;/span>&lt;span class="err">&amp;#39;&lt;/span> &lt;span class="k">for&lt;/span> nil:NilClass
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="jekyll-安裝問題解決">jekyll 安裝問題解決&lt;/h3>
+&lt;p>更新 gem 就可以正確安裝了：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo gem update
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>再次安裝：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo gem install -n /usr/local/bin jekyll --user-install
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Successfully installed jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Parsing documentation &lt;span class="k">for&lt;/span> jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Installing ri documentation &lt;span class="k">for&lt;/span> jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Done installing documentation &lt;span class="k">for&lt;/span> jekyll after &lt;span class="m">0&lt;/span> seconds
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">1&lt;/span> gem installed
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>&lt;em>但執行 &lt;code>sudo jekyll new blog&lt;/code> 時卻噴了一大串的錯誤，目前還不知道怎麼解決，所以改成直接 clone jekyll-theme-next 提供的範例檔來做。&lt;/em>&lt;/p>
+&lt;/blockquote>
+&lt;hr>
+&lt;h2 id="改從範例檔進行安裝">改從範例檔進行安裝&lt;/h2>
+&lt;h3 id="bundle-exec-jekyll-server-失敗">bundle exec jekyll server 失敗&lt;/h3>
+&lt;p>首先照官方的步驟進行安裝，在使用&lt;code>bundle install&lt;/code> 前要先 update：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ bundle update
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>將套件都裝好後，嘗試啟動失敗：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ bundle &lt;span class="nb">exec&lt;/span> jekyll server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/forwardable.rb:116: warning: already initialized constant Forwardable::VERSION
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Configuration file: /Users/ceyanglab/Documents/github/jekyll-theme-next/_config.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Dependency Error: Yikes! It looks like you don&lt;span class="s1">&amp;#39;t have jemoji or one of its dependencies installed. In order to use Jekyll as currently configured, you&amp;#39;&lt;/span>ll need to install this gem. The full error message from Ruby is: &lt;span class="s1">&amp;#39;cannot load such file -- nokogiri/nokogiri&amp;#39;&lt;/span> If you run into trouble, you can find helpful resources at https://jekyllrb.com/help/!
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">jekyll 3.9.0 &lt;span class="p">|&lt;/span> Error: jemoji
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>一開始以為是 jemoji 的問題，移除後連啟動都無法，只好再裝回來：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ bundle &lt;span class="nb">exec&lt;/span> jekyll server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Could not find jemoji-0.12.0 in any of the sources
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Run &lt;span class="sb">`&lt;/span>bundle install&lt;span class="sb">`&lt;/span> to install missing gems.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>再次搜尋資料，查到有可能重複安裝多個 jekyll 導致啟動失敗，那就刪掉多的吧：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo gem uninstall jekyll
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">You have requested to uninstall the gem:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> jekyll-3.9.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">github-pages-222 depends on jekyll &lt;span class="o">(=&lt;/span> 3.9.0&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">jekyll-default-layout-0.1.4 depends on jekyll &lt;span class="o">(&lt;/span>~&amp;gt; 3.0&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">jekyll-swiss-1.0.0 depends on jekyll &lt;span class="o">(&lt;/span>~&amp;gt; 3.2, development&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">If you remove this gem, these dependencies will not be met.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Continue with Uninstall? &lt;span class="o">[&lt;/span>yN&lt;span class="o">]&lt;/span> y
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Successfully uninstalled jekyll-3.9.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Select gem to uninstall:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 1. jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 2. jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 3. All versions
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; &lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">You have requested to uninstall the gem:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>再次嘗試啟動依然報同樣的錯 Orz，仔細觀察錯誤訊息發現關鍵字：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">The full error message from Ruby is: &lt;span class="s1">&amp;#39;cannot load such file -- nokogiri/nokogiri&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="套件問題處理">套件問題處理&lt;/h3>
+&lt;p>嗯好應該是 nokogiri 這個套件的問題，開 gem 的清單看一下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ gem list
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nokogiri &lt;span class="o">(&lt;/span>1.12.5 arm64-darwin x86_64-darwin, 1.10.1&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>同時有 arm 跟 x86 版本的套件存在，刪掉其他只留 arm 的試試：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo gem uninstall nokogiri
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Select gem to uninstall:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 1. nokogiri-1.12.5-x86_64-darwin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 2. nokogiri-1.12.5-x86_64-darwin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 3. nokogiri-1.12.5-arm64-darwin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 4. All versions
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Successfully uninstalled nokogiri-1.12.5-x86_64-darwin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Select gem to uninstall:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 1. nokogiri-1.12.5-x86_64-darwin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 2. nokogiri-1.12.5-arm64-darwin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 3. All versions
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Successfully uninstalled nokogiri-1.12.5-x86_64-darwin
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="成功啟動網站">成功啟動網站&lt;/h3>
+&lt;p>果然是 nokogiri 套件的問題，可以正常啟動了：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ bundle &lt;span class="nb">exec&lt;/span> jekyll server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Configuration file: /Users/ceyanglab/Documents/github/jekyll-theme-next/_config.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Source: /Users/ceyanglab/Documents/github/jekyll-theme-next
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Destination: /Users/ceyanglab/Documents/github/jekyll-theme-next/_site
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Incremental build: disabled. Enable with --incremental
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Generating...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Jekyll Feed: Generating feed &lt;span class="k">for&lt;/span> posts
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">done&lt;/span> in 1.813 seconds.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Auto-regeneration: enabled &lt;span class="k">for&lt;/span> &lt;span class="s1">&amp;#39;/Users/ceyanglab/Documents/github/jekyll-theme-next&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Server address: http://127.0.0.1:4000
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Server running... press ctrl-c to stop.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="總結">總結&lt;/h2>
+&lt;p>遇到問題時先好好看錯誤訊息，才不會答案擺在眼前還到處盲試。&lt;/p>
+&lt;h2 id="參考資料">參考資料&lt;/h2>
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://medium.com/%E9%80%B2%E6%93%8A%E7%9A%84-git-git-git/%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B-%E7%94%A8github-pages-%E4%B8%8A%E5%82%B3%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99-fa2ae83e6276" target="_blank" rel="noopener"
+>從零開始: 用 github pages 上傳靜態網站 - sexyoung&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="http://theme-next.simpleyyt.com/getting-started.html" target="_blank" rel="noopener"
+>NexT 使用文檔&lt;/a>&lt;/li>
+&lt;/ol></description></item></channel></rss>
