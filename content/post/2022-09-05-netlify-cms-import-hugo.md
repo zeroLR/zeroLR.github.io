@@ -246,6 +246,9 @@ git commit -m "feat: add netlify cms"
 
 ### 補充： git branch 分支建立
 
+<details>
+  <summary>點擊展開</summary>
+
 這邊用範例來解釋分支，新開資料夾加入一個 blog.txt 檔案，並建立 git 環境加入 commit。
 
 ```bash
@@ -300,6 +303,8 @@ d5bf87b (HEAD -> master) initial commit
 ```
 
 > 可以把 branch 想像成是資料夾，開分支就是從 master 資料夾複製一份並重新命名成 cms，commit 就是對資料夾內的內容做編輯，以範例來說最後 master 有一份檔案，而 cms 則有兩份檔案囉！
+
+</details>
 
 ### 部署測試版網站
 
