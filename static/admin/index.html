@@ -24,8 +24,8 @@
             widget: 'string'
           },
           {
-            name: 'details',
-            label: 'Details',
+            name: 'detail',
+            label: 'Detail',
             widget: 'markdown'
           }
         ],
@@ -47,7 +47,7 @@
         fromBlock: function(match) {
           return {
             summary: match[1],
-            detail: match[2]
+            detail: match[3]
           };
         },
         // Given an object with one property for each field defined in `fields`,
@@ -60,7 +60,7 @@
 <details>
   <summary>${data.summary}</summary>
       
-    ${data.detail}
+  ${data.detail}
       
 </details>
       `;
@@ -72,7 +72,7 @@
 <details>
   <summary>${data.summary}</summary>
       
-    ${data.detail}
+  ${data.detail}
       
 </details>
       `;
