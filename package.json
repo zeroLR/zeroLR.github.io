@@ -1,0 +1,23 @@
+{
+  "name": "zeroLR.github.io",
+  "version": "1.0.0",
+  "description": "My personal blog, the theme is from https://themes.gohugo.io/themes/hugo-theme-stack/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zeroLR/zeroLR.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zeroLR/zeroLR.github.io/issues"
+  },
+  "homepage": "https://github.com/zeroLR/zeroLR.github.io#readme",
+  "devDependencies": {
+    "workbox-cli": "^6.5.4"
+  }
+}
