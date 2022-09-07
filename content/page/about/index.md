@@ -2,10 +2,6 @@
 title: About
 description: Learning, begin with zero and one.
 date: "2022-09-04"
-aliases:
-  - about-us
-  - about-hugo
-  - contact
 lastmod: "2022-09-04"
 menu:
   main:

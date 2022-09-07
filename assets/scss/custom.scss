@@ -1,0 +1,9 @@
+#live2d-widget {
+  left: 3% !important;
+}
+
+@media screen and (max-width: 767px), screen and (max-height: 800px) {
+  #live2d-widget {
+    display: none;
+  }
+}
