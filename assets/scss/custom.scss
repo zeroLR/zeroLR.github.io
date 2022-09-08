@@ -1,5 +1,22 @@
+article,
+header {
+  animation: fade 0.8s ease;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 #live2d-widget {
   left: 3% !important;
+  bottom: 1% !important;
+  animation: fade 1s linear;
 }
 
 @media screen and (max-width: 767px), screen and (max-height: 800px) {
