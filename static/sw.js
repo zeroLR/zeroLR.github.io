@@ -21,10 +21,10 @@ if (!self.define) {
       ("document" in self ? document.currentScript.src : "") ||
       location.href;
     if (i[l]) return;
-    let c = {};
-    const r = (e) => s(e, l),
-      b = { module: { uri: l }, exports: c, require: r };
-    i[l] = Promise.all(a.map((e) => b[e] || r(e))).then((e) => (d(...e), c));
+    let r = {};
+    const f = (e) => s(e, l),
+      b = { module: { uri: l }, exports: r, require: f };
+    i[l] = Promise.all(a.map((e) => b[e] || f(e))).then((e) => (d(...e), r));
   };
   self.addEventListener("fetch", function (event) {
     event.respondWith(
@@ -41,10 +41,10 @@ define(["./workbox-6da860f9"], function (e) {
   }),
     e.precacheAndRoute(
       [
-        { url: "404.html", revision: "9968b1a411a91cf4b6ce6a94e04ef3db" },
+        { url: "404.html", revision: "bbbcd6ab60c930d16f9f5ccb2f583642" },
         {
           url: "about/index.html",
-          revision: "4f5d6602884b66a7b4d4b64be17a0d6b",
+          revision: "85b665630b358bc8480d15b880eb64f8",
         },
         {
           url: "admin/config.yml",
@@ -56,7 +56,7 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "archives/index.html",
-          revision: "6c528eb21567172d3bef98762777f289",
+          revision: "4d68830a15f1f95bdb464fe54d27675f",
         },
         {
           url: "assets/libs/live2dw/assets/hijiki.model.json",
@@ -116,7 +116,7 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "categories/blog/index.html",
-          revision: "17f4f3d7c35b5e0d95165190792ae989",
+          revision: "b57d89027cd7351dde92eae501853a8f",
         },
         {
           url: "categories/blog/index.xml",
@@ -128,7 +128,7 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "categories/index.html",
-          revision: "8e62b54494943e69ee66e9a114eea69b",
+          revision: "e6b3ea188d8d54d9dc8adce3455fe3d6",
         },
         {
           url: "categories/index.xml",
@@ -136,7 +136,7 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "categories/issues/index.html",
-          revision: "3c208b92ceeb6e9cb3ff63e37aeee3b0",
+          revision: "f035b22584df98f17da91ff5dbf12794",
         },
         {
           url: "categories/issues/index.xml",
@@ -148,7 +148,7 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "categories/libs/index.html",
-          revision: "d3ac4c676a486aec9b77df0c9c8f4a2e",
+          revision: "a4f471085cbac9c125985a9588f15a91",
         },
         {
           url: "categories/libs/index.xml",
@@ -160,7 +160,7 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "categories/other/index.html",
-          revision: "fb85f689a08e797bb5b75e9f4a1372ee",
+          revision: "adfcfaf0cc405213219e996b9f93f62d",
         },
         {
           url: "categories/other/index.xml",
@@ -179,32 +179,32 @@ define(["./workbox-6da860f9"], function (e) {
           url: "googlec4c6ab9c7c6d8533.html",
           revision: "813efb9de26450a9d782147ec4bfecf3",
         },
-        { url: "index.html", revision: "bc732db220d7c4e79eb93e8cd7883738" },
+        { url: "index.html", revision: "955b8c4c7cc1d5f4414cb831073f0146" },
         { url: "index.xml", revision: "ecce87eaee29132d90da537e90793219" },
         {
           url: "links/index.html",
-          revision: "cfc28e002b2460ba0c2dde8d9c24100b",
+          revision: "e999f6d5a156e42d22ed2fb0ab1f7b5c",
         },
         { url: "manifest.json", revision: "0369aaf8e13661bf65a9a1b169073392" },
         {
           url: "p/2021/12/20/jekyll-mac-m1-issue/index.html",
-          revision: "57322e0e95ee840f05c7060cabb5a840",
+          revision: "4d26faf7ef9741bea8536c966b4aea67",
         },
         {
           url: "p/2021/12/22/jekyll-gitalk-issue/index.html",
-          revision: "d8b1f64dd2df56807fd52cdd5c8416a3",
+          revision: "4712b98f01782b6c07436213c3b5f88e",
         },
         {
           url: "p/2022/03/05/netlify-cms-import-github-pages/index.html",
-          revision: "494c33c433e90a9c32a679681cd48da2",
+          revision: "db067a0bbfb0137e592a57d420684428",
         },
         {
           url: "p/2022/09/03/hugo-new-theme/index.html",
-          revision: "c6878727f5746aa72147eedc5e6f6a94",
+          revision: "007512dc4015fef61649e25c52026a2e",
         },
         {
           url: "p/2022/09/05/netlify-cms-import-hugo/index.html",
-          revision: "048d0cf9c14f4aed4c9b06f07f4ed8a0",
+          revision: "5c3bbb427ff564804d4daeae23506c0a",
         },
         {
           url: "page/1/index.html",
@@ -216,7 +216,7 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "page/index.html",
-          revision: "63c0d0c96fe028e39c414ab8bd5c1fcc",
+          revision: "28b031defd61bf997083f30794f889ab",
         },
         { url: "page/index.xml", revision: "327c5217f7edab15eda4ab3eeb19cdf3" },
         {
@@ -225,7 +225,7 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "post/index.html",
-          revision: "90dcf6b3b6cb26362d10b83a031cebcb",
+          revision: "bc3c8880b3105de368186123ecb9175b",
         },
         { url: "post/index.xml", revision: "f4fd28d456da2eb78539efef8018d515" },
         {
@@ -234,16 +234,16 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "projects/index.html",
-          revision: "7ac4cb48affe7ce5c91248ae08d58d84",
+          revision: "fef2e382c6802db88ec2e53a1ed6d991",
         },
         { url: "robots.txt", revision: "50d8a018e8ae96732c8a2ba663c61d4e" },
         {
-          url: "scss/style.min.110a3d7d7f709295fd97b73273395d89c8a69f85d3f82f947edce2bb5fc15f89.css",
-          revision: "65cfe9fd9021f64727d465ab63b66c90",
+          url: "scss/style.min.f1629321971fdeabdc7a8b293ae9ac40aefb661b0582bfb00482d9297479deaa.css",
+          revision: "43991bb4e1cedb60504334b9da6dd360",
         },
         {
           url: "search/index.html",
-          revision: "e6543148188604625186eb519629b3e5",
+          revision: "d7615a7d35bf96ebfdeb1722b5381279",
         },
         {
           url: "search/index.json",
@@ -252,7 +252,7 @@ define(["./workbox-6da860f9"], function (e) {
         { url: "sitemap.xml", revision: "f313481e76afe5590d848585ce4f4c64" },
         {
           url: "tags/gitalk/index.html",
-          revision: "1578a3e22ae9c8b2096ea478aaa524b0",
+          revision: "1b1a276e3888a973a369912be53dbfb5",
         },
         {
           url: "tags/gitalk/index.xml",
@@ -264,7 +264,7 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "tags/github-pages/index.html",
-          revision: "9380fbaf0fd6278409b672f2191d6388",
+          revision: "d358f3addc3212f1d7e73f21bd82c911",
         },
         {
           url: "tags/github-pages/index.xml",
@@ -276,7 +276,7 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "tags/hugo/index.html",
-          revision: "cdd5abad5bef2d88c3da73aad42dd851",
+          revision: "8e542574bb7473da3aa6d464799c14a0",
         },
         {
           url: "tags/hugo/index.xml",
@@ -288,12 +288,12 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "tags/index.html",
-          revision: "5cc6283fc8196c7b5209359d8e10e49c",
+          revision: "770b2c4eff6417907b37f3e8e84940e4",
         },
         { url: "tags/index.xml", revision: "a75bfe8cb9815b80d9e258ae80e62720" },
         {
           url: "tags/jekyll/index.html",
-          revision: "9580a3050b91b9693a7b806bff353d1c",
+          revision: "d21c713888f398afa0428eb3c419930f",
         },
         {
           url: "tags/jekyll/index.xml",
@@ -305,7 +305,7 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "tags/mac/index.html",
-          revision: "d5a05b1e31ac21f57e25db0dc92202c4",
+          revision: "e875b00165a817d8f73013fc491a2721",
         },
         {
           url: "tags/mac/index.xml",
@@ -317,7 +317,7 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "tags/netlify-cms/index.html",
-          revision: "ea7cb8d88b33164038e1086b9f1e624a",
+          revision: "8d650666ccdd975e3cb11ac080792c2b",
         },
         {
           url: "tags/netlify-cms/index.xml",
@@ -333,12 +333,12 @@ define(["./workbox-6da860f9"], function (e) {
         },
         {
           url: "tags/page/2/index.html",
-          revision: "4e9cb2aa1b437f463b55f5bc81075d24",
+          revision: "7f6e153e1224775c6bb5dabf803122c9",
         },
         { url: "ts/main.js", revision: "37336a55ddcc41bd1ebfe18f236916ce" },
         { url: "ts/search.js", revision: "094fac01e74a3012119651d38f950386" },
       ],
-      { ignoreURLParametersMatching: [/^utm_/, /^fbclid$/, /^about/] }
+      { ignoreURLParametersMatching: [/^utm_/, /^fbclid$/, /^search/] }
     );
 });
 //# sourceMappingURL=sw.js.map
