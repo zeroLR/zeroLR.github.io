@@ -81,7 +81,7 @@ date: 2022-10-16T19:56:56.431Z
    # docker command
    sudo docker run -dti --restart always --workdir /home --mount type=bind,source="$(pwd)/",target=/home --name busybox busybox ash
    ```
--﻿--
+
 
    ```yaml
    # concurrency-on-sh/docker-compose.yml
@@ -99,7 +99,6 @@ date: 2022-10-16T19:56:56.431Z
          - .:/home
    ```
 
--﻿--
 
    ```bash
    # docker-compose
