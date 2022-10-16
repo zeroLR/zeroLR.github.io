@@ -1,9 +1,9 @@
 ---
 title: 【Linux】Concurrency on sh
 slug: concurrency-on-sh
-description: "在研究 SQL Transaction Isolation 時，遇到想要模擬多個使用者同時建立 transaction
+description:
+  "在研究 SQL Transaction Isolation 時，遇到想要模擬多個使用者同時建立 transaction
   的需求，就先來嘗試一下在 container 中執行多個 command，並觀察系統產生 process 的過程。 OS: 怎麼感覺越摸坑越大…"
-image: /assets/images/linux_logo_01.jpeg
 categories:
   - Linux
   - Docker
@@ -11,6 +11,7 @@ tags:
   - Shell Script
 date: 2022-10-16T19:56:56.431Z
 ---
+
 # 【Linux】Concurrency on sh
 
 > 在研究 **SQL Transaction Isolation** 時，遇到想要模擬多個使用者**同時**建立 transaction 的需求，就先來嘗試一下在 container 中執行多個 command，並觀察系統產生 process 的過程。 OS: 怎麼感覺越摸坑越大…
@@ -21,10 +22,10 @@ date: 2022-10-16T19:56:56.431Z
 
 ## 實驗環境
 
-* Mac M1
-* Docker 20.10.17
-* Docker Compose 2.2.3
-* Docker Image: `busybox:latest`
+- Mac M1
+- Docker 20.10.17
+- Docker Compose 2.2.3
+- Docker Image: `busybox:latest`
 
 ## 建立實驗環境
 
@@ -34,6 +35,7 @@ date: 2022-10-16T19:56:56.431Z
    mkdir concurrency-on-sh
    cd concurrency-on-sh
    ```
+
 2. 執行以下指令產生本次實驗檔案。
 
    ```bash
@@ -75,6 +77,7 @@ date: 2022-10-16T19:56:56.431Z
    wait
    EOF
    ```
+
 3. 使用 docker 或 docker-compose 啟動 container，將實驗檔案 mount 至 container 中。
 
    ```bash
@@ -82,10 +85,9 @@ date: 2022-10-16T19:56:56.431Z
    sudo docker run -dti --restart always --workdir /home --mount type=bind,source="$(pwd)/",target=/home --name busybox busybox ash
    ```
 
-
    ```yaml
    # concurrency-on-sh/docker-compose.yml
-   version: '3.1'
+   version: "3.1"
    services:
      busybox:
        container_name: busybox
@@ -99,17 +101,18 @@ date: 2022-10-16T19:56:56.431Z
          - .:/home
    ```
 
-
    ```bash
    # docker-compose
    sudo docker-compose up -d
    ```
+
 4. 開啟兩個 shell ，都使用 docker exec 進入 container 的 shell 中。
 
    ```bash
    sudo docker exec -ti busybox busybox ash
    ```
-5. 其中一個 shell 執行 top 開啟系統監視(按1可以顯示各個CPU資源)，待會實驗時方便觀察 process 的增減過程。
+
+5. 其中一個 shell 執行 top 開啟系統監視(按 1 可以顯示各個 CPU 資源)，待會實驗時方便觀察 process 的增減過程。
 
    ![截圖 2022-10-17 上午12.29.18.png](assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-8812.29.18.png)
 
@@ -121,7 +124,7 @@ date: 2022-10-16T19:56:56.431Z
 time -p sh foreground.sh
 ```
 
-> 使用 time -p 執行命令，會將 time -p  後的命令作為其子程序執行，再由這個子程序作為父程序執行 shell script ，產生出新的程序(有點繞口XD)，待所有子程序都執行完畢後，回傳從程序執行到結束所經過的時間。
+> 使用 time -p 執行命令，會將 time -p 後的命令作為其子程序執行，再由這個子程序作為父程序執行 shell script ，產生出新的程序(有點繞口 XD)，待所有子程序都執行完畢後，回傳從程序執行到結束所經過的時間。
 
 第一個子程序等待 3 秒：
 
@@ -178,12 +181,12 @@ time -p sh zombie.sh
 
 命令執行中，echo 先將所有已產生程序的 PID 顯示出來，觀察以下結果 :
 
-* 每個程序的 PPID(父程序) 是誰，父 產生(→) 子
-* container → `shell(ash)`
-* `shell(ash)` → `time -p sh zombie.sh`
-* `time -p sh zombie.sh` → `sh zombie.sh`
-* `sh zombie.sh` → `sleep`
-* `time -p sh zombie.sh` 程序在前景執行並等待中
+- 每個程序的 PPID(父程序) 是誰，父 產生(→) 子
+- container → `shell(ash)`
+- `shell(ash)` → `time -p sh zombie.sh`
+- `time -p sh zombie.sh` → `sh zombie.sh`
+- `sh zombie.sh` → `sleep`
+- `time -p sh zombie.sh` 程序在前景執行並等待中
 
 ![截圖 2022-10-17 上午1.34.06.png](assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.34.06.png)
 
@@ -202,8 +205,8 @@ time -p sh zombie.sh
 
 命令執行後馬上結束，與前面的狀況有些不同：
 
-* 程序執行時間約 0.01 秒，這邊的執行時間只包含 `time -p sh zombie.sh` 及 `sh zombie.sh`  程序
-* 每個 `sleep` 程序其 PPID 為 1，而這個 PID 為 1 的程序是 container 建立後產生的第一個程序，也就是最前面 docker run 時的 command 所產生的
+- 程序執行時間約 0.01 秒，這邊的執行時間只包含 `time -p sh zombie.sh` 及 `sh zombie.sh` 程序
+- 每個 `sleep` 程序其 PPID 為 1，而這個 PID 為 1 的程序是 container 建立後產生的第一個程序，也就是最前面 docker run 時的 command 所產生的
 
 ![截圖 2022-10-17 上午1.34.36.png](assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.34.36.png)
 
@@ -211,7 +214,7 @@ time -p sh zombie.sh
 
 ![截圖 2022-10-17 上午1.34.46.png](assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.34.46.png)
 
-- - -
+---
 
 那麼為什麼沒用 `wait` 就會讓程序變成由 PID 1 的程序來產生呢？
 
@@ -233,24 +236,24 @@ sudo docker attach busybox
 
 ### 結果比較
 
-| 有 wait       | 沒 wait                                       |
-| ------------ | -------------------------------------------- |
+| 有 wait                  | 沒 wait                                                            |
+| ------------------------ | ------------------------------------------------------------------ |
 | 由其父程序進行等待並回收 | 由 PID 1 的程序 init(1) 接收子程序，並自動加入 wait 去結束殭屍程序 |
-| 老爹給你靠        | 老爹跑路，隔壁老王好心收養                                |
+| 老爹給你靠               | 老爹跑路，隔壁老王好心收養                                         |
 
 ## 總結
 
-* 原本只是要紀錄怎麼樣同時下命令，結果想要弄個模擬實驗就會挖更多坑，不過也算比以前更深入一點點探討運作過程中的原理，速速妹！
+- 原本只是要紀錄怎麼樣同時下命令，結果想要弄個模擬實驗就會挖更多坑，不過也算比以前更深入一點點探討運作過程中的原理，速速妹！
 
 ## 參考資料
 
-* [Symmetric Multi-Processing -  Linux kernel concurrency sources](https://linux-kernel-labs.github.io/refs/heads/master/lectures/smp.html#linux-kernel-concurrency-sources)
-* [busybox - procps/top.c](https://github.com/mirror/busybox/blob/master/procps/top.c)
-* [Linux中Sleep和Wait命令的使用方式](https://iter01.com/642002.html)
-* [LINUX 學習日誌 - 把命令放到背景執行](http://linuxdiary.blogspot.com/2007/10/blog-post_30.html)
-* [Background, zombie, daemon and without ctty - are these concepts connected?](https://unix.stackexchange.com/questions/352781/background-zombie-daemon-and-without-ctty-are-these-concepts-connected)
-* [How do you run multiple programs in parallel from a bash script?](https://stackoverflow.com/questions/3004811/how-do-you-run-multiple-programs-in-parallel-from-a-bash-script)
-* [time(1) — Linux manual page](https://man7.org/linux/man-pages/man1/time.1.html#OPTIONS)
-* [wait(2) — Linux manual page](https://man7.org/linux/man-pages/man2/waitpid.2.html)
-* [docker attach](https://docs.docker.com/engine/reference/commandline/attach/)
-* [Concurrency 程式設計 - HackMD](https://hackmd.io/@owlfox/SyaTF2VgL/https%3A%2F%2Fhackmd.io%2Fs%2FSkh_AaVix)
+- [Symmetric Multi-Processing - Linux kernel concurrency sources](https://linux-kernel-labs.github.io/refs/heads/master/lectures/smp.html#linux-kernel-concurrency-sources)
+- [busybox - procps/top.c](https://github.com/mirror/busybox/blob/master/procps/top.c)
+- [Linux 中 Sleep 和 Wait 命令的使用方式](https://iter01.com/642002.html)
+- [LINUX 學習日誌 - 把命令放到背景執行](http://linuxdiary.blogspot.com/2007/10/blog-post_30.html)
+- [Background, zombie, daemon and without ctty - are these concepts connected?](https://unix.stackexchange.com/questions/352781/background-zombie-daemon-and-without-ctty-are-these-concepts-connected)
+- [How do you run multiple programs in parallel from a bash script?](https://stackoverflow.com/questions/3004811/how-do-you-run-multiple-programs-in-parallel-from-a-bash-script)
+- [time(1) — Linux manual page](https://man7.org/linux/man-pages/man1/time.1.html#OPTIONS)
+- [wait(2) — Linux manual page](https://man7.org/linux/man-pages/man2/waitpid.2.html)
+- [docker attach](https://docs.docker.com/engine/reference/commandline/attach/)
+- [Concurrency 程式設計 - HackMD](https://hackmd.io/@owlfox/SyaTF2VgL/https%3A%2F%2Fhackmd.io%2Fs%2FSkh_AaVix)
