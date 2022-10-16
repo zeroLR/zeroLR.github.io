@@ -3,7 +3,7 @@ title: 【Linux】Concurrency on sh
 slug: concurrency-on-sh
 description: "在研究 SQL Transaction Isolation 時，遇到想要模擬多個使用者同時建立 transaction
   的需求，就先來嘗試一下在 container 中執行多個 command，並觀察系統產生 process 的過程。 OS: 怎麼感覺越摸坑越大…"
-image: /assets/images/Linux_Logo_01.jpeg
+image: /assets/images/linux_logo_01.jpeg
 categories:
   - Linux
   - Docker
@@ -81,7 +81,7 @@ date: 2022-10-16T19:56:56.431Z
    # docker command
    sudo docker run -dti --restart always --workdir /home --mount type=bind,source="$(pwd)/",target=/home --name busybox busybox ash
    ```
--﻿--
+
 
    ```yaml
    # concurrency-on-sh/docker-compose.yml
@@ -99,7 +99,6 @@ date: 2022-10-16T19:56:56.431Z
          - .:/home
    ```
 
--﻿--
 
    ```bash
    # docker-compose
