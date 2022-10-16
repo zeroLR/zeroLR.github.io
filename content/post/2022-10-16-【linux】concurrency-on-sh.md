@@ -3,7 +3,7 @@ title: 【Linux】Concurrency on sh
 slug: concurrency-on-sh
 description: "在研究 SQL Transaction Isolation 時，遇到想要模擬多個使用者同時建立 transaction
   的需求，就先來嘗試一下在 container 中執行多個 command，並觀察系統產生 process 的過程。 OS: 怎麼感覺越摸坑越大…"
-image: " "
+image: /assets/images/Linux_Logo_01.jpeg
 categories:
   - Linux
   - Docker
@@ -81,6 +81,7 @@ date: 2022-10-16T19:56:56.431Z
    # docker command
    sudo docker run -dti --restart always --workdir /home --mount type=bind,source="$(pwd)/",target=/home --name busybox busybox ash
    ```
+-﻿--
 
    ```yaml
    # concurrency-on-sh/docker-compose.yml
@@ -97,6 +98,8 @@ date: 2022-10-16T19:56:56.431Z
        volumes:
          - .:/home
    ```
+
+-﻿--
 
    ```bash
    # docker-compose
@@ -200,8 +203,7 @@ time -p sh zombie.sh
 
 命令執行後馬上結束，與前面的狀況有些不同：
 
-* 程序執行時間約 0.01 秒，這邊的執行時間只包含 `time -p sh zombie.sh` 及 
-  `sh zombie.sh`  程序
+* 程序執行時間約 0.01 秒，這邊的執行時間只包含 `time -p sh zombie.sh` 及 `sh zombie.sh`  程序
 * 每個 `sleep` 程序其 PPID 為 1，而這個 PID 為 1 的程序是 container 建立後產生的第一個程序，也就是最前面 docker run 時的 command 所產生的
 
 ![截圖 2022-10-17 上午1.34.36.png](assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.34.36.png)
@@ -219,7 +221,7 @@ time -p sh zombie.sh
 > If a **parent process terminates**, then its "zombie" children (if any) are adopted by **init(1)**, (or by the nearest "subreaper" process as defined through the use of the **prctl(2)** PR_SET_CHILD_SUBREAPER operation);
 > **init(1) automatically performs a wait to remove the zombies.**
 
-喔～由於未使用 `wait` 去等待 `zombie.sh` 產生的背景程序執行完畢，所以執行 `zombie.sh` 的當下程序就結束了，產生出來的子程序找不到爹，最後就被隔壁老王 **init(1)**收養了(X，而這個程序在這個實驗中是由 docker run 的 command - ash 所產生的，最後可以透過以下命令去進入 container 中 PID 1 的程序：
+喔～由於未使用 `wait` 去等待 `zombie.sh` 產生的背景程序執行完畢，所以執行 `zombie.sh` 的當下程序就結束了，產生出來的子程序找不到爹，最後就被隔壁老王 **init(1)** 收養了(X，而這個程序在這個實驗中是由 docker run 的 command - ash 所產生的，最後可以透過以下命令去進入 container 中 PID 1 的程序：
 
 ```bash
 # 退出目前的 shell
