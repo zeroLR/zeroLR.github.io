@@ -12,10 +12,6 @@ tags:
 date: 2022-10-16T19:56:56.431Z
 ---
 
-# 【Linux】Concurrency on sh
-
-> 在研究 **SQL Transaction Isolation** 時，遇到想要模擬多個使用者**同時**建立 transaction 的需求，就先來嘗試一下在 container 中執行多個 command，並觀察系統產生 process 的過程。 OS: 怎麼感覺越摸坑越大…
-
 這篇紀錄在 docker busybox 中使用 shell script 同時執行多個指令，比較使用 `&` 將命令帶到背景執行與在前景執行時的狀況，如理解有誤也歡迎糾正。
 
 程式碼放在 github: <https://github.com/zeroLR/concurrency-on-sh>
