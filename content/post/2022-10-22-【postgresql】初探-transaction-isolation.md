@@ -27,7 +27,7 @@ date: 2022-10-22T17:57:01.549Z
 
 可以先到 [Crunchydata Tutorials - Transactions](https://www.crunchydata.com/developers/playground/transactions) 去試一遍 postgres 中的 transaction 行為，照著做之外也可以去試著理解教學的重點喔！
 
-## SQL **\*\*Transaction\*\***
+## SQL **Transaction**
 
 在實驗前先來複習一下 **資料庫交易行為(Transaction)** 的特性，以下節錄自 [SQL 大小事 - Po-Ching \*\*Liu](https://totoroliu.medium.com/%E8%B3%87%E6%96%99%E5%BA%AB-acid-bb87324035a8)。\*\*
 
