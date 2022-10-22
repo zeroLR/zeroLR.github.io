@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mac on Zero's Blog</title><link>https://blog.zerolr.net/tags/mac/</link><description>Recent content in Mac on Zero's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 20 Dec 2021 18:00:00 +0000</lastBuildDate><atom:link href="https://blog.zerolr.net/tags/mac/index.xml" rel="self" type="application/rss+xml"/><item><title>【Jekyll】Mac M1 安裝 Jekyll 踩雷記錄</title><link>https://blog.zerolr.net/p/2021/12/20/jekyll-mac-m1-issue/</link><pubDate>Mon, 20 Dec 2021 18:00:00 +0000</pubDate><guid>https://blog.zerolr.net/p/2021/12/20/jekyll-mac-m1-issue/</guid><description>&lt;blockquote>
+&lt;p>由於工作上的需求入手了 MacBook Air M1，順便提早熟悉在 ARM 架構上開發會遇到的問題。
+重生後的第一篇就來記錄一下這個 blog 架設中所遇到的問題囉！&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="系統環境">系統環境&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>MacOS: Monterey&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>版本: 12.1&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>架構: aarch64&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="使用軟體工具">使用軟體/工具&lt;/h2>
+&lt;ul>
+&lt;li>ruby 2.6.8&lt;/li>
+&lt;li>jekyll 3.26.0&lt;/li>
+&lt;li>bundler 1.17.2&lt;/li>
+&lt;/ul>
+&lt;h2 id="架設流程">架設流程&lt;/h2>
+&lt;ul>
+&lt;li>準備好自己的 Github 帳號。&lt;/li>
+&lt;li>建立 github page 與挑選自己喜歡的 jekyll 主題套用，參考的文章放在底部的&lt;a class="link" href="#%e5%8f%83%e8%80%83%e8%b3%87%e6%96%99" >參考資料&lt;/a>中囉。&lt;/li>
+&lt;/ul>
+&lt;h2 id="嘗試處理-jekyll-安裝問題">嘗試處理 jekyll 安裝問題&lt;/h2>
+&lt;h3 id="jekyll-安裝失敗">jekyll 安裝失敗&lt;/h3>
+&lt;p>首先用 gem 安裝 jekyll，結果出現以下錯誤訊息：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo gem install -n /usr/local/bin jekyll --user-install
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Successfully installed jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Parsing documentation &lt;span class="k">for&lt;/span> jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Before reporting this, could you check that the file you&lt;span class="s1">&amp;#39;re documenting
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">has proper syntax:
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/bin/ruby -c lib/jekyll/commands/doctor.rb
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">RDoc is not a full Ruby parser and will fail when fed invalid ruby programs.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">The internal error was:
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> (NoMethodError) undefined method `[]&amp;#39;&lt;/span> &lt;span class="k">for&lt;/span> nil:NilClass
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ERROR: While executing gem ... &lt;span class="o">(&lt;/span>NoMethodError&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> undefined method &lt;span class="sb">`&lt;/span>&lt;span class="o">[]&lt;/span>&lt;span class="err">&amp;#39;&lt;/span> &lt;span class="k">for&lt;/span> nil:NilClass
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="jekyll-安裝問題解決">jekyll 安裝問題解決&lt;/h3>
+&lt;p>更新 gem 就可以正確安裝了：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo gem update
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>再次安裝：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo gem install -n /usr/local/bin jekyll --user-install
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Successfully installed jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Parsing documentation &lt;span class="k">for&lt;/span> jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Installing ri documentation &lt;span class="k">for&lt;/span> jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Done installing documentation &lt;span class="k">for&lt;/span> jekyll after &lt;span class="m">0&lt;/span> seconds
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">1&lt;/span> gem installed
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>&lt;em>但執行 &lt;code>sudo jekyll new blog&lt;/code> 時卻噴了一大串的錯誤，目前還不知道怎麼解決，所以改成直接 clone jekyll-theme-next 提供的範例檔來做。&lt;/em>&lt;/p>
+&lt;/blockquote>
+&lt;hr>
+&lt;h2 id="改從範例檔進行安裝">改從範例檔進行安裝&lt;/h2>
+&lt;h3 id="bundle-exec-jekyll-server-失敗">bundle exec jekyll server 失敗&lt;/h3>
+&lt;p>首先照官方的步驟進行安裝，在使用&lt;code>bundle install&lt;/code> 前要先 update：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ bundle update
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>將套件都裝好後，嘗試啟動失敗：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ bundle &lt;span class="nb">exec&lt;/span> jekyll server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/forwardable.rb:116: warning: already initialized constant Forwardable::VERSION
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Configuration file: /Users/ceyanglab/Documents/github/jekyll-theme-next/_config.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Dependency Error: Yikes! It looks like you don&lt;span class="s1">&amp;#39;t have jemoji or one of its dependencies installed. In order to use Jekyll as currently configured, you&amp;#39;&lt;/span>ll need to install this gem. The full error message from Ruby is: &lt;span class="s1">&amp;#39;cannot load such file -- nokogiri/nokogiri&amp;#39;&lt;/span> If you run into trouble, you can find helpful resources at https://jekyllrb.com/help/!
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">jekyll 3.9.0 &lt;span class="p">|&lt;/span> Error: jemoji
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>一開始以為是 jemoji 的問題，移除後連啟動都無法，只好再裝回來：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ bundle &lt;span class="nb">exec&lt;/span> jekyll server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Could not find jemoji-0.12.0 in any of the sources
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Run &lt;span class="sb">`&lt;/span>bundle install&lt;span class="sb">`&lt;/span> to install missing gems.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>再次搜尋資料，查到有可能重複安裝多個 jekyll 導致啟動失敗，那就刪掉多的吧：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo gem uninstall jekyll
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">You have requested to uninstall the gem:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> jekyll-3.9.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">github-pages-222 depends on jekyll &lt;span class="o">(=&lt;/span> 3.9.0&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">jekyll-default-layout-0.1.4 depends on jekyll &lt;span class="o">(&lt;/span>~&amp;gt; 3.0&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">jekyll-swiss-1.0.0 depends on jekyll &lt;span class="o">(&lt;/span>~&amp;gt; 3.2, development&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">If you remove this gem, these dependencies will not be met.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Continue with Uninstall? &lt;span class="o">[&lt;/span>yN&lt;span class="o">]&lt;/span> y
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Successfully uninstalled jekyll-3.9.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Select gem to uninstall:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 1. jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 2. jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 3. All versions
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; &lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">You have requested to uninstall the gem:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> jekyll-4.2.1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>再次嘗試啟動依然報同樣的錯 Orz，仔細觀察錯誤訊息發現關鍵字：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">The full error message from Ruby is: &lt;span class="s1">&amp;#39;cannot load such file -- nokogiri/nokogiri&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="套件問題處理">套件問題處理&lt;/h3>
+&lt;p>嗯好應該是 nokogiri 這個套件的問題，開 gem 的清單看一下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ gem list
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nokogiri &lt;span class="o">(&lt;/span>1.12.5 arm64-darwin x86_64-darwin, 1.10.1&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>同時有 arm 跟 x86 版本的套件存在，刪掉其他只留 arm 的試試：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo gem uninstall nokogiri
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Select gem to uninstall:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 1. nokogiri-1.12.5-x86_64-darwin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 2. nokogiri-1.12.5-x86_64-darwin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 3. nokogiri-1.12.5-arm64-darwin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 4. All versions
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Successfully uninstalled nokogiri-1.12.5-x86_64-darwin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Select gem to uninstall:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 1. nokogiri-1.12.5-x86_64-darwin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 2. nokogiri-1.12.5-arm64-darwin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 3. All versions
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Successfully uninstalled nokogiri-1.12.5-x86_64-darwin
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="成功啟動網站">成功啟動網站&lt;/h3>
+&lt;p>果然是 nokogiri 套件的問題，可以正常啟動了：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ bundle &lt;span class="nb">exec&lt;/span> jekyll server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Configuration file: /Users/ceyanglab/Documents/github/jekyll-theme-next/_config.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Source: /Users/ceyanglab/Documents/github/jekyll-theme-next
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Destination: /Users/ceyanglab/Documents/github/jekyll-theme-next/_site
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Incremental build: disabled. Enable with --incremental
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Generating...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Jekyll Feed: Generating feed &lt;span class="k">for&lt;/span> posts
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">done&lt;/span> in 1.813 seconds.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Auto-regeneration: enabled &lt;span class="k">for&lt;/span> &lt;span class="s1">&amp;#39;/Users/ceyanglab/Documents/github/jekyll-theme-next&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Server address: http://127.0.0.1:4000
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Server running... press ctrl-c to stop.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="總結">總結&lt;/h2>
+&lt;p>遇到問題時先好好看錯誤訊息，才不會答案擺在眼前還到處盲試。&lt;/p>
+&lt;h2 id="參考資料">參考資料&lt;/h2>
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://medium.com/%E9%80%B2%E6%93%8A%E7%9A%84-git-git-git/%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B-%E7%94%A8github-pages-%E4%B8%8A%E5%82%B3%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99-fa2ae83e6276" target="_blank" rel="noopener"
+>從零開始: 用 github pages 上傳靜態網站 - sexyoung&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="http://theme-next.simpleyyt.com/getting-started.html" target="_blank" rel="noopener"
+>NexT 使用文檔&lt;/a>&lt;/li>
+&lt;/ol></description></item></channel></rss>

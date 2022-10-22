@@ -1,0 +1,188 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="唸大學時開的那隻 github page 太久沒管理直接砍掉重做，當初也沒規劃好筆記的風格就隨便做了XD"><title>【Jekyll】Mac M1 安裝 Jekyll 踩雷記錄 | Zero's Blog</title><link rel=canonical href=https://blog.zerolr.net/p/2021/12/20/jekyll-mac-m1-issue/><link rel=stylesheet href=/scss/style.min.f1629321971fdeabdc7a8b293ae9ac40aefb661b0582bfb00482d9297479deaa.css><script src=/assets/libs/live2dw/lib/L2Dwidget.min.js></script>
+<script>L2Dwidget.init({pluginRootPath:"/assets/libs/live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/libs/",tagMode:!1,debug:!1,model:{jsonPath:"/assets/libs/live2dw/assets/hijiki.model.json"},display:{position:"right",width:150,height:300},mobile:{show:!0},log:!1})</script><meta property="og:title" content="【Jekyll】Mac M1 安裝 Jekyll 踩雷記錄"><meta property="og:description" content="唸大學時開的那隻 github page 太久沒管理直接砍掉重做，當初也沒規劃好筆記的風格就隨便做了XD"><meta property="og:url" content="https://blog.zerolr.net/p/2021/12/20/jekyll-mac-m1-issue/"><meta property="og:site_name" content="Zero's Blog"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Mac"><meta property="article:tag" content="Jekyll"><meta property="article:tag" content="GitHub Pages"><meta property="article:published_time" content="2021-12-20T18:00:00+00:00"><meta property="article:modified_time" content="2021-12-20T18:00:00+00:00"><meta name=twitter:title content="【Jekyll】Mac M1 安裝 Jekyll 踩雷記錄"><meta name=twitter:description content="唸大學時開的那隻 github page 太久沒管理直接砍掉重做，當初也沒規劃好筆記的風格就隨便做了XD"><link rel=manifest href=/manifest.json><script>"serviceWorker"in navigator&&(navigator.serviceWorker.controller?console.log("An active service worker found, no need to register"):navigator.serviceWorker.register("/sw.js",{scope:"./"}).then(function(e){console.log("Service worker has been registered for scope: "+e.scope)}))</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"light")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu0bb0d0bc9d1f96c923be960b637becbd_99158_300x0_resize_q75_box.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>Zero's Blog</a></h1><h2 class=site-description>Keep going</h2></div></header><ol class=social-menu><li><a href=https://github.com/zeroLR target=_blank title=GitHub><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.linkedin.com/in/cheng-en-yang-84a641173 target=_blank title=Linkedin><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="none" class="mercado-match" width="24" height="24" focusable="false"><path d="M20.5 2h-17A1.5 1.5.0 002 3.5v17A1.5 1.5.0 003.5 22h17a1.5 1.5.0 001.5-1.5v-17A1.5 1.5.0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75.0 118.3 6.5 1.78 1.78.0 016.5 8.25zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74.0 0013 14.19a.66.66.0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11.0 012.7-1.4c1.55.0 3.36.86 3.36 3.66z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/about/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About</span></a></li><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><li><a href=/links/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg><span>Links</span></a></li><li><a href=/projects/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg><span>Projects</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/blog/ style=background-color:#58b2dc;color:#fff>Blog</a>
+<a href=/categories/issues/ style=background-color:#f05e1c;color:#fff>Issues</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/2021/12/20/jekyll-mac-m1-issue/>【Jekyll】Mac M1 安裝 Jekyll 踩雷記錄</a></h2><h3 class=article-subtitle>唸大學時開的那隻 github page 太久沒管理直接砍掉重做，當初也沒規劃好筆記的風格就隨便做了XD</h3></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Dec 20, 2021</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>3 minute read</time></div></footer></div></header><section class=article-content><blockquote><p>由於工作上的需求入手了 MacBook Air M1，順便提早熟悉在 ARM 架構上開發會遇到的問題。
+重生後的第一篇就來記錄一下這個 blog 架設中所遇到的問題囉！</p></blockquote><h2 id=系統環境>系統環境</h2><ul><li><p>MacOS: Monterey</p></li><li><p>版本: 12.1</p></li><li><p>架構: aarch64</p></li></ul><h2 id=使用軟體工具>使用軟體/工具</h2><ul><li>ruby 2.6.8</li><li>jekyll 3.26.0</li><li>bundler 1.17.2</li></ul><h2 id=架設流程>架設流程</h2><ul><li>準備好自己的 Github 帳號。</li><li>建立 github page 與挑選自己喜歡的 jekyll 主題套用，參考的文章放在底部的<a class=link href=#%e5%8f%83%e8%80%83%e8%b3%87%e6%96%99>參考資料</a>中囉。</li></ul><h2 id=嘗試處理-jekyll-安裝問題>嘗試處理 jekyll 安裝問題</h2><h3 id=jekyll-安裝失敗>jekyll 安裝失敗</h3><p>首先用 gem 安裝 jekyll，結果出現以下錯誤訊息：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ sudo gem install -n /usr/local/bin jekyll --user-install
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Successfully installed jekyll-4.2.1
+</span></span><span class=line><span class=cl>Parsing documentation <span class=k>for</span> jekyll-4.2.1
+</span></span><span class=line><span class=cl>Before reporting this, could you check that the file you<span class=s1>&#39;re documenting
+</span></span></span><span class=line><span class=cl><span class=s1>has proper syntax:
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>  /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/bin/ruby -c lib/jekyll/commands/doctor.rb
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>RDoc is not a full Ruby parser and will fail when fed invalid ruby programs.
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>The internal error was:
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>	(NoMethodError) undefined method `[]&#39;</span> <span class=k>for</span> nil:NilClass
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>ERROR:  While executing gem ... <span class=o>(</span>NoMethodError<span class=o>)</span>
+</span></span><span class=line><span class=cl>    undefined method <span class=sb>`</span><span class=o>[]</span><span class=err>&#39;</span> <span class=k>for</span> nil:NilClass
+</span></span></code></pre></td></tr></table></div></div><h3 id=jekyll-安裝問題解決>jekyll 安裝問題解決</h3><p>更新 gem 就可以正確安裝了：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ sudo gem update
+</span></span></code></pre></td></tr></table></div></div><p>再次安裝：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ sudo gem install -n /usr/local/bin jekyll --user-install
+</span></span><span class=line><span class=cl>Successfully installed jekyll-4.2.1
+</span></span><span class=line><span class=cl>Parsing documentation <span class=k>for</span> jekyll-4.2.1
+</span></span><span class=line><span class=cl>Installing ri documentation <span class=k>for</span> jekyll-4.2.1
+</span></span><span class=line><span class=cl>Done installing documentation <span class=k>for</span> jekyll after <span class=m>0</span> seconds
+</span></span><span class=line><span class=cl><span class=m>1</span> gem installed
+</span></span></code></pre></td></tr></table></div></div><blockquote><p><em>但執行 <code>sudo jekyll new blog</code> 時卻噴了一大串的錯誤，目前還不知道怎麼解決，所以改成直接 clone jekyll-theme-next 提供的範例檔來做。</em></p></blockquote><hr><h2 id=改從範例檔進行安裝>改從範例檔進行安裝</h2><h3 id=bundle-exec-jekyll-server-失敗>bundle exec jekyll server 失敗</h3><p>首先照官方的步驟進行安裝，在使用<code>bundle install</code> 前要先 update：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ bundle update
+</span></span></code></pre></td></tr></table></div></div><p>將套件都裝好後，嘗試啟動失敗：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ bundle <span class=nb>exec</span> jekyll server
+</span></span><span class=line><span class=cl>/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/forwardable.rb:116: warning: already initialized constant Forwardable::VERSION
+</span></span><span class=line><span class=cl>...
+</span></span><span class=line><span class=cl>Configuration file: /Users/ceyanglab/Documents/github/jekyll-theme-next/_config.yml
+</span></span><span class=line><span class=cl>  Dependency Error: Yikes! It looks like you don<span class=s1>&#39;t have jemoji or one of its dependencies installed. In order to use Jekyll as currently configured, you&#39;</span>ll need to install this gem. The full error message from Ruby is: <span class=s1>&#39;cannot load such file -- nokogiri/nokogiri&#39;</span> If you run into trouble, you can find helpful resources at https://jekyllrb.com/help/!
+</span></span><span class=line><span class=cl>jekyll 3.9.0 <span class=p>|</span> Error:  jemoji
+</span></span></code></pre></td></tr></table></div></div><p>一開始以為是 jemoji 的問題，移除後連啟動都無法，只好再裝回來：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ bundle <span class=nb>exec</span> jekyll server
+</span></span><span class=line><span class=cl>Could not find jemoji-0.12.0 in any of the sources
+</span></span><span class=line><span class=cl>Run <span class=sb>`</span>bundle install<span class=sb>`</span> to install missing gems.
+</span></span></code></pre></td></tr></table></div></div><p>再次搜尋資料，查到有可能重複安裝多個 jekyll 導致啟動失敗，那就刪掉多的吧：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ sudo gem uninstall jekyll
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>You have requested to uninstall the gem:
+</span></span><span class=line><span class=cl>	jekyll-3.9.0
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>github-pages-222 depends on jekyll <span class=o>(=</span> 3.9.0<span class=o>)</span>
+</span></span><span class=line><span class=cl>jekyll-default-layout-0.1.4 depends on jekyll <span class=o>(</span>~&gt; 3.0<span class=o>)</span>
+</span></span><span class=line><span class=cl>jekyll-swiss-1.0.0 depends on jekyll <span class=o>(</span>~&gt; 3.2, development<span class=o>)</span>
+</span></span><span class=line><span class=cl>If you remove this gem, these dependencies will not be met.
+</span></span><span class=line><span class=cl>Continue with Uninstall? <span class=o>[</span>yN<span class=o>]</span>  y
+</span></span><span class=line><span class=cl>Successfully uninstalled jekyll-3.9.0
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Select gem to uninstall:
+</span></span><span class=line><span class=cl> 1. jekyll-4.2.1
+</span></span><span class=line><span class=cl> 2. jekyll-4.2.1
+</span></span><span class=line><span class=cl> 3. All versions
+</span></span><span class=line><span class=cl>&gt; <span class=m>2</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>You have requested to uninstall the gem:
+</span></span><span class=line><span class=cl>	jekyll-4.2.1
+</span></span></code></pre></td></tr></table></div></div><p>再次嘗試啟動依然報同樣的錯 Orz，仔細觀察錯誤訊息發現關鍵字：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>The full error message from Ruby is: <span class=s1>&#39;cannot load such file -- nokogiri/nokogiri&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=套件問題處理>套件問題處理</h3><p>嗯好應該是 nokogiri 這個套件的問題，開 gem 的清單看一下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ gem list
+</span></span><span class=line><span class=cl>...
+</span></span><span class=line><span class=cl>nokogiri <span class=o>(</span>1.12.5 arm64-darwin x86_64-darwin, 1.10.1<span class=o>)</span>
+</span></span><span class=line><span class=cl>...
+</span></span></code></pre></td></tr></table></div></div><p>同時有 arm 跟 x86 版本的套件存在，刪掉其他只留 arm 的試試：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ sudo gem uninstall nokogiri
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Select gem to uninstall:
+</span></span><span class=line><span class=cl> 1. nokogiri-1.12.5-x86_64-darwin
+</span></span><span class=line><span class=cl> 2. nokogiri-1.12.5-x86_64-darwin
+</span></span><span class=line><span class=cl> 3. nokogiri-1.12.5-arm64-darwin
+</span></span><span class=line><span class=cl> 4. All versions
+</span></span><span class=line><span class=cl>&gt; <span class=m>1</span>
+</span></span><span class=line><span class=cl>Successfully uninstalled nokogiri-1.12.5-x86_64-darwin
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Select gem to uninstall:
+</span></span><span class=line><span class=cl> 1. nokogiri-1.12.5-x86_64-darwin
+</span></span><span class=line><span class=cl> 2. nokogiri-1.12.5-arm64-darwin
+</span></span><span class=line><span class=cl> 3. All versions
+</span></span><span class=line><span class=cl>&gt; <span class=m>1</span>
+</span></span><span class=line><span class=cl>Successfully uninstalled nokogiri-1.12.5-x86_64-darwin
+</span></span></code></pre></td></tr></table></div></div><h3 id=成功啟動網站>成功啟動網站</h3><p>果然是 nokogiri 套件的問題，可以正常啟動了：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ bundle <span class=nb>exec</span> jekyll server
+</span></span><span class=line><span class=cl>...
+</span></span><span class=line><span class=cl>Configuration file: /Users/ceyanglab/Documents/github/jekyll-theme-next/_config.yml
+</span></span><span class=line><span class=cl>            Source: /Users/ceyanglab/Documents/github/jekyll-theme-next
+</span></span><span class=line><span class=cl>       Destination: /Users/ceyanglab/Documents/github/jekyll-theme-next/_site
+</span></span><span class=line><span class=cl> Incremental build: disabled. Enable with --incremental
+</span></span><span class=line><span class=cl>      Generating...
+</span></span><span class=line><span class=cl>       Jekyll Feed: Generating feed <span class=k>for</span> posts
+</span></span><span class=line><span class=cl>                    <span class=k>done</span> in 1.813 seconds.
+</span></span><span class=line><span class=cl> Auto-regeneration: enabled <span class=k>for</span> <span class=s1>&#39;/Users/ceyanglab/Documents/github/jekyll-theme-next&#39;</span>
+</span></span><span class=line><span class=cl>    Server address: http://127.0.0.1:4000
+</span></span><span class=line><span class=cl>  Server running... press ctrl-c to stop.
+</span></span></code></pre></td></tr></table></div></div><h2 id=總結>總結</h2><p>遇到問題時先好好看錯誤訊息，才不會答案擺在眼前還到處盲試。</p><h2 id=參考資料>參考資料</h2><ol><li><a class=link href=https://medium.com/%E9%80%B2%E6%93%8A%E7%9A%84-git-git-git/%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B-%E7%94%A8github-pages-%E4%B8%8A%E5%82%B3%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99-fa2ae83e6276 target=_blank rel=noopener>從零開始: 用 github pages 上傳靜態網站 - sexyoung</a></li><li><a class=link href=http://theme-next.simpleyyt.com/getting-started.html target=_blank rel=noopener>NexT 使用文檔</a></li></ol></section><footer class=article-footer><section class=article-tags><a href=/tags/mac/>Mac</a>
+<a href=/tags/jekyll/>Jekyll</a>
+<a href=/tags/github-pages/>GitHub Pages</a></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css integrity="sha256-J+iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s=" crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js integrity="sha256-InsNdER1b2xUewP+pKCUJpkhiqwHgqiPXDlIk7GzBu4=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI=" crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.querySelector(`.article-content`),{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/2021/12/22/jekyll-gitalk-issue/><div class=article-details><h2 class=article-title>【Jekyll】解決gitalk啟用後錯誤訊息問題</h2></div></a></article><article class=has-image><a href=/p/2022/09/05/netlify-cms-import-hugo/><div class=article-image><img src=/post/images/cover/hugo-wide.jpeg loading=lazy data-key=netlify-cms-import-hugo data-hash=/post/images/cover/hugo-wide.jpeg></div><div class=article-details><h2 class=article-title>【Hugo】Netlify CMS 導入 Hugo 網站紀錄</h2></div></a></article><article class=has-image><a href=/p/2022/09/03/hugo-new-theme/><div class=article-image><img src=/post/images/cover/hugo-wide.jpeg loading=lazy data-key=hugo-new-theme data-hash=/post/images/cover/hugo-wide.jpeg></div><div class=article-details><h2 class=article-title>【Hugo】又…又改主題!!!</h2></div></a></article><article class=has-image><a href=/p/2022/03/05/netlify-cms-import-github-pages/><div class=article-image><img src=/post/images/cover/netlify-cms.png loading=lazy data-key=netlify-cms-import-github-pages data-hash=/post/images/cover/netlify-cms.png></div><div class=article-details><h2 class=article-title>Netlify CMS 導入 GitHub Pages 記錄</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//https-blog-zerolr-net.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{typeof DISQUS=="object"&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2022 Zero's Blog</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.13.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

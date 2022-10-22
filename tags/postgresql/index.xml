@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>PostgreSQL on Zero's Blog</title><link>https://blog.zerolr.net/tags/postgresql/</link><description>Recent content in PostgreSQL on Zero's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 22 Oct 2022 17:57:01 +0000</lastBuildDate><atom:link href="https://blog.zerolr.net/tags/postgresql/index.xml" rel="self" type="application/rss+xml"/><item><title>【PostgreSQL】初探 Transaction Isolation</title><link>https://blog.zerolr.net/p/2022/10/22/first-try-transaction-isolation/</link><pubDate>Sat, 22 Oct 2022 17:57:01 +0000</pubDate><guid>https://blog.zerolr.net/p/2022/10/22/first-try-transaction-isolation/</guid><description>&lt;img src="https://blog.zerolr.net/assets/images/pg.jpeg" alt="Featured image of post 【PostgreSQL】初探 Transaction Isolation" />&lt;blockquote>
+&lt;p>最近面試被問到有關 &lt;strong>Transaction&lt;/strong> 的問題時，幾乎答不出來Orz，趕緊查資料來壓壓驚。&lt;/p>
+&lt;/blockquote>
+&lt;p>這篇我會從官方文件及網路文章擷取部分內容，試著理解 &lt;a class="link" href="https://www.postgresql.org/docs/14/transaction-iso.html" target="_blank" rel="noopener"
+>Postgres 中的 Transaction&lt;/a> ，用 Docker 建立 Postgres 來做實驗，試著重現其中幾種狀況，由於我個人理解程度還不夠深，建議去閱讀參考資源的文章會收穫更多喔！&lt;/p>
+&lt;p>先來一段官方的介紹，詳細的內容在 &lt;a class="link" href="https://docs.postgresql.tw/the-sql-language/concurrency-control/introduction" target="_blank" rel="noopener"
+>PostgreSQL MVCC 簡介&lt;/a>。&lt;/p>
+&lt;blockquote>
+&lt;p>PostgreSQL 為開發者們提供了豐富的工具來管理資料的 &lt;strong>同時存取&lt;/strong>。資料的 &lt;strong>一致性&lt;/strong> 在資料庫內部是以 &lt;strong>多重資料版本的方式維護（Multiversion Concurrency Control，MVCC）&lt;/strong>，這表示無論目前資料的當下狀態如何，每個 SQL 指令會看見的是資料在一段時間前的 &lt;strong>快照&lt;/strong> （資料庫的某個版本）。&lt;/p>
+&lt;/blockquote>
+&lt;p>而MVCC這個功能大多數資料庫已經實現了，詳細參考 &lt;a class="link" href="https://zh.wikipedia.org/zh-tw/%E5%A4%9A%E7%89%88%E6%9C%AC%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6" target="_blank" rel="noopener"
+>維基百科-多版本並行控制&lt;/a> 。&lt;/p>
+&lt;p>這次實驗的範圍以 &lt;strong>交易隔離(Transaction Isolation)&lt;/strong> 為主 ，以我個人根據官方手冊提供的解釋及範例來做實驗，若過程中有錯誤認知也請不吝告知！&lt;/p>
+&lt;h2 id="小試身手">小試身手&lt;/h2>
+&lt;p>可以先到 &lt;a class="link" href="https://www.crunchydata.com/developers/playground/transactions" target="_blank" rel="noopener"
+>Crunchydata Tutorials - Transactions&lt;/a> 去試一遍 postgres 中的 transaction 行為，照著做之外也可以去試著理解教學的重點喔！&lt;/p>
+&lt;h2 id="sql-transaction">SQL &lt;strong>Transaction&lt;/strong>&lt;/h2>
+&lt;p>在實驗前先來複習一下 &lt;strong>資料庫交易行為(Transaction)&lt;/strong> 的特性，以下節錄自 &lt;a class="link" href="https://totoroliu.medium.com/%E8%B3%87%E6%96%99%E5%BA%AB-acid-bb87324035a8" target="_blank" rel="noopener"
+>SQL 大小事 - Po-Ching **Liu&lt;/a>。**&lt;/p>
+&lt;hr>
+&lt;p>在資料庫中，&lt;strong>交易(事務)&lt;/strong> 意旨由各種 &lt;strong>資料庫操作(select、update、insert等)&lt;/strong> 所組成的邏輯過程。&lt;/p>
+&lt;p>在資料庫中為保證其交易是正確且可靠的，必需滿足以下 &lt;strong>四個特性&lt;/strong> ：&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>原子性(Atomicity)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>在資料庫的每一筆交易中只有兩種可能發生，第一種是全部完全(commit)，第二種是全部不完成(rollback)，不會因為某個環節出錯，而終止在那個環節，在出錯之後會恢復至交易之前的狀態，如同還沒執行此筆交易。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>一致性(Consistency)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>在交易中會產生資料或者驗證狀態，然而當錯誤發生，所有已更改的資料或狀態將會恢復至交易之前。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>隔離性(Isolation)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>資料庫允許多筆交易同時進行，交易進行時未完成的交易資料並不會被其他交易使用，直到此筆交易完成。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>持續性(Durability)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>交易完成後對資料的修改是永久性的，資料不會因為系統重啟或錯誤而改變。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="什麼是-交易隔離transaction-isolation-">什麼是 交易隔離(Transaction Isolation) ?&lt;/h2>
+&lt;p>以下節錄自 &lt;a class="link" href="https://docs.postgresql.tw/the-sql-language/concurrency-control/transaction-isolation" target="_blank" rel="noopener"
+>PostgreSQL 交易隔離&lt;/a> 及 &lt;a class="link" href="https://hackmd.io/@Burgess/SkDnHKMNr" target="_blank" rel="noopener"
+>資料庫 Transaction &amp;amp; Lock 筆記。&lt;/a>&lt;/p>
+&lt;hr>
+&lt;p>在不同等級中發生 &lt;strong>競爭條件(Race condition)&lt;/strong> 是：&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>Dirty write (髒寫)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>transaction 尚未 commit 的情況下，其值被另一個 transaction 給覆寫。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Dirty read (髒讀)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>transaction 讀取的資料是由尚未 commit 的 concurrency transaction 寫入的。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Non-repeatable read (無法重複的讀取)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>又可稱作 &lt;strong>讀取偏差(read skew)&lt;/strong> ，transaction 重新讀取它之前讀過的資料，但是卻發現資料被其他 transaction 修改（在最初讀取之後commit）了。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Phantom read (幻讀)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>又可稱作 &lt;strong>寫入偏差(wirte skew)&lt;/strong> ，transaction 重新執行查詢，得到滿足搜尋條件的資料集，但卻發現得到的資料集因為其他最近剛 commit 的 transaction 而變更了。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Serialization anomaly (序列化異常)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>在成功提交一群 transactions 後，結果與以所有可能的順序依序執行交易的結果都不一致。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>SQL 標準中定義了&lt;strong>四個等級的交易隔離 :&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>Read uncommitted :&lt;/strong>
+代表 transaction 可以讀到別的 transaction &lt;strong>尚未 commit&lt;/strong> 的資料，在這個等級中 race condition 三個問題都沒有解決。&lt;/li>
+&lt;li>&lt;strong>Read committed :&lt;/strong>
+代表 transaction 只能讀到別的 transaction &lt;strong>已經 commit&lt;/strong> 的資料，沒有 commit 的話就不會讀到，在這個等級&lt;strong>解決了 Dirty read&lt;/strong> 的問題，為 &lt;strong>Postgres 預設等級&lt;/strong>。&lt;/li>
+&lt;li>&lt;strong>Repeatable read :&lt;/strong>
+代表每次 transaction 要讀取特定欄位的資料時，只要 &lt;strong>query 條件相同&lt;/strong>，&lt;strong>讀取到的資料內容就會相同，&lt;strong>在這個等級&lt;/strong>解決了 Non-repeatable read&lt;/strong> 的問題，為 &lt;strong>MYSQL InnoDB 預設等級&lt;/strong> 。&lt;/li>
+&lt;li>&lt;strong>Serializable :&lt;/strong>
+代表在多個 transaction 同時執行時，只要 &lt;strong>transaction 的順序相同時，得到的結果一定相同&lt;/strong>。比如說 Transaction A 先執行了接下來再執行 Transaction B，在同樣的條件下，每次執行都會得到一樣的結果，在這個等級下連同 &lt;strong>Phantom read 也會一併被解決&lt;/strong>。&lt;/li>
+&lt;/ol>
+&lt;h2 id="交易隔離等級與競爭條件">交易隔離等級與競爭條件&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>隔離等級&lt;/th>
+&lt;th>Dirty write&lt;/th>
+&lt;th>Dirty read&lt;/th>
+&lt;th>Non-repeatable read&lt;/th>
+&lt;th>Phantom read&lt;/th>
+&lt;th>Serialization anomaly&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Read uncommitted&lt;/td>
+&lt;td>不可能&lt;/td>
+&lt;td>允許，但PG中不會&lt;/td>
+&lt;td>可能&lt;/td>
+&lt;td>可能&lt;/td>
+&lt;td>可能&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Read committed&lt;/td>
+&lt;td>不可能&lt;/td>
+&lt;td>不可能&lt;/td>
+&lt;td>可能&lt;/td>
+&lt;td>可能&lt;/td>
+&lt;td>可能&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Repeatable read&lt;/td>
+&lt;td>不可能&lt;/td>
+&lt;td>不可能&lt;/td>
+&lt;td>不可能&lt;/td>
+&lt;td>允許，但PG中不會&lt;/td>
+&lt;td>可能&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Serializable&lt;/td>
+&lt;td>不可能&lt;/td>
+&lt;td>不可能&lt;/td>
+&lt;td>不可能&lt;/td>
+&lt;td>不可能&lt;/td>
+&lt;td>不可能&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;blockquote>
+&lt;p>&lt;a class="link" href="https://ithelp.ithome.com.tw/users/20130395/ironman/4188" target="_blank" rel="noopener"
+>資料工程師修煉之路 Part II&lt;/a> IThome 鐵人賽中的系列文章，有附圖而且解釋的更詳細，非常推薦去閱讀！&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="實驗環境">實驗環境&lt;/h2>
+&lt;ul>
+&lt;li>Mac M1&lt;/li>
+&lt;li>Docker 20.10.17&lt;/li>
+&lt;li>Docker Compose 2.2.3&lt;/li>
+&lt;li>Docker Image: &lt;code>postgres:14-alpine&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="模擬-race-condition-發生">模擬 race condition 發生&lt;/h2>
+&lt;blockquote>
+&lt;p>由於在 RDBMS 中的 transaction 不允許 &lt;strong>dirty write(髒寫)&lt;/strong> 的狀況發生，有關其狀況可以參考其他文章解釋，而 &lt;strong>serialization anomaly(序列化異常)&lt;/strong> 我還不清楚如何重現🥲，&lt;strong>dirty read(髒讀)&lt;/strong> 在 postgres 中也被限制，這邊就先試著重現一種 race condition 的狀況，並觀察修改 isolation 等級前後的結果。&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="non---repeatable-readread-skew">Non - Repeatable Read(Read skew)&lt;/h3>
+&lt;p>模擬在 &lt;strong>Read committed&lt;/strong> 等級底下會發生的問題。&lt;/p>
+&lt;p>參考以下情境進行實驗：&lt;/p>
+&lt;ul>
+&lt;li>Alice 擁有兩個銀行帳戶，各有 500 元在帳戶中，共有 1000 元&lt;/li>
+&lt;li>有個轉帳作業發起 transaction 從 Account 1 轉帳至 Account 2&lt;/li>
+&lt;li>Alice 發起的 transaction 在&lt;strong>轉帳前&lt;/strong>查了 Account 1 ，在&lt;strong>轉帳後&lt;/strong>查了 Account 2，得到總額 900元的資訊，發現總金額少了 100 元，但帳戶中總額確實為 1000 元&lt;/li>
+&lt;li>Alice 需要再次查詢才可取得正確的結果&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/figure_7-6.png"
+loading="lazy"
+alt="figure_7-6.png"
+>&lt;/p>
+&lt;p>這個情境下符合 Read committed 等級中允許讀取已 committed 的資料，但沒有保證在同一個 transaction 下，所取得的資料都是同一份。&lt;/p>
+&lt;hr>
+&lt;p>GitHub repo： &lt;a class="link" href="https://github.com/zeroLR/first-try-transaction-isolation" target="_blank" rel="noopener"
+>https://github.com/zeroLR/first-try-transaction-isolation&lt;/a>&lt;/p>
+&lt;p>建立資料夾&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">mkdir -p first-try-transaction-isolation/non-repeatable-read
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> first-try-transaction-isolation/non-repeatable-read
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">touch docker-compose.yml
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>docker-compose 配置&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;3.1&amp;#39;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">services&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">db&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">container_name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">pg&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">postgres:14-alpine&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">restart&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">always&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">environment&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">POSTGRES_DB&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">postgres&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">POSTGRES_USER&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">postgres&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">POSTGRES_PASSWORD&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">postgres&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">working_dir&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">/usr/src&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="c"># 直接把現在資料夾內容映射至建立的container中，copy所需檔案進去比較好，這邊僅為了方便操作&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">.:/usr/src&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>啟動 container 的順序不影響映射到 container 中的檔案，這邊就先啟動&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo docker-compose up -d
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>建立 sql 檔&lt;/p>
+&lt;p>&lt;strong>initdb.sql&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="k">BEGIN&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">DROP&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">TABLE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">IF&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">EXISTS&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">accounts&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">CREATE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">TABLE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">accounts&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nb">SERIAL&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">PRIMARY&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">KEY&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">balance&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nb">INT&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">INSERT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">INTO&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">accounts&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">balance&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">VALUES&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">500&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">INSERT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">INTO&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">accounts&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">balance&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">VALUES&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">500&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">COMMIT&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>alice.sql&lt;/strong>(註解那行表示設定此transaction的隔離等級)&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="k">BEGIN&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">-- SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">balance&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">FROM&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">accounts&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">WHERE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">balance&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">FROM&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">accounts&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">WHERE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">COMMIT&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>transfer.sql&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="k">BEGIN&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">UPDATE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">accounts&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">SET&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">balance&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">balance&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">100&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">WHERE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">UPDATE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">accounts&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">SET&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">balance&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">balance&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">100&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">WHERE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">COMMIT&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>建立 shell script&lt;/p>
+&lt;p>&lt;strong>lab.sh&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">path&lt;/span>&lt;span class="o">=&lt;/span>/usr/src/non-repeatable-read
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 執行 initdb 中的 query 初始化實驗環境&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">psql -U postgres -f &lt;span class="nv">$path&lt;/span>/initdb.sql --out log.txt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 將兩個執行 transaction 放到背景並發執行&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">psql -U postgres -f &lt;span class="nv">$path&lt;/span>/alice.sql &lt;span class="p">&amp;amp;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">psql -U postgres -f &lt;span class="nv">$path&lt;/span>/transfer.sql &lt;span class="p">&amp;amp;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>start.sh&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">RED&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;\033[0;31m&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">BLUE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;\033[0;34m&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">GREEN&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;\033[0;32m&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">NC&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;\033[0m&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">path&lt;/span>&lt;span class="o">=&lt;/span>/usr/src/non-repeatable-read
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">cycle&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">300&lt;/span> &lt;span class="c1"># 執行次數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">snapshotAfterTransaction&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span> &lt;span class="c1"># 另一筆 transaction commit 前取得的快照計數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">snapshotBeforeTransaction&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span> &lt;span class="c1"># 另一筆 transaction commit 後取得的快照計數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">snapshotNonRepeatable&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span> &lt;span class="c1"># 另一筆 transaction 中取到不同快照計數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> i in &lt;span class="k">$(&lt;/span>seq &lt;span class="m">1&lt;/span> &lt;span class="nv">$cycle&lt;/span>&lt;span class="k">)&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 執行 lab.sh 中的指令，並過濾出有400、500、600的結果&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">output&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>sh &lt;span class="nv">$path&lt;/span>/lab.sh &lt;span class="p">|&lt;/span> grep -E &lt;span class="s1">&amp;#39;400|500|600&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 儲存各種狀況結果&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">## 兩筆資料皆是另一筆 transaction commit 後的快照&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">snapshot1&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="nv">$output&lt;/span> &lt;span class="p">|&lt;/span> grep &lt;span class="s1">&amp;#39;600 400&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">## 兩筆資料皆是另一筆 transaction begin 前的快照&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">snapshot2&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="nv">$output&lt;/span> &lt;span class="p">|&lt;/span> grep &lt;span class="s1">&amp;#39;500 500&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">## 第一筆資料為另一筆 transaction begin 前的快照，第二筆則為 transaction commit 後的快照&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">snapshot3&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="nv">$output&lt;/span> &lt;span class="p">|&lt;/span> grep &lt;span class="s1">&amp;#39;500 400&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">[&lt;/span> ! -z &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$snapshot1&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">let&lt;/span> snapshotAfterTransaction++
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">GREEN&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="nv">$snapshot1&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">[&lt;/span> ! -z &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$snapshot2&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">let&lt;/span> snapshotBeforeTransaction++
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">BLUE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="nv">$snapshot2&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">[&lt;/span> ! -z &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$snapshot3&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">let&lt;/span> snapshotNonRepeatable++
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">RED&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="nv">$snapshot3&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 三種狀況結果統計&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">[&lt;/span> &lt;span class="nv">$i&lt;/span> -eq &lt;span class="nv">$cycle&lt;/span> &lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">GREEN&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">AfterTransaction: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">snapshotAfterTransaction&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">\n&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">BLUE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">BeforeTransaction: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">snapshotBeforeTransaction&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">\n&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">RED&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">Non-repeatable: &lt;/span>&lt;span class="nv">$snapshotNonRepeatable&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>檔案準備好之後，執行 start.sh 即可開始實驗，使用 time -p 可以得知執行時間&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">time&lt;/span> -p sh start.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="實驗結果">實驗結果&lt;/h2>
+&lt;h3 id="read-committed-postgres-預設等級">Read committed (postgres 預設等級)&lt;/h3>
+&lt;p>使用預設隔離等級，300次實驗中有8次得到有問題的結果。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/read-committed.png"
+loading="lazy"
+alt="截圖 2022-10-23 上午1.13.50.png"
+>&lt;/p>
+&lt;h2 id="repeatable-read">Repeatable Read&lt;/h2>
+&lt;p>設定 &lt;code>SET TRANSACTION ISOLATION LEVEL REPEATABLE READ&lt;/code> 後，300次實驗中無發生不正確的結果，相對的取得另一交易後的資料次數較少。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/repeatable-read.png"
+loading="lazy"
+alt="截圖 2022-10-23 上午1.14.12.png"
+>&lt;/p>
+&lt;h2 id="總結">總結&lt;/h2>
+&lt;ul>
+&lt;li>如果再將實驗次數拉高或許結果會更準確，不過我也不是很確定這個做法有沒有其他問題，只是覺得能夠重現同樣的問題並且去解決它，是一件蠻有成就的事，這次只有寫 Non-repeatable Read(read skew) 的實驗，之後有空再試試重現 Phantom Read(write skew)。&lt;/li>
+&lt;/ul>
+&lt;h2 id="參考資料">參考資料&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://zh.wikipedia.org/zh-tw/%E5%A4%9A%E7%89%88%E6%9C%AC%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6" target="_blank" rel="noopener"
+>維基百科-多版本並行控制&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.crunchydata.com/developers/playground/transactions" target="_blank" rel="noopener"
+>Crunchydata Tutorials - Transactions&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.postgresql.org/docs/14/transaction-iso.html" target="_blank" rel="noopener"
+>PostgreSQL 14 transaction-iso&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.postgresql.tw/the-sql-language/concurrency-control/introduction" target="_blank" rel="noopener"
+>PostgreSQL MVCC 簡介&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.postgresql.tw/the-sql-language/concurrency-control/transaction-isolation" target="_blank" rel="noopener"
+>PostgreSQL 交易隔離&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://totoroliu.medium.com/%E8%B3%87%E6%96%99%E5%BA%AB-acid-bb87324035a8" target="_blank" rel="noopener"
+>SQL 大小事&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://hackmd.io/@Burgess/SkDnHKMNr" target="_blank" rel="noopener"
+>資料庫 Transaction &amp;amp; Lock 筆記&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://ithelp.ithome.com.tw/users/20130395/ironman/4188" target="_blank" rel="noopener"
+>資料工程師修煉之路 Part II&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>

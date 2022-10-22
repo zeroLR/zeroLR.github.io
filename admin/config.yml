@@ -1,0 +1,37 @@
+backend:
+  name: github
+  repo: zeroLR/zeroLR.github.io
+  branch: master # Branch to update (optional; defaults to master)
+  site_domain: musing-swanson-deda90.netlify.com
+media_folder: static/assets/images
+public_folder: assets/images
+publish_mode: editorial_workflow
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "content/post"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Cover", name: "image", widget: "string", required: false }
+      - {
+          label: "Categories",
+          name: "categories",
+          widget: "list",
+          summary: "{{fields.category}}",
+          field: { label: "Category", name: "category", widget: "string" },
+        }
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "list",
+          summary: "{{fields.tag}}",
+          field: { label: "Tag", name: "tag", widget: "string" },
+        }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Body", name: "body", widget: "markdown" }

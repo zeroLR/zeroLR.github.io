@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on Zero's Blog</title><link>https://blog.zerolr.net/categories/linux/</link><description>Recent content in Linux on Zero's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 16 Oct 2022 19:56:56 +0000</lastBuildDate><atom:link href="https://blog.zerolr.net/categories/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>【Linux】Concurrency on sh</title><link>https://blog.zerolr.net/p/2022/10/16/concurrency-on-sh/</link><pubDate>Sun, 16 Oct 2022 19:56:56 +0000</pubDate><guid>https://blog.zerolr.net/p/2022/10/16/concurrency-on-sh/</guid><description>&lt;p>這篇紀錄在 docker busybox 中使用 shell script 同時執行多個指令，比較使用 &lt;code>&amp;amp;&lt;/code> 將命令帶到背景執行與在前景執行時的狀況，如理解有誤也歡迎糾正。&lt;/p>
+&lt;p>程式碼放在 github: &lt;a class="link" href="https://github.com/zeroLR/concurrency-on-sh" target="_blank" rel="noopener"
+>https://github.com/zeroLR/concurrency-on-sh&lt;/a>&lt;/p>
+&lt;h2 id="實驗環境">實驗環境&lt;/h2>
+&lt;ul>
+&lt;li>Mac M1&lt;/li>
+&lt;li>Docker 20.10.17&lt;/li>
+&lt;li>Docker Compose 2.2.3&lt;/li>
+&lt;li>Docker Image: &lt;code>busybox:latest&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="建立實驗環境">建立實驗環境&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>建立資料夾 。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">mkdir concurrency-on-sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> concurrency-on-sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>執行以下指令產生本次實驗檔案。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">cat &lt;span class="s">&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39; &amp;gt;&amp;gt; foreground.sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">sleep 3 ; echo &amp;#34;First job has been completed.&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">sleep 9 ; echo &amp;#34;Next job has been completed.&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">sleep 6 ; echo &amp;#34;All jobs have been completed.&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">EOF&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cat &lt;span class="s">&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39; &amp;gt;&amp;gt; background.sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">sleep 3 &amp;amp;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">echo $!
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">sleep 9 &amp;amp;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">echo $!
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">sleep 6 &amp;amp;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">echo $!
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">wait -n
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">echo &amp;#34;First job has been completed.&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">wait -n
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">echo &amp;#34;Next job has been completed.&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">wait
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">echo &amp;#34;All jobs have been completed.&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">EOF&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cat &lt;span class="s">&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39; &amp;gt;&amp;gt; zombie.sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">for i in `seq 1 10`
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> do
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> sleep 10 &amp;amp;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> echo $!
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">done
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">wait
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">EOF&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>使用 docker 或 docker-compose 啟動 container，將實驗檔案 mount 至 container 中。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># docker command&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo docker run -dti --restart always --workdir /home --mount &lt;span class="nv">type&lt;/span>&lt;span class="o">=&lt;/span>bind,source&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>&lt;span class="nb">pwd&lt;/span>&lt;span class="k">)&lt;/span>&lt;span class="s2">/&amp;#34;&lt;/span>,target&lt;span class="o">=&lt;/span>/home --name busybox busybox ash
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># concurrency-on-sh/docker-compose.yml&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;3.1&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">services&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">busybox&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">container_name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">busybox&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">busybox:latest&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">stdin_open&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">tty&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">restart&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">always&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">working_dir&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">/home&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">command&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">ash&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">.:/home&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># docker-compose&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo docker-compose up -d
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>開啟兩個 shell ，都使用 docker exec 進入 container 的 shell 中。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo docker &lt;span class="nb">exec&lt;/span> -ti busybox busybox ash
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>其中一個 shell 執行 top 開啟系統監視(按 1 可以顯示各個 CPU 資源)，待會實驗時方便觀察 process 的增減過程。&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-8812.29.18.png"
+loading="lazy"
+alt="截圖 2022-10-17 上午12.29.18.png"
+>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="前景執行">前景執行&lt;/h2>
+&lt;p>一般在 shell 中未加上 &lt;code>&amp;amp;&lt;/code> 的命令就會放在前景處理，且一次只會處理一個 process，使用 shell script 執行多個命令時，也是一次只產生一個 process：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">time&lt;/span> -p sh foreground.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>使用 time -p 執行命令，會將 time -p 後的命令作為其子程序執行，再由這個子程序作為父程序執行 shell script ，產生出新的程序(有點繞口 XD)，待所有子程序都執行完畢後，回傳從程序執行到結束所經過的時間。&lt;/p>
+&lt;/blockquote>
+&lt;p>第一個子程序等待 3 秒：&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.29.37.png"
+loading="lazy"
+alt="截圖 2022-10-17 上午1.29.37.png"
+>&lt;/p>
+&lt;p>開始第二個子程序等待 9 秒，回傳第一個子程序結束後執行的訊息：&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.29.40.png"
+loading="lazy"
+alt="截圖 2022-10-17 上午1.29.40.png"
+>&lt;/p>
+&lt;p>開始第三個子程序等待 6 秒，回傳第二個子程序結束後執行的訊息：&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.29.48.png"
+loading="lazy"
+alt="截圖 2022-10-17 上午1.29.48.png"
+>&lt;/p>
+&lt;p>所有程序結束，回傳訊息與執行時間，總共花費 3+6+9 = 18 秒：&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.29.54.png"
+loading="lazy"
+alt="截圖 2022-10-17 上午1.29.54.png"
+>&lt;/p>
+&lt;h2 id="背景執行">背景執行&lt;/h2>
+&lt;p>現在將前景執行的命令放到背景執行，並回傳子程序 PID，使用 &lt;code>wait&lt;/code> 等待程序結束：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">time&lt;/span> -p sh background.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>同時產生三個子程序，放在背景由 Linux 去做並發或平行處理，其中 &lt;code>CPU&lt;/code> 的欄位表示當下這個程序是由哪個 CPU 處理的：&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.31.36.png"
+loading="lazy"
+alt="截圖 2022-10-17 上午1.31.36.png"
+>&lt;/p>
+&lt;p>第一個子程序結束，此時其他子程序繼續倒數中：&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.31.38.png"
+loading="lazy"
+alt="截圖 2022-10-17 上午1.31.38.png"
+>&lt;/p>
+&lt;p>第三個子程序先結束了，因為已經倒數完畢：&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.31.40.png"
+loading="lazy"
+alt="截圖 2022-10-17 上午1.31.40.png"
+>&lt;/p>
+&lt;p>最後第二個子程序結束，總共花費 9 秒：&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.31.44.png"
+loading="lazy"
+alt="截圖 2022-10-17 上午1.31.44.png"
+>&lt;/p>
+&lt;p>這邊的例子及命令的量都舉得很少，建議可以自己試試用 &lt;code>for loop&lt;/code> 去產生大量的命令執行，不過還要考慮單核及多核的系統上處理的差異喔！ 可以參考 &lt;strong>&lt;a class="link" href="https://www.google.com/url?sa=t&amp;amp;rct=j&amp;amp;q=&amp;amp;esrc=s&amp;amp;source=web&amp;amp;cd=&amp;amp;ved=2ahUKEwjn2_mguuX6AhUU4GEKHbACBIIQFnoECBUQAQ&amp;amp;url=https%3A%2F%2Fhackmd.io%2F%40owlfox%2FSyaTF2VgL%2Fhttps%253A%252F%252Fhackmd.io%252Fs%252FSkh_AaVix&amp;amp;usg=AOvVaw2MPz6QOe7v0wzttr70OaRN" target="_blank" rel="noopener"
+>Concurrency 程式設計 - HackMD&lt;/a> 。&lt;/strong>&lt;/p>
+&lt;h2 id="殭屍程序">殭屍程序&lt;/h2>
+&lt;h3 id="程序被正常回收">程序被正常回收&lt;/h3>
+&lt;p>我們先來看看有正常使用 &lt;code>wait&lt;/code> 等待程序結束的狀況：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># use wait&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">time&lt;/span> -p sh zombie.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>命令執行中，echo 先將所有已產生程序的 PID 顯示出來，觀察以下結果 :&lt;/p>
+&lt;ul>
+&lt;li>每個程序的 PPID(父程序) 是誰，父 產生(→) 子&lt;/li>
+&lt;li>container → &lt;code>shell(ash)&lt;/code>&lt;/li>
+&lt;li>&lt;code>shell(ash)&lt;/code> → &lt;code>time -p sh zombie.sh&lt;/code>&lt;/li>
+&lt;li>&lt;code>time -p sh zombie.sh&lt;/code> → &lt;code>sh zombie.sh&lt;/code>&lt;/li>
+&lt;li>&lt;code>sh zombie.sh&lt;/code> → &lt;code>sleep&lt;/code>&lt;/li>
+&lt;li>&lt;code>time -p sh zombie.sh&lt;/code> 程序在前景執行並等待中&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.34.06.png"
+loading="lazy"
+alt="截圖 2022-10-17 上午1.34.06.png"
+>&lt;/p>
+&lt;p>命令結束，所有結束的子程序都被其父程序回收，程序執行時間共約 10 秒(並發執行)：&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.34.17.png"
+loading="lazy"
+alt="截圖 2022-10-17 上午1.34.17.png"
+>&lt;/p>
+&lt;h3 id="程序結束後未被父程序回收">程序結束後未被父程序回收&lt;/h3>
+&lt;p>再來試試不使用 &lt;code>wait&lt;/code> 時，程序執行完的狀況：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># not use wait&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">time&lt;/span> -p sh zombie.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>命令執行後馬上結束，與前面的狀況有些不同：&lt;/p>
+&lt;ul>
+&lt;li>程序執行時間約 0.01 秒，這邊的執行時間只包含 &lt;code>time -p sh zombie.sh&lt;/code> 及 &lt;code>sh zombie.sh&lt;/code> 程序&lt;/li>
+&lt;li>每個 &lt;code>sleep&lt;/code> 程序其 PPID 為 1，而這個 PID 為 1 的程序是 container 建立後產生的第一個程序，也就是最前面 docker run 時的 command 所產生的&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.34.36.png"
+loading="lazy"
+alt="截圖 2022-10-17 上午1.34.36.png"
+>&lt;/p>
+&lt;p>程序結束後，其父行程沒有回收子程序，子程序變成 &lt;strong>殭屍程序&lt;/strong>：&lt;/p>
+&lt;p>&lt;img src="https://blog.zerolr.net/assets/images/e6-88-aa-e5-9c-96_2022-10-17_-e4-b8-8a-e5-8d-881.34.46.png"
+loading="lazy"
+alt="截圖 2022-10-17 上午1.34.46.png"
+>&lt;/p>
+&lt;hr>
+&lt;p>那麼為什麼沒用 &lt;code>wait&lt;/code> 就會讓程序變成由 PID 1 的程序來產生呢？&lt;/p>
+&lt;p>我們從 &lt;code>wait&lt;/code> 的 manual page 中可以得知 :&lt;/p>
+&lt;blockquote>
+&lt;p>If a &lt;strong>parent process terminates&lt;/strong>, then its &amp;ldquo;zombie&amp;rdquo; children (if any) are adopted by &lt;strong>init(1)&lt;/strong>, (or by the nearest &amp;ldquo;subreaper&amp;rdquo; process as defined through the use of the &lt;strong>prctl(2)&lt;/strong> PR_SET_CHILD_SUBREAPER operation);
+&lt;strong>init(1) automatically performs a wait to remove the zombies.&lt;/strong>&lt;/p>
+&lt;/blockquote>
+&lt;p>喔～由於未使用 &lt;code>wait&lt;/code> 去等待 &lt;code>zombie.sh&lt;/code> 產生的背景程序執行完畢，所以執行 &lt;code>zombie.sh&lt;/code> 的當下程序就結束了，產生出來的子程序找不到爹，最後就被隔壁老王 &lt;strong>init(1)&lt;/strong> 收養了(X，而這個程序在這個實驗中是由 docker run 的 command - ash 所產生的，最後可以透過以下命令去進入 container 中 PID 1 的程序：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 退出目前的 shell&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">exit&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 進入&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo docker attach busybox
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然後按個 enter，殭屍程序就會被回收了 。&lt;/p>
+&lt;h3 id="結果比較">結果比較&lt;/h3>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>有 wait&lt;/th>
+&lt;th>沒 wait&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>由其父程序進行等待並回收&lt;/td>
+&lt;td>由 PID 1 的程序 init(1) 接收子程序，並自動加入 wait 去結束殭屍程序&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>老爹給你靠&lt;/td>
+&lt;td>老爹跑路，隔壁老王好心收養&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="總結">總結&lt;/h2>
+&lt;ul>
+&lt;li>原本只是要紀錄怎麼樣同時下命令，結果想要弄個模擬實驗就會挖更多坑，不過也算比以前更深入一點點探討運作過程中的原理，速速妹！&lt;/li>
+&lt;/ul>
+&lt;h2 id="參考資料">參考資料&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://linux-kernel-labs.github.io/refs/heads/master/lectures/smp.html#linux-kernel-concurrency-sources" target="_blank" rel="noopener"
+>Symmetric Multi-Processing - Linux kernel concurrency sources&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/mirror/busybox/blob/master/procps/top.c" target="_blank" rel="noopener"
+>busybox - procps/top.c&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://iter01.com/642002.html" target="_blank" rel="noopener"
+>Linux 中 Sleep 和 Wait 命令的使用方式&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="http://linuxdiary.blogspot.com/2007/10/blog-post_30.html" target="_blank" rel="noopener"
+>LINUX 學習日誌 - 把命令放到背景執行&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://unix.stackexchange.com/questions/352781/background-zombie-daemon-and-without-ctty-are-these-concepts-connected" target="_blank" rel="noopener"
+>Background, zombie, daemon and without ctty - are these concepts connected?&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://stackoverflow.com/questions/3004811/how-do-you-run-multiple-programs-in-parallel-from-a-bash-script" target="_blank" rel="noopener"
+>How do you run multiple programs in parallel from a bash script?&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://man7.org/linux/man-pages/man1/time.1.html#OPTIONS" target="_blank" rel="noopener"
+>time(1) — Linux manual page&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://man7.org/linux/man-pages/man2/waitpid.2.html" target="_blank" rel="noopener"
+>wait(2) — Linux manual page&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/engine/reference/commandline/attach/" target="_blank" rel="noopener"
+>docker attach&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://hackmd.io/@owlfox/SyaTF2VgL/https%3A%2F%2Fhackmd.io%2Fs%2FSkh_AaVix" target="_blank" rel="noopener"
+>Concurrency 程式設計 - HackMD&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>
